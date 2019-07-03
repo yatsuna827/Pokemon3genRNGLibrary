@@ -1,0 +1,9 @@
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\bin\Release\netstandard2.0\3genRNG.deps.json
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\bin\Release\netstandard2.0\3genRNG.dll
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\bin\Release\netstandard2.0\3genRNG.pdb
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Release\netstandard2.0\3genRNG.csprojAssemblyReference.cache
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Release\netstandard2.0\3genRNG.csproj.CoreCompileInputs.cache
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Release\netstandard2.0\3genRNG.AssemblyInfoInputs.cache
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Release\netstandard2.0\3genRNG.AssemblyInfo.cs
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Release\netstandard2.0\3genRNG.dll
+C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Release\netstandard2.0\3genRNG.pdb
