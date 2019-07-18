@@ -7,8 +7,7 @@ namespace _3genRNG
     internal class Individual
     {
         internal Pokemon Species { get; private set; }
-        private uint index;
-        internal uint PokeDexIndex { set { Species = PokeDex.GetPokemonInfo(index = value); } get { return index; } }
+
         private uint _Lv;
         internal uint Lv { get { return _Lv; } set { _Lv = value > 100 ? 100 : (value == 0 ? 1 : value); } }
 
@@ -26,8 +25,9 @@ namespace _3genRNG
         internal uint HiddenPower { get{ return CalcHiddenPower(IVs ?? new uint[] { 0, 0, 0, 0, 0, 0 }); } }
         internal string HiddenPowerType { get { return CalcHiddenPowerType(IVs ?? new uint[] { 0, 0, 0, 0, 0, 0 }); } }
 
-        internal Individual() { PokeDexIndex = 0; }
-        internal Individual(uint DexIndex) { PokeDexIndex = DexIndex; }
+        internal Individual() { Species = PokeDex.GetPokemon(0); }
+        internal Individual(uint DexIndex) { Species = PokeDex.GetPokemon(DexIndex); }
+        internal Individual(uint DexIndex, string Form) { Species = PokeDex.GetPokemon(DexIndex, Form); }
 
         private uint[] CalcStats()
         {
@@ -52,24 +52,6 @@ namespace _3genRNG
             uint num = (IVs[0] & 1) + 2 * (IVs[1] & 1) + 4 * (IVs[2] & 1) + 8 * (IVs[5] & 1) + 16 * (IVs[3] & 1) + 32 * (IVs[4] & 1);
             return Types[(int)num * 15 / 63];
         }
-        private readonly string[] Types =
-        {
-            "格闘",
-            "飛行",
-            "毒",
-            "地面",
-            "岩",
-            "虫",
-            "ゴースト",
-            "鋼",
-            "炎",
-            "水",
-            "草",
-            "電気",
-            "エスパー",
-            "氷",
-            "ドラゴン",
-            "悪",
-        };
+        private readonly string[] Types = { "闘", "飛", "毒", "地", "岩", "虫", "霊", "鋼", "炎", "水", "草", "電", "超", "氷", "龍", "悪" };
     }
 }

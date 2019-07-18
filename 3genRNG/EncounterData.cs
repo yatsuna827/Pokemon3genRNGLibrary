@@ -9,8 +9,9 @@ namespace _3genRNG.Wild
         public readonly uint PokeID;
         public readonly uint BaseLv;
         public readonly uint LvRange;
-        
-        internal Slot(uint ID, uint Lv, uint Range) { PokeID = ID; BaseLv = Lv; LvRange = Range; }
+        public readonly string Form;
+        internal Slot(uint ID, uint Lv, uint Range) { PokeID = ID; BaseLv = Lv; LvRange = Range; this.Form = ""; }
+        internal Slot(uint ID, uint Lv, uint Range, string Form) { PokeID = ID; BaseLv = Lv; LvRange = Range; this.Form = Form; }
     }
     public class Map
     {
@@ -20,7 +21,9 @@ namespace _3genRNG.Wild
         public readonly Slot[] EncounterTable;
         public readonly EncounterType EncounterType;
         public bool isFishing => EncounterType == EncounterType.OldRod || EncounterType == EncounterType.GoodRod || EncounterType == EncounterType.SuperRod;
-        public bool isHoennSafari() { return Rom != Rom.FRLG && MapName.Contains("サファリ"); }
+        public bool isHoennSafari => Rom != Rom.FRLG && MapName.Contains("サファリ");
+        public bool isTanobyRuins => Rom == Rom.FRLG && MapName.Contains("せきしつ");
+
         internal Map(string label, uint rate, EncounterType encType, Slot[] table) { MapName = label; EncounterRate = rate; EncounterType = encType; EncounterTable = table; }
     }
     class EncounterDataSet
@@ -334,14 +337,14 @@ namespace _3genRNG.Wild
             MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("しっぽうけいこく(FR)", 20, EncounterType.GrassCave, new Slot[] { new Slot(74, 46, 1), new Slot(231, 15, 1), new Slot(104, 46, 1), new Slot(22, 50, 1), new Slot(105, 52, 1), new Slot(52, 43, 1), new Slot(95, 54, 1), new Slot(227, 30, 1), new Slot(246, 15, 1), new Slot(53, 49, 1), new Slot(246, 20, 1), new Slot(53, 52, 1), }));
             MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("しっぽうけいこく(LG)", 20, EncounterType.GrassCave, new Slot[] { new Slot(74, 46, 1), new Slot(231, 15, 1), new Slot(104, 46, 1), new Slot(22, 50, 1), new Slot(105, 52, 1), new Slot(52, 43, 1), new Slot(95, 54, 1), new Slot(22, 50, 1), new Slot(246, 15, 1), new Slot(53, 49, 1), new Slot(246, 20, 1), new Slot(53, 52, 1), }));
             MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("へんげのどうくつ", 5, EncounterType.GrassCave, new Slot[] { new Slot(41, 10, 1), new Slot(41, 12, 1), new Slot(41, 8, 1), new Slot(41, 14, 1), new Slot(41, 10, 1), new Slot(41, 12, 1), new Slot(41, 16, 1), new Slot(41, 6, 1), new Slot(41, 8, 1), new Slot(41, 14, 1), new Slot(41, 8, 1), new Slot(41, 14, 1), }));
-            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("イレスのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), }));
-            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("ナザンのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), }));
-            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("ユゴのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), }));
-            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("アレボカのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), }));
-            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("コトーのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), }));
-            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("アヌザのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), }));
-            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("オリフのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), new Slot(201, 25, 1), }));
-
+            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("イレスのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "A"), new Slot(201, 25, 1, "?") }));
+            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("ナザンのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1, "C"), new Slot(201, 25, 1, "C"), new Slot(201, 25, 1, "C"), new Slot(201, 25, 1, "D"), new Slot(201, 25, 1, "D"), new Slot(201, 25, 1, "D"), new Slot(201, 25, 1, "H"), new Slot(201, 25, 1, "H"), new Slot(201, 25, 1, "H"), new Slot(201, 25, 1, "U"), new Slot(201, 25, 1, "U"), new Slot(201, 25, 1, "O") }));
+            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("ユゴのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1, "N"), new Slot(201, 25, 1, "N"), new Slot(201, 25, 1, "N"), new Slot(201, 25, 1, "N"), new Slot(201, 25, 1, "S"), new Slot(201, 25, 1, "S"), new Slot(201, 25, 1, "S"), new Slot(201, 25, 1, "S"), new Slot(201, 25, 1, "I"), new Slot(201, 25, 1, "I"), new Slot(201, 25, 1, "E"), new Slot(201, 25, 1, "E") }));
+            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("アレボカのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1, "P"), new Slot(201, 25, 1, "P"), new Slot(201, 25, 1, "L"), new Slot(201, 25, 1, "L"), new Slot(201, 25, 1, "J"), new Slot(201, 25, 1, "J"), new Slot(201, 25, 1, "R"), new Slot(201, 25, 1, "R"), new Slot(201, 25, 1, "R"), new Slot(201, 25, 1, "Q"), new Slot(201, 25, 1, "Q"), new Slot(201, 25, 1, "Q") }));
+            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("コトーのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1, "Y"), new Slot(201, 25, 1, "Y"), new Slot(201, 25, 1, "T"), new Slot(201, 25, 1, "T"), new Slot(201, 25, 1, "G"), new Slot(201, 25, 1, "G"), new Slot(201, 25, 1, "G"), new Slot(201, 25, 1, "F"), new Slot(201, 25, 1, "F"), new Slot(201, 25, 1, "F"), new Slot(201, 25, 1, "K"), new Slot(201, 25, 1, "K") }));
+            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("アヌザのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1, "V"), new Slot(201, 25, 1, "V"), new Slot(201, 25, 1, "V"), new Slot(201, 25, 1, "W"), new Slot(201, 25, 1, "W"), new Slot(201, 25, 1, "W"), new Slot(201, 25, 1, "X"), new Slot(201, 25, 1, "X"), new Slot(201, 25, 1, "M"), new Slot(201, 25, 1, "M"), new Slot(201, 25, 1, "B"), new Slot(201, 25, 1, "B") }));
+            MapList[EncounterType.GrassCave].AddMap(Rom.FRLG, new Map("オリフのせきしつ", 7, EncounterType.GrassCave, new Slot[] { new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "Z"), new Slot(201, 25, 1, "!") }));
+            
             #endregion
 
             #region Surf
@@ -1005,26 +1008,28 @@ namespace _3genRNG.Wild
             #endregion
 
             #region RockSmash
+            MapList[EncounterType.RockSmash].AddMap(Rom.RS, new Map("111ばんどうろ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
+            MapList[EncounterType.RockSmash].AddMap(Rom.RS, new Map("114ばんどうろ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.RS, new Map("いしのどうくつ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(299, 10, 11), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.RS, new Map("チャンピオンロード", 20, EncounterType.RockSmash, new Slot[] { new Slot(75, 30, 11), new Slot(74, 30, 11), new Slot(75, 35, 6), new Slot(75, 35, 6), new Slot(75, 35, 6), }));
-            MapList[EncounterType.RockSmash].AddMap(Rom.RS, new Map("111ばんどうろ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.RS, new Map("サファリゾーン ダートエリア", 25, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 20, 6), new Slot(74, 25, 6), }));
 
+            MapList[EncounterType.RockSmash].AddMap(Rom.Em, new Map("111ばんどうろ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
+            MapList[EncounterType.RockSmash].AddMap(Rom.Em, new Map("114ばんどうろ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.Em, new Map("いしのどうくつ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(299, 10, 11), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.Em, new Map("チャンピオンロード", 20, EncounterType.RockSmash, new Slot[] { new Slot(75, 30, 11), new Slot(74, 30, 11), new Slot(75, 35, 6), new Slot(75, 35, 6), new Slot(75, 35, 6), }));
-            MapList[EncounterType.RockSmash].AddMap(Rom.Em, new Map("111ばんどうろ", 20, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), new Slot(74, 15, 6), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.Em, new Map("サファリゾーン ダートエリア", 25, EncounterType.RockSmash, new Slot[] { new Slot(74, 10, 6), new Slot(74, 5, 6), new Slot(74, 15, 6), new Slot(74, 20, 6), new Slot(74, 25, 6), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.Em, new Map("サファリゾーン 追加エリア", 25, EncounterType.RockSmash, new Slot[] { new Slot(213, 25, 6), new Slot(213, 20, 6), new Slot(213, 30, 6), new Slot(213, 30, 6), new Slot(213, 35, 6), }));
 
             MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("イワヤマトンネル", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 5, 16), new Slot(74, 10, 11), new Slot(74, 15, 16), new Slot(75, 25, 16), new Slot(75, 30, 11), }));
-            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("しっぽうけいこく", 25, EncounterType.RockSmash, new Slot[] { new Slot(74, 25, 11), new Slot(75, 30, 16), new Slot(75, 35, 16), new Slot(74, 30, 11), new Slot(74, 30, 11), }));
-            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ともしびやま 外/洞窟(左)", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 5, 16), new Slot(74, 10, 11), new Slot(74, 15, 16), new Slot(75, 25, 16), new Slot(75, 30, 11), }));
-            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ともしびやま 洞窟(右) 1F-B2F", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 25, 11), new Slot(75, 30, 16), new Slot(75, 35, 16), new Slot(74, 30, 11), new Slot(74, 30, 11) }));
-            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ともしびやま 洞窟(右) B3F", 50, EncounterType.RockSmash, new Slot[] { new Slot(218, 15, 11), new Slot(218, 25, 11), new Slot(219, 40, 6), new Slot(219, 35, 11), new Slot(219, 25, 11), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ハナダのどうくつ 1F", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 30, 11), new Slot(75, 40, 11), new Slot(75, 45, 11), new Slot(74, 40, 11), new Slot(74, 40, 11), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ハナダのどうくつ 2F", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 35, 11), new Slot(75, 45, 11), new Slot(75, 50, 11), new Slot(74, 45, 11), new Slot(74, 45, 11), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ハナダのどうくつ B1F", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 40, 11), new Slot(75, 50, 11), new Slot(75, 55, 11), new Slot(74, 50, 11), new Slot(74, 50, 11), }));
+            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ともしびやま 外/洞窟(左)", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 5, 16), new Slot(74, 10, 11), new Slot(74, 15, 16), new Slot(75, 25, 16), new Slot(75, 30, 11), }));
+            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ともしびやま 洞窟(右) 1F-B2F", 50, EncounterType.RockSmash, new Slot[] { new Slot(74, 25, 11), new Slot(75, 30, 16), new Slot(75, 35, 16), new Slot(74, 30, 11), new Slot(74, 30, 11) }));
+            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ともしびやま 洞窟(右) B3F", 50, EncounterType.RockSmash, new Slot[] { new Slot(218, 15, 11), new Slot(218, 25, 11), new Slot(219, 40, 6), new Slot(219, 35, 11), new Slot(219, 25, 11), }));
             MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("ほてりのみち", 25, EncounterType.RockSmash, new Slot[] { new Slot(74, 5, 16), new Slot(74, 10, 11), new Slot(74, 15, 16), new Slot(75, 25, 16), new Slot(75, 30, 11), }));
+            MapList[EncounterType.RockSmash].AddMap(Rom.FRLG, new Map("しっぽうけいこく", 25, EncounterType.RockSmash, new Slot[] { new Slot(74, 25, 11), new Slot(75, 30, 16), new Slot(75, 35, 16), new Slot(74, 30, 11), new Slot(74, 30, 11), }));
             #endregion
 
         }

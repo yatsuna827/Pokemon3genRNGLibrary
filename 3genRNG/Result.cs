@@ -13,7 +13,8 @@ namespace _3genRNG
         public uint StartingSeed { get { return _startingSeed; } internal set { _startingSeed = value; index = LCGModules.GetIndex(StartingSeed, InitialSeed); } } // 計算開始seed
         public uint FinishingSeed { get; internal set; }// 計算終了時seed
         internal Individual Individual { get; set; } // 個体情報
-        public Pokemon Species { get { return Individual?.Species ?? PokeDex.GetPokemonInfo(0); } }
+        public Pokemon Species { get { return Individual?.Species ?? PokeDex.GetPokemon(0); } }
+        public string Name { get { return Species.GetFullName(); } }
         public uint Lv { get { return Individual?.Lv ?? 0; } set { Individual.Lv = value; } }
         public string PID { get { return Individual?.PID.ToString("X8") ?? "!!Error!! Individual is null"; } }
         public Nature Nature { get { return Individual?.Nature ?? Nature.Hardy; } set { if (Individual != null) Individual.Nature = value; } }

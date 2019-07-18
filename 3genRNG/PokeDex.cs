@@ -8,25 +8,46 @@ namespace _3genRNG
         public readonly uint[] BS;
         public readonly string[] Ability;
         public readonly uint GenderThreshold;
-
+        public readonly string FormName;
+        public string GetFullName() { return Name + FormName; }
         public Pokemon(string name, uint[] bs, string[] ability, uint genderThreshold)
         {
             Name = name;
             BS = bs;
             Ability = ability;
             GenderThreshold = genderThreshold;
+            FormName = "";
         }
-
+        public Pokemon(string name, string FormName, uint[] bs, string[] ability, uint genderThreshold)
+        {
+            Name = name;
+            BS = bs;
+            Ability = ability;
+            GenderThreshold = genderThreshold;
+            this.FormName = FormName;
+        }
     }
 
     public static class PokeDex
     {
-        public static Pokemon GetPokemonInfo(uint index) { return DexData[(int)(index > 386 ? 0 : index)]; }
-        public static Pokemon GetPokemon(string Name) { return DexData.Find(x => x.Name == Name); }
+        public static Pokemon GetPokemon(uint index) { return DexData[(int)(index > 386 ? 0 : index)]; }
+        public static Pokemon GetPokemon(uint index, string form)
+        {
+            if (index == 201) return UnownDex[form];
+            if (index == 386) return DeoxysDex[form];
+            return DexData[(int)(index > 386 ? 0 : index)];
+        }
+        public static Pokemon FindPokemon(string Name) { return DexData.Find(x => x.Name == Name); }
         private static readonly List<Pokemon> DexData;
+        private static readonly Dictionary<string, Pokemon> UnownDex;
+        private static readonly Dictionary<string, Pokemon> DeoxysDex;
+
         static PokeDex()
         {
             DexData = new List<Pokemon>();
+            UnownDex = new Dictionary<string, Pokemon>();
+            DeoxysDex = new Dictionary<string, Pokemon>();
+
             DexData.Add(new Pokemon("---", new uint[] { 100, 100, 100, 100, 100, 100 }, new string[] { "特性1", "特性2" }, 300));
             DexData.Add(new Pokemon("フシギダネ", new uint[] { 45, 49, 49, 65, 65, 45 }, new string[] { "しんりょく", "---" }, 31));
             DexData.Add(new Pokemon("フシギソウ", new uint[] { 60, 62, 63, 80, 80, 60 }, new string[] { "しんりょく", "---" }, 31));
@@ -228,7 +249,7 @@ namespace _3genRNG
             DexData.Add(new Pokemon("ヤミカラス", new uint[] { 60, 85, 42, 85, 42, 91 }, new string[] { "ふみん", "---" }, 127));
             DexData.Add(new Pokemon("ヤドキング", new uint[] { 95, 75, 80, 100, 110, 30 }, new string[] { "どんかん", "マイペース" }, 127));
             DexData.Add(new Pokemon("ムウマ", new uint[] { 60, 60, 60, 85, 85, 85 }, new string[] { "ふゆう", "---" }, 127));
-            DexData.Add(new Pokemon("アンノーン", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            DexData.Add(new Pokemon("アンノーン", "A", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
             DexData.Add(new Pokemon("ソーナンス", new uint[] { 190, 33, 58, 33, 58, 33 }, new string[] { "かげふみ", "---" }, 127));
             DexData.Add(new Pokemon("キリンリキ", new uint[] { 70, 80, 65, 90, 65, 85 }, new string[] { "せいしんりょく", "はやおき" }, 127));
             DexData.Add(new Pokemon("クヌギダマ", new uint[] { 50, 65, 90, 35, 35, 15 }, new string[] { "がんじょう", "---" }, 127));
@@ -413,7 +434,41 @@ namespace _3genRNG
             DexData.Add(new Pokemon("グラードン", new uint[] { 100, 150, 140, 100, 90, 90 }, new string[] { "ひでり", "---" }, 300));
             DexData.Add(new Pokemon("レックウザ", new uint[] { 105, 150, 90, 150, 90, 95 }, new string[] { "エアロック", "---" }, 300));
             DexData.Add(new Pokemon("ジラーチ", new uint[] { 100, 100, 100, 100, 100, 100 }, new string[] { "てんのめぐみ", "---" }, 300));
-            DexData.Add(new Pokemon("デオキシス", new uint[] { 50, 150, 50, 150, 50, 150 }, new string[] { "プレッシャー", "---" }, 300));
+            DexData.Add(new Pokemon("デオキシス", "N", new uint[] { 50, 150, 50, 150, 50, 150 }, new string[] { "プレッシャー", "---" }, 300));
+
+            UnownDex.Add("A", new Pokemon("アンノーン", "A", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("B", new Pokemon("アンノーン", "B", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("C", new Pokemon("アンノーン", "C", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("D", new Pokemon("アンノーン", "D", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("E", new Pokemon("アンノーン", "E", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("F", new Pokemon("アンノーン", "F", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("G", new Pokemon("アンノーン", "G", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("H", new Pokemon("アンノーン", "H", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("I", new Pokemon("アンノーン", "I", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("J", new Pokemon("アンノーン", "J", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("K", new Pokemon("アンノーン", "K", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("L", new Pokemon("アンノーン", "L", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("M", new Pokemon("アンノーン", "M", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("N", new Pokemon("アンノーン", "N", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("O", new Pokemon("アンノーン", "O", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("P", new Pokemon("アンノーン", "P", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("Q", new Pokemon("アンノーン", "Q", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("R", new Pokemon("アンノーン", "R", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("S", new Pokemon("アンノーン", "S", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("T", new Pokemon("アンノーン", "T", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("U", new Pokemon("アンノーン", "U", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("V", new Pokemon("アンノーン", "V", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("W", new Pokemon("アンノーン", "W", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("X", new Pokemon("アンノーン", "X", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("Y", new Pokemon("アンノーン", "Y", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("Z", new Pokemon("アンノーン", "Z", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("!", new Pokemon("アンノーン", "!", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+            UnownDex.Add("?", new Pokemon("アンノーン", "?", new uint[] { 48, 72, 48, 72, 48, 48 }, new string[] { "ふゆう", "---" }, 300));
+
+            DeoxysDex.Add("N", new Pokemon("デオキシス", "N", new uint[] { 50, 150, 50, 150, 50, 150 }, new string[] { "プレッシャー", "---" }, 300));
+            DeoxysDex.Add("A", new Pokemon("デオキシス", "A", new uint[] { 50, 180, 20, 180, 20, 150 }, new string[] { "プレッシャー", "---" }, 300));
+            DeoxysDex.Add("D", new Pokemon("デオキシス", "D", new uint[] { 50, 70, 160, 70, 160, 90 }, new string[] { "プレッシャー", "---" }, 300));
+            DeoxysDex.Add("S", new Pokemon("デオキシス", "S", new uint[] { 50, 95, 90, 95, 90, 180 }, new string[] { "プレッシャー", "---" }, 300));
         }
     }
 }

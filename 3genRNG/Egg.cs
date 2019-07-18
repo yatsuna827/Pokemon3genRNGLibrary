@@ -16,6 +16,8 @@ namespace _3genRNG.Egg
         public List<HeredityInfo> HeredityInfo { get; internal set; }
         public uint[] RowIVs { get; internal set; }
         public bool isLaying { get { return Individual != null; } }
+        public uint Difference { get; internal set; }
+        public uint FrameCounter { get; internal set; }
 
         public EggResult() : base(0) { }
     }
@@ -26,20 +28,39 @@ namespace _3genRNG.Egg
         public bool Everstone { get; set; }
         public uint Difference { get; set; }
         public Nature EverstoneNature { get; set; }
-        public readonly uint LayingThreshold;
+        public Compatibility Compability { set { LayingThreshold = value.ToUint(); } }
+        public uint LayingThreshold { get; private set; }
 
         public EggResult GeneratePID(uint seed)
         {
-            EggResult res = new EggResult() { StartingSeed = seed, Index = seed.GetIndex() - Difference };
+            EggResult res = new EggResult() { StartingSeed = seed, Index = seed.GetIndex() - Difference, Difference = Difference };
 
             bool isLayed = (res.LayingValue = seed.GetLayingValue()) < LayingThreshold;
             if (isLayed)
             {
                 Individual indiv = new Individual(PokeID);
                 if (Everstone)
-                    indiv.PID = seed.GetPID(Difference, EverstoneNature);
+                    indiv.PID = seed.GetPID(seed.GetIndex() - Difference, EverstoneNature);
                 else
-                    indiv.PID = seed.GetPID(Difference);
+                    indiv.PID = seed.GetPID(seed.GetIndex() - Difference);
+                res.Individual = indiv;
+            }
+            res.FinishingSeed = seed;
+
+            return res;
+        }
+        public EggResult GeneratePID(uint seed, uint FrameCounter)
+        {
+            EggResult res = new EggResult() { StartingSeed = seed, Index = seed.GetIndex(), FrameCounter = FrameCounter, Difference = seed.GetIndex() - FrameCounter };
+
+            bool isLayed = (res.LayingValue = seed.GetLayingValue()) < LayingThreshold;
+            if (isLayed)
+            {
+                Individual indiv = new Individual(PokeID);
+                if (Everstone)
+                    indiv.PID = seed.GetPID(FrameCounter, EverstoneNature);
+                else
+                    indiv.PID = seed.GetPID(FrameCounter);
                 res.Individual = indiv;
             }
             res.FinishingSeed = seed;
@@ -47,12 +68,13 @@ namespace _3genRNG.Egg
             return res;
         }
         
-        public EggPIDGenerator(Compatibility comp) { LayingThreshold = comp.ToUint(); Difference = 19; }
+        public EggPIDGenerator(Compatibility comp) { Compability = comp; Difference = 19; }
     }
 
     public class EggIVsGenerator
     {
         public uint PokeID { get; set; }
+        public uint Lv { get; set; }
         public EggMethod method;
 
         private uint[][] ParentIVs;
@@ -62,9 +84,9 @@ namespace _3genRNG.Egg
         public EggResult GenerateIVs(uint seed)
         {
             EggResult res = new EggResult() { StartingSeed = seed, Index = seed.GetIndex() };
-            Individual indiv = new Individual(PokeID);
+            Individual indiv = new Individual(PokeID) { Lv = Lv };
             res.Individual = indiv;
-
+            
             // 基礎個体値の決定
             uint[] IVs = seed.GetIVs(method);
             res.RowIVs = IVs;
@@ -113,19 +135,18 @@ namespace _3genRNG.Egg
     public static class EggGeneratorModule
     {
         public static uint GetLayingValue(ref this uint seed) { return (seed.GetRand() * 100) >> 16; }
-        public static uint GetPID(ref this uint seed, uint Difference)
+        public static uint GetPID(ref this uint seed, uint FrameCounter)
         {
-            uint LID, HID;
-            uint seed_HID = (seed.GetIndex() - Difference) & 0xFFFF;
-            LID = seed.GetRand(0xFFFE) + 1;
-            HID = seed_HID.GetRand();
+            uint seed_HID = (FrameCounter & 0xFFFF);
+            uint LID = seed.GetRand(0xFFFE) + 1;
+            uint HID = seed_HID.GetRand();
             return LID | (HID << 16);
         }
-        public static uint GetPID(ref this uint seed, uint Difference, Nature EverStoneNature)
+        public static uint GetPID(ref this uint seed, uint FrameCounter, Nature EverStoneNature)
         {
             uint PID;
-            uint seed_HID = (seed.GetIndex() - Difference) & 0xFFFF;
-            if ((seed.GetRand() >> 15) == 1) return GetPID(ref seed, Difference);
+            uint seed_HID = FrameCounter & 0xFFFF;
+            if ((seed.GetRand() >> 15) == 1) return GetPID(ref seed, FrameCounter);
             do { PID = seed.GetRand() | (seed_HID.GetRand() << 16); } while ((PID % 25) != (uint)EverStoneNature);
             return PID;
         }

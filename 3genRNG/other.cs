@@ -70,7 +70,7 @@
         }
         public static string ToJapanese(this Nature nature) { return Nature_JP[(int)nature]; }
         public static double[] ToMagnification(this Nature nature) { return Magnifications[(int)nature]; }
-        public static string ToSymbol(this Gender gender) { if (gender == Gender.Male) return "♂"; else if (gender == Gender.Female) return "♀"; else return "なし"; }
+        public static string ToSymbol(this Gender gender) { if (gender == Gender.Male) return "♂"; else if (gender == Gender.Female) return "♀"; else return "-"; }
         public static uint[] ToEncounterRate(this EncounterType encounterType)
         {
             switch (encounterType)

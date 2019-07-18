@@ -7,13 +7,14 @@ namespace _3genRNG.StationarySymbol
     public class StationarySymbolGenerator
     {
         public uint PokeID { get; set; }
+        public string Form { get; set; }
         public uint Lv { get; set; }
         public StationaryMethod Method { get; set; }
         public uint InitialSeed { get; set; }
         public Result Generate(uint seed)
         {
             Result res = new Result(InitialSeed) { StartingSeed = seed };
-            Individual indiv = new Individual(PokeID);
+            Individual indiv = new Individual(PokeID, Form);
             indiv.Lv = Lv;
             indiv.PID = seed.GetPID(Method);
             indiv.IVs = seed.GetIVs(Method);

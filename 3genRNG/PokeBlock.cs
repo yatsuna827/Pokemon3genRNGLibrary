@@ -17,7 +17,7 @@ namespace _3genRNG
             if (nature.ToMagnification() == new double[] { 1, 1, 1, 1, 1, 1 }) return false;
             return (int)TasteLevel[(int)nature.ToLikeTaste()] - (int)TasteLevel[(int)nature.ToUnlikeTaste()] > 0;
         }
-        public bool isTasteless() { return (SpicyLevel + DryLevel + SweetLevel + BitterLevel + SourLevel == 0); }
+        public bool isTasteless => (SpicyLevel + DryLevel + SweetLevel + BitterLevel + SourLevel == 0);
         private uint[] TasteLevel;
 
         public PokeBlock()
