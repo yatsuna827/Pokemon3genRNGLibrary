@@ -16,7 +16,7 @@ namespace _3genRNG
 
         internal Nature Nature { get; set; }
         internal string Ability { get { if (Species.Ability[1] == "---") return Species.Ability[0]; else return Species.Ability[PID & 1]; } }
-        internal Gender Gender { get { if (Species.GenderThreshold == 300) return Gender.X; else if ((PID & 0xFF) < Species.GenderThreshold) return Gender.Female; else return Gender.Male; } }
+        internal Gender Gender { get { if (Species.GenderThreshold == 300) return Gender.Genderless; else if ((PID & 0xFF) < Species.GenderThreshold) return Gender.Female; else return Gender.Male; } }
         internal uint PSV { get { return (PID >> 16) ^ (PID & 0xFFFF); } }
         internal uint[] IVs { get; set; }
         private uint[] stats;

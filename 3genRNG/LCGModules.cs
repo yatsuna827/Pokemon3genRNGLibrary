@@ -5,7 +5,10 @@ namespace _3genRNG
     public static class LCGModules
     {
         public static uint GetLCGSeed(uint InitialSeed, uint FirstFrame) { return InitialSeed.Advance(FirstFrame); }
-        public static uint GetNext(this uint seed) { return seed.Advance(); }
+        public static uint NextSeed(this uint seed) { return seed.Advance(); }
+        public static uint NextSeed(this uint seed, uint n) { return seed.Advance(n); }
+        public static uint PreviousSeed(this uint seed) { return seed.Back(); }
+        public static uint PreviousSeed(this uint seed, uint n) { return seed.Back(n); }
         public static uint Advance(ref this uint seed) { return seed = seed * 0x41C64E6D + 0x6073; }
         public static uint Advance(ref this uint seed, uint n)
         {

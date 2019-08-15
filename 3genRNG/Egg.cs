@@ -75,7 +75,9 @@ namespace _3genRNG.Egg
     {
         public uint PokeID { get; set; }
         public uint Lv { get; set; }
-        public EggMethod method;
+        public bool isKecleon { get; set; }
+        public Nature Nature { get; set; }
+        public EggMethod method { get; set; }
 
         private uint[][] ParentIVs;
         public uint[] preParentIVs { set { ParentIVs[0] = value; } }
@@ -84,19 +86,22 @@ namespace _3genRNG.Egg
         public EggResult GenerateIVs(uint seed)
         {
             EggResult res = new EggResult() { StartingSeed = seed, Index = seed.GetIndex() };
-            Individual indiv = new Individual(PokeID) { Lv = Lv };
+            Individual indiv = new Individual(PokeID) { Lv = Lv, Nature = Nature };
             res.Individual = indiv;
             
             // 基礎個体値の決定
             uint[] IVs = seed.GetIVs(method);
             res.RowIVs = IVs;
 
-            if (method == EggMethod.method3) seed.Advance();
-            seed.Advance();
-
+            seed.Advance(); // 描画が入る
+            if (isKecleon) seed.Advance(2); // カクレオンは遅いので描画が入る
+            if (method == EggMethod.MiddleInterrupt) seed.Advance();
 
             // 遺伝処理
-            List<HeredityInfo> HeredityInfo = Enumerable.Range(0, 3).Select(x => new HeredityInfo()).ToList();
+            List<HeredityInfo> HeredityInfo = new List<HeredityInfo>();
+            HeredityInfo.Add(new HeredityInfo());
+            HeredityInfo.Add(new HeredityInfo());
+            HeredityInfo.Add(new HeredityInfo());
 
             // 遺伝先決定
             List<Stat> temp = new List<Stat> { Stat.H, Stat.A, Stat.B, Stat.S, Stat.C, Stat.D };
@@ -153,7 +158,7 @@ namespace _3genRNG.Egg
         public static uint[] GetIVs(ref this uint seed, EggMethod method)
         {
             uint HAB = seed.GetRand();
-            if (method == EggMethod.method2) seed.Advance();
+            if (method == EggMethod.IVsInterrupt) seed.Advance();
             uint SCD = seed.GetRand();
             return new uint[6] {
                 HAB & 0x1f,

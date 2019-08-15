@@ -19,12 +19,11 @@ namespace _3genRNG.Wild
 
         private Map _selectedMap;
         public Map SelectedMap { get { return _selectedMap; } set { _selectedMap = value; UpdateGenerator(); } }
-        public WildMethod Method { get; set; }
+        public GenerateMethod Method { get; set; }
         public FieldAbility FieldAbility { get; set; }
         public Nature SyncNature { get; set; }
         public Gender CuteCharmGender { get; set; }
         public PokeBlock PokeBlock { get; set; }
-        public bool hasPokeBlock { get; set; }
         public bool RidingBicycle { get; set; }
         public bool BlackFlute { get; set; }
         public bool WhiteFlute { get; set; }
@@ -36,7 +35,7 @@ namespace _3genRNG.Wild
         private WildResult Generate_Em(uint seed)
         {
             Slot[] table = SelectedMap.EncounterTable;
-            Condition PIDCondition = x => true;
+            List<Condition> PIDCondition = new List<Condition>();
             WildResult res = new WildResult(InitialSeed) { StartingSeed = seed };
             
             // 119ばんどうろで釣りをしたときのみ入るヒンバス判定
@@ -66,13 +65,13 @@ namespace _3genRNG.Wild
             res.SlotIndex = SlotIndex;
             Individual indiv = new Individual(SelectedSlot.PokeID);
 
+            // Lv決定
+            indiv.Lv = seed.GetRand(SelectedSlot.LvRange) + SelectedSlot.BaseLv;
+
             // メロボ判定 
             // 条件式が長いからなんとかしたい
             if (FieldAbility == FieldAbility.CuteCharm && (indiv.Species.GenderThreshold > 0) && (indiv.Species.GenderThreshold < 256) && seed.GetRand(3) != 0)
-                PIDCondition = ComposeAnd(PIDCondition, pid => pid.GetGender(indiv.Species.GenderThreshold) == CuteCharmGender);
-
-            // Lv決定
-            indiv.Lv = seed.GetRand(SelectedSlot.LvRange) + SelectedSlot.BaseLv;
+                PIDCondition.Add(pid => pid.GetGender(indiv.Species.GenderThreshold) == CuteCharmGender);
 
             // プレッシャー判定
             if (FieldAbility == FieldAbility.Pressure)
@@ -85,14 +84,16 @@ namespace _3genRNG.Wild
 
             // 性格決定
             uint nature;
-            if (SelectedMap.isHoennSafari && hasPokeBlock && !PokeBlock.isTasteless)
+            if (SelectedMap.isHoennSafari)
                 nature = (uint)seed.GetNature(FieldAbility, SyncNature, PokeBlock);
             else
                 nature = (uint)seed.GetNature(FieldAbility, SyncNature);
-            PIDCondition = ComposeAnd(PIDCondition, pid => (pid % 25) == nature);
+            PIDCondition.Add(pid => (pid % 25) == nature);
 
             // PID生成
-            indiv.PID = seed.GetPID(PIDCondition);
+            indiv.PID = seed.GetPID(pid => PIDCondition.GetAnd(pid));
+
+            if (Method == GenerateMethod.MiddleInterrupt) seed.Advance();
 
             // IVs生成
             indiv.IVs = seed.GetIVs(Method);
@@ -105,7 +106,6 @@ namespace _3genRNG.Wild
         private WildResult Generate_RS(uint seed)
         {
             Slot[] table = SelectedMap.EncounterTable;
-            Condition PIDCondition = x => true;
             WildResult res = new WildResult(InitialSeed) { StartingSeed = seed };
 
             // 出現判定 いわくだきのみ
@@ -138,15 +138,15 @@ namespace _3genRNG.Wild
 
             // 性格決定
             uint nature;
-            if (SelectedMap.isHoennSafari && hasPokeBlock && !PokeBlock.isTasteless && seed.GetRand(100) < 80)
+            if (SelectedMap.isHoennSafari && seed.GetRand(100) < 80 && !PokeBlock.isTasteless)
                 nature = (uint)seed.GetNature_PokeBlock(PokeBlock);
             else
                 nature = seed.GetRand(25);
-            PIDCondition = ComposeAnd(PIDCondition, pid => (pid % 25) == nature);
-
 
             // PID生成
-            indiv.PID = seed.GetPID(PIDCondition);
+            indiv.PID = seed.GetPID(pid => (pid % 25) == nature);
+
+            if (Method == GenerateMethod.MiddleInterrupt) seed.Advance();
 
             // IVs生成
             indiv.IVs = seed.GetIVs(Method);
@@ -172,6 +172,7 @@ namespace _3genRNG.Wild
 
             uint nature = seed.GetRand(25);
             indiv.PID = seed.GetPID(pid => (pid % 25) == nature);
+            if (Method == GenerateMethod.MiddleInterrupt) seed.Advance();
             indiv.IVs = seed.GetIVs(Method);
 
             res.FinishingSeed = seed;
@@ -194,6 +195,7 @@ namespace _3genRNG.Wild
             indiv.Lv = seed.GetRand(SelectedSlot.LvRange) + SelectedSlot.BaseLv;
 
             indiv.PID = seed.GetReversePID(pid => pid.GetUnownForm() == Form);
+            if (Method == GenerateMethod.MiddleInterrupt) seed.Advance();
             indiv.IVs = seed.GetIVs(Method);
 
             res.FinishingSeed = seed;
@@ -234,7 +236,6 @@ namespace _3genRNG.Wild
             }
             return value;
         }
-        private Condition ComposeAnd(Condition f, Condition g) { return x => f(x) && g(x); }
 
         public WildGenerator(uint InitialSeed, Map SelectedMap)
         {
@@ -248,15 +249,22 @@ namespace _3genRNG.Wild
 
     public static class WildGeneratorModules
     {
+        internal static bool GetAnd(this List<Condition> list, uint PID)
+        {
+            bool b = true;
+            foreach (var cond in list) b &= cond(PID);
+            return b;
+        }
+
         private readonly static string[] UnownForms = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "!", "?" };
         public static string GetUnownForm(this uint PID)
         {
-            uint value = (PID & 0x3) | ((PID >> 8) & 0xC) | ((PID >> 16) & 0x30) | ((PID >> 24) & 0xC0);
+            uint value = (PID & 0x3) | ((PID >> 6) & 0xC) | ((PID >> 12) & 0x30) | ((PID >> 18) & 0xC0);
             return UnownForms[value % 28];
         }
         public static Gender GetGender(this uint PID, uint GenderThreshold)
         {
-            return (PID % 0xFF) < GenderThreshold ? Gender.Female : Gender.Male;
+            return (PID & 0xFF) < GenderThreshold ? Gender.Female : Gender.Male;
         }
         public static Nature GetNature(ref this uint seed, FieldAbility fieldAbility, Nature SyncNature)
         {
@@ -265,7 +273,7 @@ namespace _3genRNG.Wild
         }
         public static Nature GetNature(ref this uint seed, FieldAbility fieldAbility, Nature SyncNature, PokeBlock PokeBlock)
         {
-            if (seed.GetRand(100) < 80)
+            if (seed.GetRand(100) < 80 && !PokeBlock.isTasteless)
             {
                 Nature FoundNature = seed.GetNature_PokeBlock(PokeBlock);
                 if (FoundNature != Nature.Hardy) return FoundNature;
@@ -275,18 +283,27 @@ namespace _3genRNG.Wild
         internal static Nature GetNature_PokeBlock(ref this uint seed, PokeBlock PokeBlock)
         {
             List<Nature> NatureList = Enumerable.Range(0, 25).Select(x=>(Nature)x).ToList();
-            for (int i = 0; i < 24; i++)
-                for (int j = i + 1; j <= 24; j++)
-                    if (seed.GetRand(2) == 1) NatureList.Swap(0, j);
+            for (int i = 0; i < 25; i++)
+                for (int j = i + 1; j < 25; j++)
+                    if (seed.GetRand(2) == 1) NatureList.Swap(i, j);
 
             return NatureList.Find(x => PokeBlock.DoesLikes(x));
         }
-        private static void Swap(this List<Nature> list, int index1, int index2) { list[index1] ^= list[index2]; list[index2] ^= list[index1]; list[index1] ^= list[index2]; }
+        private static void Swap(this List<Nature> list, int index1, int index2)
+        {
+            Nature temp = list[index1];
+            list[index1] = list[index2];
+            list[index2] = temp;
+        }
         public static uint GetPID(ref this uint seed, Func<uint,bool> condition)
         {
             uint PID;
             do PID = seed.GetRand() | (seed.GetRand() << 16); while (!condition(PID));
             return PID;
+        }
+        public static uint GetReversePID(ref this uint seed)
+        {
+            return (seed.GetRand() << 16) | seed.GetRand();
         }
         public static uint GetReversePID(ref this uint seed, Func<uint, bool> condition)
         {
@@ -294,10 +311,10 @@ namespace _3genRNG.Wild
             do PID = (seed.GetRand() << 16) | seed.GetRand(); while (!condition(PID));
             return PID;
         }
-        public static uint[] GetIVs(ref this uint seed, WildMethod method)
+        public static uint[] GetIVs(ref this uint seed, GenerateMethod method)
         {
             uint HAB = seed.GetRand();
-            if (method == WildMethod.method3 || method == WildMethod.method4) seed.Advance();
+            if (method == GenerateMethod.IVsInterrupt) seed.Advance();
             uint SCD = seed.GetRand();
             return new uint[6] {
                 HAB & 0x1f,

@@ -11,12 +11,20 @@
     public enum FieldAbility { other, Synchronize, CuteCharm, Pressure, MagnetPull, Static, Stench, Illuminate }
     public enum EncounterType { GrassCave, Surf, OldRod, GoodRod, SuperRod, RockSmash }
     public enum Compatibility { NotLikeMuch, GetAlong, VeryWell }
-    public enum Gender { X, Male, Female }
+    public enum Gender { Genderless, Male, Female }
     public enum HeredityParent { PreParent, PostParent }
-    public enum StationaryMethod { method1, method2, method3, method4 }
-    public enum WildMethod { method1, method2, method3, method4 }
-    public enum EggMethod { method1, method2, method3, method4 }
-
+    public enum GenerateMethod { Standard, MiddleInterrupt, IVsInterrupt }
+    public enum EggMethod { Standard, MiddleInterrupt, IVsInterrupt }
+    public enum GenderRatio : uint
+    {
+        MaleOnly = 0,
+        M7F1 = 0x1F,
+        M3F1 = 0x3F,
+        M1F1 = 0x7F,
+        M1F3 = 0xBF,
+        FemaleOnly = 0x100,
+        Genderless = 0x12C
+    }
     public enum Rom { RS, Em, FRLG }
 
     public static class Modules
@@ -59,7 +67,9 @@
                 new double[] { 1, 1, 1, 1, 1, 1}
             };
         static private Taste[] ToTaste = { Taste.Spicy, Taste.Sour, Taste.Sweet, Taste.Dry, Taste.Bitter };
-
+        static private readonly string[] GenerateMethodName = { "Method1", "Method2", "Method4" };
+        static private readonly string[] EggMethodName = { "Method1", "Method2", "Method3" };
+        static public Gender Reverse(this Gender gender) { if (gender == Gender.Male) return Gender.Female; else if (gender == Gender.Female) return Gender.Male; else return Gender.Genderless; }
         static public Taste ToLikeTaste(this Nature nature)
         {
             return (((uint)nature / 5) != ((uint)nature % 5)) ? ToTaste[(int)nature / 5] : Taste.NoTaste;
@@ -70,6 +80,8 @@
         }
         public static string ToJapanese(this Nature nature) { return Nature_JP[(int)nature]; }
         public static double[] ToMagnification(this Nature nature) { return Magnifications[(int)nature]; }
+        public static string ToMethodName(this GenerateMethod method) { return GenerateMethodName[(int)method]; }
+        public static string ToMethodName(this EggMethod method) { return EggMethodName[(int)method]; }
         public static string ToSymbol(this Gender gender) { if (gender == Gender.Male) return "♂"; else if (gender == Gender.Female) return "♀"; else return "-"; }
         public static uint[] ToEncounterRate(this EncounterType encounterType)
         {

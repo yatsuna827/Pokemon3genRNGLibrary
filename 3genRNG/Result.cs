@@ -19,7 +19,7 @@ namespace _3genRNG
         public string PID { get { return Individual?.PID.ToString("X8") ?? "!!Error!! Individual is null"; } }
         public Nature Nature { get { return Individual?.Nature ?? Nature.Hardy; } set { if (Individual != null) Individual.Nature = value; } }
         public string Ability { get { return Individual?.Ability ?? "!!Error!! Individual is null"; } }
-        public Gender Gender { get { return Individual?.Gender ?? Gender.X; } }
+        public Gender Gender { get { return Individual?.Gender ?? Gender.Genderless; } }
         public uint[] IVs { get { return Individual?.IVs ?? new uint[] { 0, 0, 0, 0, 0, 0 }; } internal set { Individual.IVs = value; } }
         public uint[] Stats { get { return Individual?.Stats ?? new uint[] { 0, 0, 0, 0, 0, 0 }; } }
         public uint HiddenPower { get { return Individual?.HiddenPower ?? 0; } }
