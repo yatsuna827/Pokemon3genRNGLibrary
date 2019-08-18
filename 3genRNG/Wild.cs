@@ -50,6 +50,7 @@ namespace _3genRNG.Wild
 
             // 磁力・静電気判定
             // R&1==0
+            
 
             // スロット決定
             Slot SelectedSlot;
@@ -70,8 +71,8 @@ namespace _3genRNG.Wild
 
             // メロボ判定 
             // 条件式が長いからなんとかしたい
-            if (FieldAbility == FieldAbility.CuteCharm && (indiv.Species.GenderThreshold > 0) && (indiv.Species.GenderThreshold < 256) && seed.GetRand(3) != 0)
-                PIDCondition.Add(pid => pid.GetGender(indiv.Species.GenderThreshold) == CuteCharmGender);
+            if (FieldAbility == FieldAbility.CuteCharm && indiv.Species.GenderRatio.isSubjectToCuteCharm() && seed.GetRand(3) != 0)
+                PIDCondition.Add(pid => pid.GetGender(indiv.Species.GenderRatio) == CuteCharmGender);
 
             // プレッシャー判定
             if (FieldAbility == FieldAbility.Pressure)
@@ -255,16 +256,17 @@ namespace _3genRNG.Wild
             foreach (var cond in list) b &= cond(PID);
             return b;
         }
-
+        internal static bool isSubjectToCuteCharm(this GenderRatio ratio) { return 0 < (uint)ratio && (uint)ratio < 256; }
         private readonly static string[] UnownForms = { "A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z", "!", "?" };
         public static string GetUnownForm(this uint PID)
         {
             uint value = (PID & 0x3) | ((PID >> 6) & 0xC) | ((PID >> 12) & 0x30) | ((PID >> 18) & 0xC0);
             return UnownForms[value % 28];
         }
-        public static Gender GetGender(this uint PID, uint GenderThreshold)
+        public static Gender GetGender(this uint PID, GenderRatio ratio)
         {
-            return (PID & 0xFF) < GenderThreshold ? Gender.Female : Gender.Male;
+            if (ratio == GenderRatio.Genderless) return Gender.Genderless;
+            return (PID & 0xFF) < (uint)ratio ? Gender.Female : Gender.Male;
         }
         public static Nature GetNature(ref this uint seed, FieldAbility fieldAbility, Nature SyncNature)
         {

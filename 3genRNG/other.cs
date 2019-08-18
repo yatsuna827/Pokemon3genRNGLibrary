@@ -6,6 +6,11 @@
         Timid, Hasty, Serious, Jolly, Naive,
         Modest, Mild, Quiet, Bashful, Rash,
         Calm, Gentle, Sassy, Careful, Quirky, other }
+    public enum PokeType
+    {
+        Normal, Fire, Water, Grass, Electric, Ice, Fighting, Poison, 
+        Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, Non
+    }
     public enum Taste { NoTaste, Spicy, Sour, Dry, Bitter, Sweet }
     public enum Stat { H, A, B, C, D, S }
     public enum FieldAbility { other, Synchronize, CuteCharm, Pressure, MagnetPull, Static, Stench, Illuminate }
@@ -69,6 +74,8 @@
         static private Taste[] ToTaste = { Taste.Spicy, Taste.Sour, Taste.Sweet, Taste.Dry, Taste.Bitter };
         static private readonly string[] GenerateMethodName = { "Method1", "Method2", "Method4" };
         static private readonly string[] EggMethodName = { "Method1", "Method2", "Method3" };
+        static private readonly string[] TypeKanji = { "闘", "飛", "毒", "地", "岩", "虫", "霊", "鋼", "炎", "水", "草", "電", "超", "氷", "龍", "悪" };
+
         static public Gender Reverse(this Gender gender) { if (gender == Gender.Male) return Gender.Female; else if (gender == Gender.Female) return Gender.Male; else return Gender.Genderless; }
         static public Taste ToLikeTaste(this Nature nature)
         {
@@ -78,6 +85,7 @@
         {
             return (((uint)nature / 5) != ((uint)nature % 5)) ? ToTaste[(int)nature % 5] : Taste.NoTaste;
         }
+        static public string ToKanji(this PokeType type) { return TypeKanji[(int)type]; }
         public static string ToJapanese(this Nature nature) { return Nature_JP[(int)nature]; }
         public static double[] ToMagnification(this Nature nature) { return Magnifications[(int)nature]; }
         public static string ToMethodName(this GenerateMethod method) { return GenerateMethodName[(int)method]; }
