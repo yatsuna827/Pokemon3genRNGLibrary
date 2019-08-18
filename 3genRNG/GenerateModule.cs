@@ -130,7 +130,7 @@ namespace _3genRNG
                     if (Synchronize(seedList[0]))
                         resList.Add(new GeneratingSeedResult() { GeneratingSeed = GeneratingSeed, EncountingSeed = seedList[3], Option = $"シンクロ({((Nature)(TargetPID % 25)).ToJapanese()})", Nature = (Nature)TargetNature });
 
-                    var thresh = (GenderRatio)PokeDex.GetPokemon(map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].PokeID).GenderRatio;
+                    var thresh = map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].Pokemon.GenderRatio;
                     TargetGender = GetGender(TargetPID, thresh);
 
                     if (!Synchronize(seedList[1]) && GetNature(seedList[0]) == TargetNature)
@@ -166,7 +166,7 @@ namespace _3genRNG
                         Border[GenderRatio.M1F3] |= GetGender(GetPID(seedList[1]), GenderRatio.M1F3) == GetGender(TargetPID, GenderRatio.M1F3);
                     }
 
-                    var ratio = (GenderRatio)PokeDex.GetPokemon(map.EncounterTable[GetSlotIndex(seedList[4], map.EncounterType)].PokeID).GenderRatio;
+                    var ratio = map.EncounterTable[GetSlotIndex(seedList[4], map.EncounterType)].Pokemon.GenderRatio;
                     TargetGender = GetGender(TargetPID, ratio);
 
                     if (CuteCharm(seedList[2]) && !Border[ratio] && GetNature(seedList[0]) == TargetNature)
@@ -187,7 +187,7 @@ namespace _3genRNG
                     if (Synchronize(seedList[0]))
                         resList.Add(new GeneratingSeedResult() { GeneratingSeed = GeneratingSeed, EncountingSeed = seedList[3], Option = $"シンクロ({((Nature)(TargetPID % 25)).ToJapanese()})", Nature = (Nature)TargetNature });
 
-                    var thresh = (GenderRatio)PokeDex.GetPokemon(map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].PokeID).GenderRatio;
+                    var thresh = map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].Pokemon.GenderRatio;
                     TargetGender = GetGender(TargetPID, thresh);
 
                     if (!Synchronize(seedList[1]) && GetNature(seedList[0]) == TargetNature)
@@ -222,7 +222,7 @@ namespace _3genRNG
                         Border[GenderRatio.M1F3] |= GetGender(GetPID(seedList[1]), GenderRatio.M1F3) == GetGender(TargetPID, GenderRatio.M1F3);
                     }
 
-                    var ratio = (GenderRatio)PokeDex.GetPokemon(map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].PokeID).GenderRatio;
+                    var ratio = map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].Pokemon.GenderRatio;
                     TargetGender = GetGender(TargetPID, ratio);
 
                     if (CuteCharm(seedList[1]) && !Border[ratio] && GetNature(seedList[0]) == TargetNature)
@@ -242,7 +242,7 @@ namespace _3genRNG
                     if (Synchronize(seedList[0]))
                         resList.Add(new GeneratingSeedResult() { GeneratingSeed = GeneratingSeed, EncountingSeed = seedList[2], Option = $"シンクロ({((Nature)(TargetPID % 25)).ToJapanese()})", Nature = (Nature)TargetNature });
 
-                    var thresh = (GenderRatio)PokeDex.GetPokemon(map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].PokeID).GenderRatio;
+                    var thresh = map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].Pokemon.GenderRatio;
                     TargetGender = GetGender(TargetPID, thresh);
 
                     if (!Synchronize(seedList[1]) && GetNature(seedList[0]) == TargetNature)
@@ -277,7 +277,7 @@ namespace _3genRNG
                         Border[GenderRatio.M1F3] |= GetGender(GetPID(seedList[1]), GenderRatio.M1F3) == GetGender(TargetPID, GenderRatio.M1F3);
                     }
 
-                    var ratio = (GenderRatio)PokeDex.GetPokemon(map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].PokeID).GenderRatio;
+                    var ratio = map.EncounterTable[GetSlotIndex(seedList[3], map.EncounterType)].Pokemon.GenderRatio;
                     TargetGender = GetGender(TargetPID, ratio);
 
                     if (CuteCharm(seedList[1]) && !Border[ratio] && GetNature(seedList[0]) == TargetNature)
@@ -298,7 +298,7 @@ namespace _3genRNG
             {
                 while (true)
                 {
-                    string Form = map.EncounterTable[GetSlotIndex(seedList[1], map.EncounterType)].Form;
+                    string Form = map.EncounterTable[GetSlotIndex(seedList[1], map.EncounterType)].Pokemon.FormName;
                     if (Form == TargetForm)
                         resList.Add(new GeneratingSeedResult() { GeneratingSeed = GeneratingSeed, EncountingSeed = seedList[1], Option = $"通常", Nature = (Nature)TargetNature });
 

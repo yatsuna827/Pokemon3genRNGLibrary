@@ -38,7 +38,7 @@ namespace _3genRNG.Egg
             bool isLayed = (res.LayingValue = seed.GetLayingValue()) < LayingThreshold;
             if (isLayed)
             {
-                Individual indiv = new Individual(PokeID);
+                Individual indiv = new Individual(PokeDex.GetPokemon(PokeID));
                 if (Everstone)
                     indiv.PID = seed.GetPID(seed.GetIndex() - Difference, EverstoneNature);
                 else
@@ -56,7 +56,7 @@ namespace _3genRNG.Egg
             bool isLayed = (res.LayingValue = seed.GetLayingValue()) < LayingThreshold;
             if (isLayed)
             {
-                Individual indiv = new Individual(PokeID);
+                Individual indiv = new Individual(PokeDex.GetPokemon(PokeID));
                 if (Everstone)
                     indiv.PID = seed.GetPID(FrameCounter, EverstoneNature);
                 else
@@ -86,7 +86,7 @@ namespace _3genRNG.Egg
         public EggResult GenerateIVs(uint seed)
         {
             EggResult res = new EggResult() { StartingSeed = seed, Index = seed.GetIndex() };
-            Individual indiv = new Individual(PokeID) { Lv = Lv, Nature = Nature };
+            Individual indiv = new Individual(PokeDex.GetPokemon(PokeID)) { Lv = Lv, Nature = Nature };
             res.Individual = indiv;
             
             // 基礎個体値の決定

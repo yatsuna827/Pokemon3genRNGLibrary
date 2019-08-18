@@ -11,10 +11,11 @@ namespace _3genRNG.StationarySymbol
         public uint Lv { get; set; }
         public GenerateMethod Method { get; set; }
         public uint InitialSeed { get; set; }
+        private Pokemon Pokemon { get { return PokeDex.GetPokemon(PokeID, Form); } }
         public Result Generate(uint seed)
         {
             Result res = new Result(InitialSeed) { StartingSeed = seed };
-            Individual indiv = new Individual(PokeID, Form);
+            Individual indiv = new Individual(Pokemon);
             indiv.Lv = Lv;
             indiv.PID = seed.GetPID();
             if (Method == GenerateMethod.MiddleInterrupt) seed.Advance();

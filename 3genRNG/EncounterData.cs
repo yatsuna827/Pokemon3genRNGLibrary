@@ -4,14 +4,16 @@ using System.Linq;
 
 namespace _3genRNG.Wild
 {
-    public struct Slot
+    public class Slot
     {
-        public readonly uint PokeID;
+        public Pokemon Pokemon { get; }
         public readonly uint BaseLv;
         public readonly uint LvRange;
-        public readonly string Form;
-        internal Slot(uint ID, uint Lv, uint Range) { PokeID = ID; BaseLv = Lv; LvRange = Range; this.Form = ""; }
-        internal Slot(uint ID, uint Lv, uint Range, string Form) { PokeID = ID; BaseLv = Lv; LvRange = Range; this.Form = Form; }
+        internal bool isStaticSlot => Pokemon.Type[0] == PokeType.Electric || Pokemon.Type[1] == PokeType.Electric;
+        internal bool isMagnetPullSlot => Pokemon.Type[0] == PokeType.Steel || Pokemon.Type[1] == PokeType.Steel;
+
+        internal Slot(uint ID, uint Lv, uint Range) { Pokemon = PokeDex.GetPokemon(ID); BaseLv = Lv; LvRange = Range; }
+        internal Slot(uint ID, uint Lv, uint Range, string Form) { Pokemon = PokeDex.GetPokemon(ID, Form); BaseLv = Lv; LvRange = Range; }
     }
     public class Map
     {
@@ -19,12 +21,30 @@ namespace _3genRNG.Wild
         public readonly string MapName;
         public readonly uint EncounterRate;
         public readonly Slot[] EncounterTable;
+        public readonly Slot[] StaticTable;
+        public readonly Slot[] MagnetPullTable;
         public readonly EncounterType EncounterType;
         public bool isFishing => EncounterType == EncounterType.OldRod || EncounterType == EncounterType.GoodRod || EncounterType == EncounterType.SuperRod;
         public bool isHoennSafari => Rom != Rom.FRLG && MapName.Contains("サファリ");
         public bool isTanobyRuins => Rom == Rom.FRLG && MapName.Contains("せきしつ");
+        public uint ElectricCount
+        {
+            get { return (uint)EncounterTable.Count(_ => _.isStaticSlot); }
+        }
+        public uint SteelCount
+        {
+            get { return (uint)EncounterTable.Count(_ => _.isMagnetPullSlot); }
+        }
 
-        internal Map(string label, uint rate, EncounterType encType, Slot[] table) { MapName = label; EncounterRate = rate; EncounterType = encType; EncounterTable = table; }
+        internal Map(string label, uint rate, EncounterType encType, Slot[] table)
+        {
+            MapName = label;
+            EncounterRate = rate;
+            EncounterType = encType;
+            EncounterTable = table;
+            StaticTable = table.Where(_ => _.isStaticSlot).ToArray();
+            MagnetPullTable = table.Where(_ => _.isMagnetPullSlot).ToArray();
+        }
     }
     class EncounterDataSet
     {

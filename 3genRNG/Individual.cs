@@ -26,8 +26,7 @@ namespace _3genRNG
         internal string HiddenPowerType { get { return CalcHiddenPowerType(IVs ?? new uint[] { 0, 0, 0, 0, 0, 0 }); } }
 
         internal Individual() { Species = PokeDex.GetPokemon(0); }
-        internal Individual(uint DexIndex) { Species = PokeDex.GetPokemon(DexIndex); }
-        internal Individual(uint DexIndex, string Form) { Species = PokeDex.GetPokemon(DexIndex, Form); }
+        internal Individual(Pokemon species) { Species = species; }
 
         private uint[] CalcStats()
         {

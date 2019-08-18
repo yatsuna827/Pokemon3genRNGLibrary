@@ -48,15 +48,24 @@ namespace _3genRNG.Wild
                 if (!isAppeared) return res;
             }
 
-            // 磁力・静電気判定
-            // R&1==0
-            
-
             // スロット決定
             Slot SelectedSlot;
-            int SlotIndex = -1;
+            int SlotIndex;
             if (AppearingFeebas)
+            {
+                SlotIndex = -1;
                 SelectedSlot = new Slot(349, 20, 6);
+            }
+            else if (FieldAbility == FieldAbility.Static && SelectedMap.ElectricCount != 0 && seed.GetRand(2) == 0)
+            {
+                SlotIndex = (int)seed.GetRand(SelectedMap.ElectricCount);
+                SelectedSlot = SelectedMap.StaticTable[SlotIndex];
+            }
+            else if (FieldAbility == FieldAbility.MagnetPull && SelectedMap.ElectricCount != 0 && seed.GetRand(2) == 0)
+            {
+                SlotIndex = (int)seed.GetRand(SelectedMap.SteelCount);
+                SelectedSlot = SelectedMap.MagnetPullTable[SlotIndex];
+            }
             else
             {
                 SlotIndex = seed.GetSlotIndex(SelectedMap.EncounterType);
@@ -64,13 +73,12 @@ namespace _3genRNG.Wild
             }
 
             res.SlotIndex = SlotIndex;
-            Individual indiv = new Individual(SelectedSlot.PokeID);
+            Individual indiv = new Individual(SelectedSlot.Pokemon);
 
             // Lv決定
             indiv.Lv = seed.GetRand(SelectedSlot.LvRange) + SelectedSlot.BaseLv;
 
             // メロボ判定 
-            // 条件式が長いからなんとかしたい
             if (FieldAbility == FieldAbility.CuteCharm && indiv.Species.GenderRatio.isSubjectToCuteCharm() && seed.GetRand(3) != 0)
                 PIDCondition.Add(pid => pid.GetGender(indiv.Species.GenderRatio) == CuteCharmGender);
 
@@ -132,7 +140,7 @@ namespace _3genRNG.Wild
             }
 
             res.SlotIndex = SlotIndex;
-            Individual indiv = new Individual(SelectedSlot.PokeID);
+            Individual indiv = new Individual(SelectedSlot.Pokemon);
 
             // Lv決定
             indiv.Lv = seed.GetRand(SelectedSlot.LvRange) + SelectedSlot.BaseLv;
@@ -167,7 +175,7 @@ namespace _3genRNG.Wild
             Slot SelectedSlot = table[SlotIndex];
 
             res.SlotIndex = SlotIndex;
-            Individual indiv = new Individual(SelectedSlot.PokeID);
+            Individual indiv = new Individual(SelectedSlot.Pokemon);
 
             indiv.Lv = seed.GetRand(SelectedSlot.LvRange) + SelectedSlot.BaseLv;
 
@@ -188,14 +196,13 @@ namespace _3genRNG.Wild
             WildResult res = new WildResult(InitialSeed) { StartingSeed = seed };
             int SlotIndex = seed.GetSlotIndex(SelectedMap.EncounterType);
             Slot SelectedSlot = table[SlotIndex];
-            string Form = SelectedSlot.Form;
 
             res.SlotIndex = SlotIndex;
-            Individual indiv = new Individual(SelectedSlot.PokeID, Form);
+            Individual indiv = new Individual(SelectedSlot.Pokemon);
 
             indiv.Lv = seed.GetRand(SelectedSlot.LvRange) + SelectedSlot.BaseLv;
 
-            indiv.PID = seed.GetReversePID(pid => pid.GetUnownForm() == Form);
+            indiv.PID = seed.GetReversePID(pid => pid.GetUnownForm() == SelectedSlot.Pokemon.FormName);
             if (Method == GenerateMethod.MiddleInterrupt) seed.Advance();
             indiv.IVs = seed.GetIVs(Method);
 
