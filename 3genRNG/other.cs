@@ -1,4 +1,6 @@
-﻿namespace _3genRNG
+﻿using System.Collections.Generic;
+
+namespace _3genRNG
 {
     public enum Nature {
         Hardy, Lonely, Brave, Adamant, Naughty,
@@ -75,7 +77,7 @@
         static private readonly string[] GenerateMethodName = { "Method1", "Method2", "Method4" };
         static private readonly string[] EggMethodName = { "Method1", "Method2", "Method3" };
         static private readonly string[] TypeKanji = { "闘", "飛", "毒", "地", "岩", "虫", "霊", "鋼", "炎", "水", "草", "電", "超", "氷", "龍", "悪" };
-
+        static public bool isFixed(this GenderRatio ratio) { return ratio == GenderRatio.FemaleOnly || ratio == GenderRatio.MaleOnly || ratio == GenderRatio.Genderless; }
         static public Gender Reverse(this Gender gender) { if (gender == Gender.Male) return Gender.Female; else if (gender == Gender.Female) return Gender.Male; else return Gender.Genderless; }
         static public Taste ToLikeTaste(this Nature nature)
         {
@@ -111,5 +113,15 @@
             }
         }
         public static uint ToUint(this Compatibility comp) { switch (comp) { case Compatibility.NotLikeMuch: return 20; case Compatibility.GetAlong: return 50; case Compatibility.VeryWell: return 70; default: return 0; } }
+    }
+
+    public static class ListExtention
+    {
+        internal static void Swap<T>(this List<T> list, int index1, int index2)
+        {
+            T temp = list[index1];
+            list[index1] = list[index2];
+            list[index2] = temp;
+        }
     }
 }

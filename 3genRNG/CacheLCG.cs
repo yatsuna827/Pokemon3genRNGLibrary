@@ -20,7 +20,7 @@ namespace _3genRNG
         public void Advance()
         {
             Head++;
-            Add(array[Tail].PreviousSeed());
+            Add(array[Tail].PrevSeed());
         }
 
         private void ExtendArray()

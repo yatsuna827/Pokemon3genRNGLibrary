@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 
 namespace _3genRNG
 {
@@ -12,6 +13,63 @@ namespace _3genRNG
         public readonly bool Hatchable;
         public readonly string FormName;
         public string GetFullName() { return Name + FormName; }
+        internal Individual_ GetIndividual(IndivKernel Kernel)
+        {
+            return new Individual_()
+            {
+                Name = Name,
+                Lv = Kernel.Lv,
+                PID = Kernel.PID,
+                Stats = GetStats(Kernel.IVs, GetNature(Kernel.PID), Kernel.Lv),
+                IVs = Kernel.IVs,
+                Nature = GetNature(Kernel.PID),
+                Ability = GetAbility(Kernel.PID),
+                Gender = GetGender(Kernel.PID),
+                HiddenPower = CalcHiddenPower(Kernel.IVs),
+                HiddenPowerType = CalcHiddenPowerType(Kernel.IVs)
+            };
+        }
+
+        private uint[] GetStats(uint[] IVs, Nature Nature = Nature.Hardy, uint Lv = 50)
+        {
+            uint[] stats = new uint[6];
+            double[] mag = Nature.ToMagnification();
+
+            stats[0] = (IVs[0] + BS[0] * 2) * Lv / 100 + 10 + Lv;
+            if (Name == "ヌケニン") stats[0] = 1;
+            for (int i = 1; i < 6; i++)
+                stats[i] = (uint)(((IVs[i] + BS[i] * 2) * Lv / 100 + 5) * mag[i]);
+
+            return stats;
+        }
+        private Gender GetGender(uint PID)
+        {
+            if (GenderRatio == GenderRatio.Genderless) return Gender.Genderless;
+            return (PID & 0xFF) < (uint)GenderRatio ? Gender.Female : Gender.Male;
+        }
+        private Nature GetNature(uint PID)
+        {
+            return (Nature)(PID % 25);
+        }
+        private string GetAbility(uint PID)
+        {
+            return Ability[PID & 1];
+        }
+        private static uint CalcHiddenPower(uint[] IVs)
+        {
+            uint num = ((IVs[0] >> 1) & 1) + 2 * ((IVs[1] >> 1) & 1) + 4 * ((IVs[2] >> 1) & 1) + 8 * ((IVs[5] >> 1) & 1) + 16 * ((IVs[3] >> 1) & 1) + 32 * ((IVs[4] >> 1) & 1);
+
+            return num * 40 / 63 + 30;
+        }
+        private PokeType CalcHiddenPowerType(uint[] IVs)
+        {
+            uint num = (IVs[0] & 1) + 2 * (IVs[1] & 1) + 4 * (IVs[2] & 1) + 8 * (IVs[5] & 1) + 16 * (IVs[3] & 1) + 32 * (IVs[4] & 1);
+            return (PokeType)(num * 15 / 63);
+        }
+
+
+
+
         public Pokemon(string name, uint[] bs, PokeType[] type, string[] ability, bool hatchable, GenderRatio ratio)
         {
             Name = name;
@@ -32,23 +90,29 @@ namespace _3genRNG
             Hatchable = hatchable;
             this.FormName = FormName;
         }
-    }
 
-    public static class PokeDex
-    {
+
+
         public static Pokemon GetPokemon(uint index) { return DexData[(int)(index > 386 ? 0 : index)]; }
-        public static Pokemon GetPokemon(uint index, string form)
+        public static Pokemon GetPokemon(uint index, string Form)
         {
-            if (index == 201) return UnownDex[form];
-            if (index == 386) return DeoxysDex[form];
+            if (index == 201) return UnownDex[Form];
+            if (index == 386) return DeoxysDex[Form];
             return DexData[(int)(index > 386 ? 0 : index)];
         }
-        public static Pokemon FindPokemon(string Name) { return DexData.Find(x => x.Name == Name); }
+        public static Pokemon GetPokemon(string Name) { return DexDictionary[Name]; }
+        public static Pokemon GetPokemon(string Name, string Form)
+        {
+            if (Name == "アンノーン") return UnownDex[Form];
+            if (Name == "デオキシス") return DeoxysDex[Form];
+            return DexDictionary[Name];
+        }
         private static readonly List<Pokemon> DexData;
+        private static readonly Dictionary<string, Pokemon> DexDictionary;
         private static readonly Dictionary<string, Pokemon> UnownDex;
         private static readonly Dictionary<string, Pokemon> DeoxysDex;
 
-        static PokeDex()
+        static Pokemon()
         {
             DexData = new List<Pokemon>();
             UnownDex = new Dictionary<string, Pokemon>();
@@ -475,6 +539,9 @@ namespace _3genRNG
             DeoxysDex.Add("A", new Pokemon("デオキシス", "A", new uint[] { 50, 180, 20, 180, 20, 150 }, new PokeType[] { PokeType.Psychic, PokeType.Non }, new string[] { "プレッシャー", "---" }, false, GenderRatio.Genderless));
             DeoxysDex.Add("D", new Pokemon("デオキシス", "D", new uint[] { 50, 70, 160, 70, 160, 90 }, new PokeType[] { PokeType.Psychic, PokeType.Non }, new string[] { "プレッシャー", "---" }, false, GenderRatio.Genderless));
             DeoxysDex.Add("S", new Pokemon("デオキシス", "S", new uint[] { 50, 95, 90, 95, 90, 180 }, new PokeType[] { PokeType.Psychic, PokeType.Non }, new string[] { "プレッシャー", "---" }, false, GenderRatio.Genderless));
+
+
+            DexDictionary = DexData.ToDictionary(_ => _.Name, _ => _);
         }
     }
 }

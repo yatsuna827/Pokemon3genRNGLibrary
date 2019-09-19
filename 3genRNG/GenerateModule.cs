@@ -49,7 +49,7 @@ namespace _3genRNG
             uint skip = MiddleInterrupt ? 4U : 3U;
             foreach(var l16 in Lower16bitList)
             {
-                uint seed = ((HAB << 16) | l16).PreviousSeed(skip);
+                uint seed = ((HAB << 16) | l16).PrevSeed(skip);
                 resList.Add(seed);
                 resList.Add(seed ^ 0x80000000);
             }
@@ -67,7 +67,7 @@ namespace _3genRNG
         private static List<GeneratingSeedResult> FindEncounterSeed_RS(uint GeneratingSeed, Map map)
         {
             var resList = new List<GeneratingSeedResult>();
-            CacheLCG seedList = new CacheLCG(GeneratingSeed.PreviousSeed());
+            CacheLCG seedList = new CacheLCG(GeneratingSeed.PrevSeed());
             uint TargetPID = GetPID(GeneratingSeed);
             uint TargetNature = TargetPID % 25;
 
@@ -103,7 +103,7 @@ namespace _3genRNG
         private static List<GeneratingSeedResult> FindEncounterSeed_Em(uint GeneratingSeed, Map map)
         {
             var resList = new List<GeneratingSeedResult>();
-            CacheLCG seedList = new CacheLCG(GeneratingSeed.PreviousSeed());
+            CacheLCG seedList = new CacheLCG(GeneratingSeed.PrevSeed());
             uint TargetPID = GetPID(GeneratingSeed);
             uint TargetNature = TargetPID % 25;
             Gender TargetGender;
@@ -291,7 +291,7 @@ namespace _3genRNG
         private static List<GeneratingSeedResult> FindEncounterSeed_FRLG(uint GeneratingSeed, Map map)
         {
             var resList = new List<GeneratingSeedResult>();
-            CacheLCG seedList = new CacheLCG(GeneratingSeed.PreviousSeed());
+            CacheLCG seedList = new CacheLCG(GeneratingSeed.PrevSeed());
             uint TargetNature = GetPID(GeneratingSeed) % 25;
             string TargetForm = GetUnownForm(GetReversePID(GeneratingSeed));
             if (map.isTanobyRuins)

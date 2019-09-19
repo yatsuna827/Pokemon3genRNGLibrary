@@ -25,7 +25,7 @@ namespace _3genRNG
         internal uint HiddenPower { get{ return CalcHiddenPower(IVs ?? new uint[] { 0, 0, 0, 0, 0, 0 }); } }
         internal string HiddenPowerType { get { return CalcHiddenPowerType(IVs ?? new uint[] { 0, 0, 0, 0, 0, 0 }); } }
 
-        internal Individual() { Species = PokeDex.GetPokemon(0); }
+        internal Individual() { Species = Pokemon.GetPokemon(0); }
         internal Individual(Pokemon species) { Species = species; }
 
         private uint[] CalcStats()
@@ -52,5 +52,25 @@ namespace _3genRNG
             return Types[(int)num * 15 / 63];
         }
         private readonly string[] Types = { "闘", "飛", "毒", "地", "岩", "虫", "霊", "鋼", "炎", "水", "草", "電", "超", "氷", "龍", "悪" };
+    }
+
+    public class Individual_
+    {
+        public string Name;
+        public uint Lv;
+        public uint PID;
+        public Nature Nature;
+        public Gender Gender;
+        public string Ability;
+        public uint[] IVs;
+        public uint[] Stats;
+
+        public uint HiddenPower;
+        public PokeType HiddenPowerType;
+
+        public bool isShiny(uint TSV) { return (TSV ^ (PID & 0xFFFF) ^ (PID >> 16)) < 8; }
+        internal Individual_() { }
+
+        internal static Individual_ Empty = new Individual_();
     }
 }
