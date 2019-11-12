@@ -5,10 +5,11 @@ using System.Linq;
 namespace _3genRNG
 {
     delegate TResult RefFunc<T, out TResult>(ref T seed);
+    internal delegate (int, Slot) GetSlotFunc(ref uint seed);
 
     public class Slot
     {
-        public Pokemon Pokemon { get; }
+        public Pokemon.Species Pokemon { get; }
         public readonly uint BaseLv;
         public readonly uint LvRange;
 
@@ -20,13 +21,13 @@ namespace _3genRNG
         {
             return seed.GetRand(LvRange) + BaseLv;
         }
-        internal Slot(Pokemon Pokemon, uint Lv) { this.Pokemon = Pokemon; BaseLv = Lv; LvRange = 1; }
-        internal Slot(Pokemon Pokemon, uint Lv, uint Range) { this.Pokemon = Pokemon; BaseLv = Lv; LvRange = Range; }
-        internal Slot(string Name, uint Lv) { Pokemon = Pokemon.GetPokemon(Name); BaseLv = Lv; LvRange = 1; }
-        internal Slot(string Name, uint Lv, uint Range) { Pokemon = Pokemon.GetPokemon(Name); BaseLv = Lv; LvRange = Range; }
-        internal Slot(uint ID, uint Lv) { Pokemon = Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = 1; }
-        internal Slot(uint ID, uint Lv, uint Range) { Pokemon = Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = Range; }
-        internal Slot(uint ID, uint Lv, uint Range, string Form) { Pokemon = Pokemon.GetPokemon(ID, Form); BaseLv = Lv; LvRange = Range; }
+        internal Slot(Pokemon.Species Pokemon, uint Lv) { this.Pokemon = Pokemon; BaseLv = Lv; LvRange = 1; }
+        internal Slot(Pokemon.Species Pokemon, uint Lv, uint Range) { this.Pokemon = Pokemon; BaseLv = Lv; LvRange = Range; }
+        internal Slot(string Name, uint Lv) { Pokemon = _3genRNG.Pokemon.GetPokemon(Name); BaseLv = Lv; LvRange = 1; }
+        internal Slot(string Name, uint Lv, uint Range) { Pokemon = _3genRNG.Pokemon.GetPokemon(Name); BaseLv = Lv; LvRange = Range; }
+        internal Slot(uint ID, uint Lv) { Pokemon = _3genRNG.Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = 1; }
+        internal Slot(uint ID, uint Lv, uint Range) { Pokemon = _3genRNG.Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = Range; }
+        internal Slot(uint ID, uint Lv, uint Range, string Form) { Pokemon = _3genRNG.Pokemon.GetPokemon(ID, Form); BaseLv = Lv; LvRange = Range; }
     }
     public class Map
     {
@@ -1075,7 +1076,7 @@ namespace _3genRNG
 
     internal class EncounterType_
     {
-        private RefFunc<uint, int> getSlotIndex;
+        internal RefFunc<uint, int> getSlotIndex;
 
         internal int GetSlotIndex(ref uint seed)
         {
@@ -1147,19 +1148,18 @@ namespace _3genRNG
         internal readonly uint BasicEncounterRate;
         private protected EncounterType_ EncounterType_;
         public readonly Slot[] EncounterTable;
-        
+        private protected virtual GetSlotFunc Get_getSlot()
+        {
+            return (ref uint seed) =>
+            {
+                int index = EncounterType_.getSlotIndex(ref seed);
+                return (index, EncounterTable[index]);
+            };
+        }
+
         internal virtual WildGenerator GetGenerator(GenerateMethod Method)
         {
-            return new WildGenerator(Method);
-        }
-        internal virtual WildSyncGenerator GetSyncGenerator(GenerateMethod Method, Nature SyncNature)
-        {
-            return new WildSyncGenerator(Method, SyncNature);
-        }
-        internal virtual (Slot, int) GetSlot(ref uint seed)
-        {
-            int index = EncounterType_.GetSlotIndex(ref seed);
-            return (EncounterTable[index], index);
+            return new WildGenerator(Method, Get_getSlot()) { EncounterRate = BasicEncounterRate };
         }
         internal uint GetEncounterRate() { return BasicEncounterRate << 4; }
         internal Map_(EncounterType_ EncounterType, string MapName, uint EncounterRate, Slot[] EncounterTable)
@@ -2355,62 +2355,152 @@ namespace _3genRNG
     }
     internal class Safari : Map_
     {
+        internal override WildGenerator GetGenerator(GenerateMethod Method)
+        {
+            return new SafariGenerator(Method, Get_getSlot(), PokeBlock.Plain) { EncounterRate = BasicEncounterRate };
+        }
         internal Safari(EncounterType_ EncounterType, string MapName, uint EncounterRate, Slot[] EncounterTable) : base(EncounterType, MapName, EncounterRate, EncounterTable) { }
     }
     internal class FeebasSpot : Map_
     {
         private static readonly Slot Feebas = new Slot("ヒンバス", 20, 6);
-        internal override (Slot, int) GetSlot(ref uint seed) {
-            if (seed.GetRand(100) < 50)
-                return (Feebas, -1);
-            return base.GetSlot(ref seed);
+        internal override WildGenerator GetGenerator(GenerateMethod Method)
+        {
+            return new WildGenerator(Method, (ref uint seed) =>
+            {
+                if (seed.GetRand(100) < 50)
+                    return (-1, Feebas);
+                int index = EncounterType_.getSlotIndex(ref seed);
+                return (index, EncounterTable[index]);
+            });
         }
+
         internal FeebasSpot(EncounterType_ EncounterType, string MapName, uint EncounterRate, Slot[] EncounterTable) : base(EncounterType, MapName, EncounterRate, EncounterTable) { }
     }
     internal class TanobyRuin : Map_
     {
         internal override WildGenerator GetGenerator(GenerateMethod Method)
         {
-            return new UnownGenerator(Method);
+            return new UnownGenerator(Method, (ref uint seed) =>
+            {
+                int index = EncounterType_.getSlotIndex(ref seed);
+                return (index, EncounterTable[index]);
+            });
         }
         internal TanobyRuin(EncounterType_ EncounterType, string MapName, uint EncounterRate, Slot[] EncounterTable) : base(EncounterType, MapName, EncounterRate, EncounterTable) { }
     }
 
     public class EmMap : Map_
     {
-        public readonly Slot[] StaticTable;
-        public readonly Slot[] MagnetPullTable;
+        public readonly (int,Slot)[] StaticTable;
+        public readonly (int,Slot)[] MagnetPullTable;
         public readonly uint ElectricCount;
         public readonly uint SteelCount;
-
-        internal override WildSyncGenerator GetSyncGenerator(GenerateMethod Method, Nature SyncNature)
+        internal virtual WildSyncGenerator GetSyncGenerator(GenerateMethod Method, Nature SyncNature)
         {
-            return new WildSyncGenerator(Method, SyncNature);
+            return new WildSyncGenerator(Method, Get_getSlot(), SyncNature);
         }
-        internal Slot GetSlotStatic(ref uint seed) { return Slot.NullSlot; }
-        internal Slot GetSlotMagnetPull(ref uint seed) { return Slot.NullSlot; }
+        internal virtual WildCuteCharmGenerator GetCuteCharmGenerator(GenerateMethod Method, Gender TargetGender)
+        {
+            return new WildCuteCharmGenerator(Method, Get_getSlot(), TargetGender);
+        }
+        internal virtual WildPressureGenerator GetPressureGenerator(GenerateMethod Method)
+        {
+            return new WildPressureGenerator(Method, Get_getSlot());
+        }
+        internal virtual WildGenerator GetStaticGenerater(GenerateMethod Method)
+        {
+            if (ElectricCount != 0)
+                return new WildGenerator(Method,
+                (ref uint seed) =>
+                {
+                    if (seed.GetRand(2) == 0)
+                        return StaticTable[seed.GetRand(ElectricCount)];
+                    int index = EncounterType_.getSlotIndex(ref seed);
+                    return (index, EncounterTable[index]);
+                });
+            return base.GetGenerator(Method);
+        }
+        internal virtual WildGenerator GetMagnetPullGenerater(GenerateMethod Method)
+        {
+            if (ElectricCount != 0)
+                return new WildGenerator(Method,
+                (ref uint seed) =>
+                {
+                    if(seed.GetRand(2)==0)
+                        return MagnetPullTable[seed.GetRand(SteelCount)];
+                    int index = EncounterType_.getSlotIndex(ref seed);
+                    return (index, EncounterTable[index]);
+                });
+            return base.GetGenerator(Method);
+        }
         internal EmMap(EncounterType_ EncounterType, string MapName, uint EncounterRate, Slot[] EncounterTable) : base(EncounterType, MapName, EncounterRate, EncounterTable)
         {
-            StaticTable = EncounterTable.Where(_ => _.isStaticSlot).ToArray();
-            MagnetPullTable = EncounterTable.Where(_ => _.isMagnetPullSlot).ToArray();
+            StaticTable = EncounterTable.Select((item, index) => (index, item)).Where(_ => _.item.isStaticSlot).ToArray();
+            MagnetPullTable = EncounterTable.Select((item, index) => (index, item)).Where(_ => _.item.isMagnetPullSlot).ToArray();
             ElectricCount = (uint)EncounterTable.Count(_ => _.isStaticSlot);
             SteelCount = (uint)EncounterTable.Count(_ => _.isMagnetPullSlot);
         }
     }
     internal class EmSafari : EmMap
     {
+        internal override WildGenerator GetGenerator(GenerateMethod Method)
+        {
+            return new SafariGenerator(Method, Get_getSlot(), PokeBlock.Plain) { EncounterRate = BasicEncounterRate };
+        }
+        internal override WildSyncGenerator GetSyncGenerator(GenerateMethod Method, Nature SyncNature)
+        {
+            return new SafariSyncGenerator(Method, Get_getSlot(),PokeBlock.Plain, SyncNature);
+        }
+        internal override WildCuteCharmGenerator GetCuteCharmGenerator(GenerateMethod Method, Gender TargetGender)
+        {
+            return new SafariCuteCharmGenerator(Method, Get_getSlot(), PokeBlock.Plain, TargetGender);
+        }
+        internal override WildPressureGenerator GetPressureGenerator(GenerateMethod Method)
+        {
+            return new SafariPressureGenerator(Method, Get_getSlot(), PokeBlock.Plain);
+        }
+        internal override WildGenerator GetStaticGenerater(GenerateMethod Method)
+        {
+            if (ElectricCount != 0)
+                return new WildGenerator(Method,
+                (ref uint seed) =>
+                {
+                    if (seed.GetRand(2) == 0)
+                        return StaticTable[seed.GetRand(ElectricCount)];
+                    int index = EncounterType_.getSlotIndex(ref seed);
+                    return (index, EncounterTable[index]);
+                });
+            return GetGenerator(Method);
+        }
+        internal override WildGenerator GetMagnetPullGenerater(GenerateMethod Method)
+        {
+            if (ElectricCount != 0)
+                return new WildGenerator(Method,
+                (ref uint seed) =>
+                {
+                    if (seed.GetRand(2) == 0)
+                        return MagnetPullTable[seed.GetRand(SteelCount)];
+                    int index = EncounterType_.getSlotIndex(ref seed);
+                    return (index, EncounterTable[index]);
+                });
+            return GetGenerator(Method);
+        }
+
         internal EmSafari(EncounterType_ EncounterType, string MapName, uint EncounterRate, Slot[] EncounterTable) : base(EncounterType, MapName, EncounterRate, EncounterTable) { }
     }
     internal class EmFeebasSpot : EmMap
     {
         private static readonly Slot Feebas = new Slot("ヒンバス", 20, 6);
-        internal override (Slot, int) GetSlot(ref uint seed)
-        {
-            if (seed.GetRand(100) < 50)
-                return (Feebas, -1);
-            return base.GetSlot(ref seed);
+        private protected override GetSlotFunc Get_getSlot() {
+            return (ref uint seed) =>
+             {
+                 if (seed.GetRand(100) < 50)
+                     return (-1, Feebas);
+                 int index = EncounterType_.getSlotIndex(ref seed);
+                 return (index, EncounterTable[index]);
+             };
         }
         internal EmFeebasSpot(EncounterType_ EncounterType, string MapName, uint EncounterRate, Slot[] EncounterTable) : base(EncounterType, MapName, EncounterRate, EncounterTable) { }
     }
-    
 }

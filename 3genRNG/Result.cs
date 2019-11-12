@@ -29,4 +29,13 @@ namespace _3genRNG
         public Result(uint InitialSeed) { this.InitialSeed = InitialSeed; }
     }
 
+    public class Result_
+    {
+        public uint Index { get; internal set; }
+        public uint InitialSeed { get; internal set; }
+        public uint StartingSeed { get; internal set; }
+        public uint FinishingSeed { get; internal set; }
+        public Individual_ indiv;
+
+    }
 }

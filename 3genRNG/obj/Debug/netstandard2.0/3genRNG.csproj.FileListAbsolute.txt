@@ -7,3 +7,12 @@ C:\Users\kotaro\source\repos\3genRNG\3genRNG\bin\Debug\netstandard2.0\3genRNG.dl
 C:\Users\kotaro\source\repos\3genRNG\3genRNG\bin\Debug\netstandard2.0\3genRNG.pdb
 C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Debug\netstandard2.0\3genRNG.dll
 C:\Users\kotaro\source\repos\3genRNG\3genRNG\obj\Debug\netstandard2.0\3genRNG.pdb
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\obj\Debug\netstandard2.0\3genRNG.csprojAssemblyReference.cache
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\obj\Debug\netstandard2.0\3genRNG.csproj.CoreCompileInputs.cache
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\obj\Debug\netstandard2.0\3genRNG.AssemblyInfoInputs.cache
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\obj\Debug\netstandard2.0\3genRNG.AssemblyInfo.cs
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\obj\Debug\netstandard2.0\3genRNG.dll
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\obj\Debug\netstandard2.0\3genRNG.pdb
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\bin\Debug\netstandard2.0\3genRNG.deps.json
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\bin\Debug\netstandard2.0\3genRNG.dll
+C:\Users\yatsu\Documents\develop\cs\Pokemon3genRNGLibrary\3genRNG\bin\Debug\netstandard2.0\3genRNG.pdb

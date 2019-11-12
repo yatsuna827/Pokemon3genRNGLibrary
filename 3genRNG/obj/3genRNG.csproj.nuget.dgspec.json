@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\kotaro\\source\\repos\\3genRNG\\3genRNG\\3genRNG.csproj": {}
+    "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\3genRNG.csproj": {}
   },
   "projects": {
-    "C:\\Users\\kotaro\\source\\repos\\3genRNG\\3genRNG\\3genRNG.csproj": {
+    "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\3genRNG.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\kotaro\\source\\repos\\3genRNG\\3genRNG\\3genRNG.csproj",
+        "projectUniqueName": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\3genRNG.csproj",
         "projectName": "3genRNG",
-        "projectPath": "C:\\Users\\kotaro\\source\\repos\\3genRNG\\3genRNG\\3genRNG.csproj",
-        "packagesPath": "C:\\Users\\kotaro\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\kotaro\\source\\repos\\3genRNG\\3genRNG\\obj\\",
+        "projectPath": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\3genRNG.csproj",
+        "packagesPath": "C:\\Users\\yatsu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\kotaro\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\yatsu\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
