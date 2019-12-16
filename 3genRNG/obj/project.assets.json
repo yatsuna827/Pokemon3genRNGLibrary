@@ -183,11 +183,11 @@
     "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder": {}
   },
   "project": {
-    "version": "1.0.0",
+    "version": "2.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\3genRNG.csproj",
-      "projectName": "3genRNG",
-      "projectPath": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\3genRNG.csproj",
+      "projectUniqueName": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\Pokemon3genRNGLirary.csproj",
+      "projectName": "Pokemon3genRNGLirary",
+      "projectPath": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\Pokemon3genRNGLirary.csproj",
       "packagesPath": "C:\\Users\\yatsu\\.nuget\\packages\\",
       "outputPath": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\obj\\",
       "projectStyle": "PackageReference",

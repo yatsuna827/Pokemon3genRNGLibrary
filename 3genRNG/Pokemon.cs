@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace _3genRNG
+namespace Pokemon3genRNGLibrary
 {
     public class Pokemon
     {
@@ -16,20 +16,21 @@ namespace _3genRNG
             public readonly string FormName;
             public string GetFullName() { return Name + FormName; }
 
-            public Individual GetIndividual(IndivKernel Kernel)
+            public Individual GetIndividual(uint PID, uint Lv, uint[] IVs)
             {
                 return new Individual()
                 {
                     Name = Name,
-                    Lv = Kernel.Lv,
-                    PID = Kernel.PID,
-                    Stats = GetStats(Kernel.IVs, GetNature(Kernel.PID), Kernel.Lv),
-                    IVs = Kernel.IVs,
-                    Nature = GetNature(Kernel.PID),
-                    Ability = GetAbility(Kernel.PID),
-                    Gender = GetGender(Kernel.PID),
-                    HiddenPower = CalcHiddenPower(Kernel.IVs),
-                    HiddenPowerType = CalcHiddenPowerType(Kernel.IVs)
+                    Form = FormName,
+                    Lv = Lv,
+                    PID = PID,
+                    Stats = GetStats(IVs, GetNature(PID), Lv),
+                    IVs = IVs,
+                    Nature = GetNature(PID),
+                    Ability = GetAbility(PID),
+                    Gender = GetGender(PID),
+                    HiddenPower = CalcHiddenPower(IVs),
+                    HiddenPowerType = CalcHiddenPowerType(IVs)
                 };
             }
 
@@ -56,7 +57,7 @@ namespace _3genRNG
             }
             private string GetAbility(uint PID)
             {
-                return Ability[PID & 1];
+                return Ability[1] != "---" ? Ability[PID & 1] : Ability[0];
             }
             private static uint CalcHiddenPower(uint[] IVs)
             {
@@ -96,14 +97,15 @@ namespace _3genRNG
 
         public class Individual
         {
-            public string Name;
-            public uint Lv;
-            public uint PID;
-            public Nature Nature;
-            public Gender Gender;
-            public string Ability;
-            public uint[] IVs;
-            public uint[] Stats;
+            public string Name { get; internal set; }
+            public string Form { get; internal set; }
+            public uint Lv { get; internal set; }
+            public uint PID { get; internal set; }
+            public Nature Nature { get; internal set; }
+            public Gender Gender { get; internal set; }
+            public string Ability { get; internal set; }
+            public uint[] IVs { get; internal set; }
+            public uint[] Stats { get; internal set; }
 
             public uint HiddenPower;
             public PokeType HiddenPowerType;
@@ -111,7 +113,7 @@ namespace _3genRNG
             public bool isShiny(uint TSV) { return (TSV ^ (PID & 0xFFFF) ^ (PID >> 16)) < 8; }
             internal Individual() { }
 
-            internal static Individual Empty = new Individual();
+            public static Individual Empty = GetPokemon(0).GetIndividual(0, 1, new uint[6]);
         }
 
         private static readonly List<Species> DexData;

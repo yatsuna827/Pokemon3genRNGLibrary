@@ -1,56 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using PokemonPRNG.LCG32;
 
-namespace _3genRNG.StationarySymbol
+namespace Pokemon3genRNGLibrary
 {
-    public class StationarySymbolGenerator
+    class StationarySymbol : IGeneratorFactory
     {
-        public uint PokeID { get; set; }
-        public string Form { get; set; }
-        public uint Lv { get; set; }
-        public GenerateMethod Method { get; set; }
-        public uint InitialSeed { get; set; }
-        private Pokemon Pokemon { get { return Pokemon.GetPokemon(PokeID, Form); } }
-        public Result Generate(uint seed)
+        private Slot symbol;
+        private string label;
+        public string GetLabel() { return label; }
+        public Slot GetSymbol() { return symbol; }
+        public Generator createGenerator(GenerateMethod method)
         {
-            Result res = new Result(InitialSeed) { StartingSeed = seed };
-            Individual indiv = new Individual(Pokemon);
-            indiv.Lv = Lv;
-            indiv.PID = seed.GetPID();
-            if (Method == GenerateMethod.MiddleInterrupt) seed.Advance();
-            indiv.IVs = seed.GetIVs(Method);
-
-            res.FinishingSeed = seed;
-            res.Individual = indiv;
-
-            return res;
-        }
-    }
-
-    public static class StationarySymbolGeneratorModules
-    {
-        public static uint GetPID(ref this uint seed)
-        {
-            return seed.GetRand() | (seed.GetRand() << 16);
-        }
-        public static uint GetReversePID(ref this uint seed)
-        {
-            return (seed.GetRand() << 16) | seed.GetRand();
-        }
-        public static uint[] GetIVs(ref this uint seed, GenerateMethod method)
-        {
-            uint HAB = seed.GetRand();
-            if (method == GenerateMethod.IVsInterrupt) seed.Advance();
-            uint SCD = seed.GetRand();
-            return new uint[6] {
-                HAB & 0x1f,
-                (HAB >> 5) & 0x1f,
-                (HAB >> 10) & 0x1f,
-                (SCD >> 5) & 0x1f,
-                (SCD >> 10) & 0x1f,
-                SCD & 0x1f
+            return new Generator(method.LegacyName)
+            {
+                checkAppearing = false,
+                getSlot = new RefFunc<uint, (int, Slot)>((ref uint seed) => (-1, symbol)),
+                getLv = new RefFunc<uint, Slot, uint>((ref uint seed, Slot slot) => slot.BaseLv),
+                getPID = new RefFunc<uint, Pokemon.Species, uint>((ref uint seed, Pokemon.Species poke) => seed.GetRand() | (seed.GetRand() << 16)),
+                getIVs = method.createGetIVs(),
             };
+        }
+        internal StationarySymbol(string label, Slot symbol)
+        {
+            this.label = label;
+            this.symbol = symbol;
         }
     }
 }

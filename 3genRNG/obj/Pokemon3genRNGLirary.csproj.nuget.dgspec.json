@@ -1,0 +1,60 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\Pokemon3genRNGLirary.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\Pokemon3genRNGLirary.csproj": {
+      "version": "2.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\Pokemon3genRNGLirary.csproj",
+        "projectName": "Pokemon3genRNGLirary",
+        "projectPath": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\Pokemon3genRNGLirary.csproj",
+        "packagesPath": "C:\\Users\\yatsu\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\yatsu\\Documents\\develop\\cs\\Pokemon3genRNGLibrary\\3genRNG\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\yatsu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      }
+    }
+  }
+}

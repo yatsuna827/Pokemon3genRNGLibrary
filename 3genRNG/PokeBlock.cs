@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace _3genRNG
+﻿namespace Pokemon3genRNGLibrary
 {
+    public enum Taste { NoTaste, Spicy, Sour, Dry, Bitter, Sweet }
     public class PokeBlock
     {
         public static readonly PokeBlock Plain = new PokeBlock();
@@ -12,7 +9,6 @@ namespace _3genRNG
         public static readonly PokeBlock PinkPokeBlock = new PokeBlock() { SweetLevel = 10 };
         public static readonly PokeBlock GreenPokeBlock = new PokeBlock() { BitterLevel = 10 };
         public static readonly PokeBlock YellowPokeBlock = new PokeBlock() { SourLevel = 10 };
-
         public uint SpicyLevel { get { return TasteLevel[(int)Taste.Spicy]; } set { TasteLevel[(int)Taste.Spicy] = value; } }
         public uint DryLevel { get { return TasteLevel[(int)Taste.Dry]; } set { TasteLevel[(int)Taste.Dry] = value; } }
         public uint SweetLevel { get { return TasteLevel[(int)Taste.Sweet]; } set { TasteLevel[(int)Taste.Sweet] = value; } }
@@ -30,6 +26,19 @@ namespace _3genRNG
         public PokeBlock()
         {
             TasteLevel = new uint[6];
+        }
+    }
+
+    public static class PokeBlockExtension
+    {
+        static private Taste[] ToTaste = { Taste.Spicy, Taste.Sour, Taste.Sweet, Taste.Dry, Taste.Bitter };
+        static public Taste ToLikeTaste(this Nature nature)
+        {
+            return (((uint)nature / 5) != ((uint)nature % 5)) ? ToTaste[(int)nature / 5] : Taste.NoTaste;
+        }
+        static public Taste ToUnlikeTaste(this Nature nature)
+        {
+            return (((uint)nature / 5) != ((uint)nature % 5)) ? ToTaste[(int)nature % 5] : Taste.NoTaste;
         }
     }
 }

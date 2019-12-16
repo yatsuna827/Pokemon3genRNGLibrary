@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace _3genRNG
+namespace Pokemon3genRNGLibrary
 {
     class ID
     {
