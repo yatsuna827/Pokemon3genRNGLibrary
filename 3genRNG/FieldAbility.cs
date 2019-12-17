@@ -17,8 +17,7 @@ namespace Pokemon3genRNGLibrary
     {
         private protected Nature syncNature = Nature.other;
         private protected Gender cuteCharmGender = Gender.Genderless;
-        private protected const bool allowRSFL = false;
-        internal FieldAbility Invalidate() { return allowRSFL ? this : new Other(); }
+        internal virtual FieldAbility Invalidate() { return new Other(); }
         internal virtual RefFunc<uint, bool> createCheckAppear(uint baseRate, EncounterOption option)
         {
             uint value = baseRate << 4;
@@ -193,7 +192,7 @@ namespace Pokemon3genRNGLibrary
 
     public sealed class Stench : FieldAbility
     {
-        new private const bool allowRSFL = true;
+        internal override FieldAbility Invalidate() { return this; }
         internal override RefFunc<uint, bool> createCheckAppear(uint baseRate, EncounterOption option)
         {
             uint value = baseRate << 4;
@@ -210,7 +209,7 @@ namespace Pokemon3genRNGLibrary
     }
     public sealed class Illuminate : FieldAbility
     {
-        new private const bool allowRSFL = true;
+        internal override FieldAbility Invalidate() { return this; }
         internal override RefFunc<uint, bool> createCheckAppear(uint baseRate, EncounterOption option)
         {
             uint value = baseRate << 4;

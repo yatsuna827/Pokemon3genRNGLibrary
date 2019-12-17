@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace Pokemon3genRNGLibrary
 {
@@ -34,6 +35,49 @@ namespace Pokemon3genRNGLibrary
                 };
             }
 
+            public (uint[] Min, uint[] Max) CalcIVsRange(uint[] Stats, uint Lv, Nature nature)
+            {
+                uint[] MinIVs = new uint[6] { 32, 32, 32, 32, 32, 32 };
+                uint[] MaxIVs = new uint[6] { 32, 32, 32, 32, 32, 32 };
+
+                double[] mag = nature.ToMagnification();
+
+                uint stat;
+                for (MinIVs[0] = 0; MinIVs[0] < 32; MinIVs[0]++)
+                {
+                    stat = (MinIVs[0] + BS[0] * 2) * Lv / 100 + 10 + Lv;
+                    if (stat == Stats[0]) break;
+                }
+                if (MinIVs[0] != 32)
+                {
+                    for (MaxIVs[0] = MinIVs[0]; MaxIVs[0] < 32; MaxIVs[0]++)
+                    {
+                        stat = (MaxIVs[0] + 1 + BS[0] * 2) * Lv / 100 + 10 + Lv;
+                        if (stat != Stats[0]) break;
+                    }
+                    MaxIVs[0] = Math.Min(MaxIVs[0], 31);
+                }
+
+                for (int i = 1; i < 6; i++)
+                {
+                    for (MinIVs[i] = 0; MinIVs[i] < 32; MinIVs[i]++)
+                    {
+                        stat = (uint)(((MinIVs[i] + BS[i] * 2) * Lv / 100 + 5) * mag[i]);
+                        if (stat == Stats[i]) break;
+                    }
+                    if (MinIVs[i] != 32)
+                    {
+                        for (MaxIVs[i] = MinIVs[i]; MaxIVs[i] < 32; MaxIVs[i]++)
+                        {
+                            stat = (uint)(((MaxIVs[i] + 1 + BS[i] * 2) * Lv / 100 + 5) * mag[i]);
+                            if (stat != Stats[i]) break;
+                        }
+                        MaxIVs[i] = Math.Min(MaxIVs[i], 31);
+                    }
+                }
+
+                return (MinIVs, MaxIVs);
+            }
             private uint[] GetStats(uint[] IVs, Nature Nature = Nature.Hardy, uint Lv = 50)
             {
                 uint[] stats = new uint[6];
@@ -46,6 +90,7 @@ namespace Pokemon3genRNGLibrary
 
                 return stats;
             }
+
             private Gender GetGender(uint PID)
             {
                 if (GenderRatio == GenderRatio.Genderless) return Gender.Genderless;
@@ -115,11 +160,13 @@ namespace Pokemon3genRNGLibrary
 
             public static Individual Empty = GetPokemon(0).GetIndividual(0, 1, new uint[6]);
         }
-
+        
         private static readonly List<Species> DexData;
         private static readonly Dictionary<string, Species> DexDictionary;
         private static readonly Dictionary<string, Species> UnownDex;
         private static readonly Dictionary<string, Species> DeoxysDex;
+
+        private Pokemon() { }
         public static Species GetPokemon(uint index) { return DexData[(int)(index > 386 ? 0 : index)]; }
         public static Species GetPokemon(uint index, string Form)
         {

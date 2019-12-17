@@ -83,16 +83,15 @@ namespace Pokemon3genRNGLibrary
         }
         public virtual Generator createGenerator(GenerateMethod method, FieldAbility fieldAbility, PokeBlock pokeBlock)
         {
-            return createGenerator(method, fieldAbility, EncounterOption.empty);
+            return createGenerator(method, fieldAbility, pokeBlock, EncounterOption.empty);
         }
-
         public virtual Generator createGenerator(GenerateMethod method, PokeBlock pokeBlock, EncounterOption option)
         {
-            return createGenerator(method, new FieldAbility.Other(), option);
+            return createGenerator(method, new FieldAbility.Other(), pokeBlock, option);
         }
         public virtual Generator createGenerator(GenerateMethod method, PokeBlock pokeBlock)
         {
-            return createGenerator(method, pokeBlock, EncounterOption.empty);
+            return createGenerator(method, new FieldAbility.Other(), pokeBlock, EncounterOption.empty);
         }
 
         public virtual SeedFinder createSeedFinder(GenerateMethod method)
