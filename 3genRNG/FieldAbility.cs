@@ -11,7 +11,7 @@ namespace Pokemon3genRNGLibrary
         public bool usedBlackFlute;
         public bool usedWhiteFlute;
         public bool hasCleanseTag;
-        internal static readonly EncounterOption empty = new EncounterOption();
+        public static readonly EncounterOption empty = new EncounterOption();
     }
     abstract public class FieldAbility
     {
