@@ -20,6 +20,10 @@ namespace Pokemon3genRNGLibrary
                 return new InvalidMap("存在しないKeyが渡されました");
             return map;
         }
+        public IMap[] GetMapList(EncounterType encounterType)
+        {
+            return MapList[encounterType].ToArray();
+        }
         public List<string> GetMapNameList(EncounterType encounterType)
         {
             return MapList[encounterType].Select(_ => _.GetMapName()).ToList();
