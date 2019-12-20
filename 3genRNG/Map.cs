@@ -244,6 +244,12 @@ namespace Pokemon3genRNGLibrary
             arr.Add(Pokemon.GetPokemon("ヒンバス"));
             return arr.ToArray();
         }
+        public override (string PokeName, string Lv)[] GetSlotList()
+        {
+            var slotList = EncounterTable.Select(_ => (_.pokemon.GetFullName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToList();
+            slotList.Add(("ヒンバス", "Lv.20-25"));
+            return slotList.ToArray();
+        }
         public override Generator createGenerator(GenerateMethod method, FieldAbility fieldAbility, EncounterOption option)
         {
             fieldAbility = fieldAbility.Invalidate();
@@ -274,6 +280,12 @@ namespace Pokemon3genRNGLibrary
             var arr = EncounterTable.Select(_ => _.pokemon).ToList();
             arr.Add(Pokemon.GetPokemon("ヒンバス"));
             return arr.ToArray();
+        }
+        public override (string PokeName, string Lv)[] GetSlotList()
+        {
+            var slotList = EncounterTable.Select(_ => (_.pokemon.GetFullName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToList();
+            slotList.Add(("ヒンバス", "Lv.20-25"));
+            return slotList.ToArray();
         }
         public override Generator createGenerator(GenerateMethod method, FieldAbility fieldAbility, EncounterOption option)
         {
