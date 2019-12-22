@@ -166,6 +166,9 @@ namespace Pokemon3genRNGLibrary
         private static readonly Dictionary<string, Species> UnownDex;
         private static readonly Dictionary<string, Species> DeoxysDex;
 
+        public static List<Species> GetAllUnowns() { return UnownDex.Select(_ => _.Value).ToList(); }
+        public static List<Species> GetAllDeoxyses() { return DeoxysDex.Select(_ => _.Value).ToList(); }
+
         private Pokemon() { }
         public static Species GetPokemon(uint index) { return DexData[(int)(index > 386 ? 0 : index)]; }
         public static Species GetPokemon(uint index, string Form)
