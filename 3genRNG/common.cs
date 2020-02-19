@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Linq;
 using System.Collections.Generic;
 using PokemonPRNG.LCG32;
 
@@ -34,6 +34,18 @@ namespace Pokemon3genRNGLibrary
         Ground, Flying, Psychic, Bug, Rock, Ghost, Dragon, Dark, Steel, Non
     }
     public enum EncounterType { Grass, Surf, OldRod, GoodRod, SuperRod, RockSmash }
+    public static class Common
+    {
+        public static readonly Nature[] NatureList;
+        public static readonly Nature[] SortedNatureList;
+        static Common()
+        {
+            NatureList = Enumerable.Range(0, 25).Select(_ => (Nature)_).ToArray();
+            var list = NatureList.ToList();
+            list.Sort((a, b) => string.Compare(a.ToJapanese(), b.ToJapanese()));
+            SortedNatureList = list.ToArray();
+        }
+    }
     public static class CommonExtension
     {
         static private readonly string[] Nature_JP =
@@ -75,6 +87,7 @@ namespace Pokemon3genRNGLibrary
             };
         static private readonly string[] genderSymbol = { "♂", "♀", "-" };
         static private readonly string[] TypeKanji = { "闘", "飛", "毒", "地", "岩", "虫", "霊", "鋼", "炎", "水", "草", "電", "超", "氷", "龍", "悪" };
+        static private Dictionary<string, Nature> natureTable = Common.NatureList.ToDictionary(_ => _.ToJapanese(), _ => _);
         static public bool isFixed(this GenderRatio ratio) { return ratio == GenderRatio.FemaleOnly || ratio == GenderRatio.MaleOnly || ratio == GenderRatio.Genderless; }
         static public Gender Reverse(this Gender gender) { return (Gender)((((int)gender) ^ 1) & ~(int)gender >> 1); } // switch式使いたい.
         public static string ToSymbol(this Gender gender) { return genderSymbol[(int)gender]; }
@@ -82,7 +95,7 @@ namespace Pokemon3genRNGLibrary
         public static string ToKanji(this PokeType type) { return TypeKanji[(int)type]; }
         public static string ToJapanese(this Nature nature) { return Nature_JP[(int)nature]; }
         public static double[] ToMagnification(this Nature nature) { return Magnifications[(int)nature]; }
-
+        public static Nature ConvertToNature(this string nature) { return natureTable[nature]; }
     }
 
     static class GenerateExtension

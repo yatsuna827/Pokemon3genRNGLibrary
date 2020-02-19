@@ -25,9 +25,8 @@ namespace Pokemon3genRNGLibrary
         internal Slot(string Name, uint Lv) { pokemon = Pokemon.GetPokemon(Name); BaseLv = Lv; LvRange = 1; }
         internal Slot(string Name, uint Lv, uint Range) { pokemon = Pokemon.GetPokemon(Name); BaseLv = Lv; LvRange = Range; }
         internal Slot(string Name, string form, uint Lv) { pokemon = Pokemon.GetPokemon(Name, form); BaseLv = Lv; LvRange = 1; }
-        internal Slot(uint ID, uint Lv) { pokemon = Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = 1; }
-        internal Slot(uint ID, uint Lv, uint Range) { pokemon = Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = Range; }
-        internal Slot(uint ID, uint Lv, uint Range, string Form) { pokemon = Pokemon.GetPokemon(ID, Form); BaseLv = Lv; LvRange = Range; }
+        internal Slot(int ID, uint Lv) { pokemon = Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = 1; }
+        internal Slot(int ID, uint Lv, uint Range) { pokemon = Pokemon.GetPokemon(ID); BaseLv = Lv; LvRange = Range; }
     }
 
     class Map : IMap
