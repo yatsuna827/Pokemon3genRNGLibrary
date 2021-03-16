@@ -13,8 +13,8 @@ namespace Pokemon3genRNGLibrary
         public static readonly Slot Empty = new Slot(0, 0, 0);
         internal static readonly Slot Feebas = new Slot("ヒンバス", 20, 6);
 
-        internal bool isStaticSlot => pokemon.Type[0] == PokeType.Electric || pokemon.Type[1] == PokeType.Electric;
-        internal bool isMagnetPullSlot => pokemon.Type[0] == PokeType.Steel || pokemon.Type[1] == PokeType.Steel;
+        internal bool isStaticSlot => pokemon.Type.Type1 == PokeType.Electric || pokemon.Type.Type2 == PokeType.Electric;
+        internal bool isMagnetPullSlot => pokemon.Type.Type1 == PokeType.Steel || pokemon.Type.Type2 == PokeType.Steel;
         internal uint GetLv(ref uint seed)
         {
             return seed.GetRand(LvRange) + BaseLv;
@@ -48,7 +48,7 @@ namespace Pokemon3genRNGLibrary
         }
         public virtual (string PokeName, string Lv)[] GetSlotList()
         {
-            return EncounterTable.Select(_ => (_.pokemon.GetFullName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToArray();
+            return EncounterTable.Select(_ => (_.pokemon.GetDefaultName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToArray();
         }
         public virtual Generator createGenerator(GenerateMethod method, FieldAbility fieldAbility, EncounterOption option)
         {
@@ -245,7 +245,7 @@ namespace Pokemon3genRNGLibrary
         }
         public override (string PokeName, string Lv)[] GetSlotList()
         {
-            var slotList = EncounterTable.Select(_ => (_.pokemon.GetFullName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToList();
+            var slotList = EncounterTable.Select(_ => (_.pokemon.GetDefaultName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToList();
             slotList.Add(("ヒンバス", "Lv.20-25"));
             return slotList.ToArray();
         }
@@ -282,7 +282,7 @@ namespace Pokemon3genRNGLibrary
         }
         public override (string PokeName, string Lv)[] GetSlotList()
         {
-            var slotList = EncounterTable.Select(_ => (_.pokemon.GetFullName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToList();
+            var slotList = EncounterTable.Select(_ => (_.pokemon.GetDefaultName(), _.LvRange == 1 ? $"Lv.{_.BaseLv}" : $"Lv.{_.BaseLv} - {_.BaseLv + _.LvRange - 1}")).ToList();
             slotList.Add(("ヒンバス", "Lv.20-25"));
             return slotList.ToArray();
         }
