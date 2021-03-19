@@ -10,7 +10,7 @@
 
   <ItemGroup>
     <Reference Include="PokemonPRNG">
-      <HintPath>..\..\PokemonPRNG\PokemonPRNG\bin\Release\PokemonPRNG.dll</HintPath>
+      <HintPath>libraries\\PokemonPRNG.dll</HintPath>
     </Reference>
     <Reference Include="PokemonStandardLibrary">
       <HintPath>libraries\PokemonStandardLibrary.dll</HintPath>
