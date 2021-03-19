@@ -17,10 +17,6 @@ namespace Pokemon3genRNGLibrary
         protected readonly INatureGenerator natureGenerator;
         protected readonly IGenderGenerator genderGenerator;
 
-        // これはメンバに持つべきではない.
-        protected bool CheckNature(uint pid, Nature fixedNature) => fixedNature == Nature.other || (pid % 25) == (uint)fixedNature;
-        protected bool CheckGender(uint pid, Gender fixedGender) => pokemon.GenderRatio.IsFixed() || fixedGender == Gender.Genderless || pid.GetGender(pokemon.GenderRatio) == fixedGender;
-
         public virtual Pokemon.Individual Generate(uint seed, GenerateMethod generateMethod, out uint finSeed)
         {
             var gender = genderGenerator.GenerateGender(ref seed);
@@ -28,7 +24,7 @@ namespace Pokemon3genRNGLibrary
 
             var pid = seed.GetRand() | (seed.GetRand() << 16);
 
-            while (!(CheckGender(pid, gender) && CheckNature(pid, nature)))
+            while (!(pid.CheckGender(pokemon.GenderRatio, gender) && pid.CheckNature(nature)))
                 pid = seed.GetRand() | (seed.GetRand() << 16);
 
             var IVs = generateMethod.GenerateIVs(ref seed);

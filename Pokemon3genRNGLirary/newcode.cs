@@ -53,22 +53,23 @@ namespace Pokemon3genRNGLibrary
     class FRLGMap
     {
         public readonly string MapName;
+        public readonly uint BasicEncounterRate;
         private readonly EncounterTableSlot[] encounterTable;
         public ISlotGenerator GetSlotGenerator(WildGenerationArgument arg)
         {
+            // seedを受け取ってGBASlotを返す.
+            // argsにエンカ判定が設定されているかどうかで分岐.
             return null;
         }
     }
 
-    class StatsCriteria : ICriteria<Pokemon.Individual>
-    {
-        private readonly uint[] stats;
-        public StatsCriteria(uint[] stats) => this.stats = stats;
-        public bool CheckConditions(Pokemon.Individual input) => input.Stats.Select((x, i) => (x, i)).All(_ => stats[_.i] == _.x);
-    }
-
     static class GenerateExtensions
     {
+        internal static bool CheckNature(this uint pid, Nature fixedNature) 
+            => fixedNature == Nature.other || (pid % 25) == (uint)fixedNature;
+        internal static bool CheckGender(this uint pid, GenderRatio genderRatio, Gender fixedGender) 
+            => genderRatio.IsFixed() || fixedGender == Gender.Genderless || pid.GetGender(genderRatio) == fixedGender;
+
         internal static Gender GetGender(this uint pid, GenderRatio ratio)
         {
             if (ratio == GenderRatio.Genderless) return Gender.Genderless;
