@@ -26,12 +26,7 @@ namespace Pokemon3genRNGLibrary
         public static FRLGStationaryGenerator Eevee = new FRLGStationaryGenerator("イーブイ", 25);
     }
 
-    class EncounterTableSlot
-    {
-        public readonly Pokemon.Species pokemon;
-        public readonly uint basicLv;
-        public readonly uint lvRange;
-    }
+
 
     class WildGenerationArgument
     {
@@ -54,8 +49,8 @@ namespace Pokemon3genRNGLibrary
     {
         public readonly string MapName;
         public readonly uint BasicEncounterRate;
-        private readonly EncounterTableSlot[] encounterTable;
-        public ISlotGenerator GetSlotGenerator(WildGenerationArgument arg)
+        private readonly IEncounterTable encounterTable;
+        public SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
         {
             // seedを受け取ってGBASlotを返す.
             // argsにエンカ判定が設定されているかどうかで分岐.
