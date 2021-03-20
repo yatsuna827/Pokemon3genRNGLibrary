@@ -7,12 +7,12 @@ namespace Pokemon3genRNGLibrary
 {
     public interface IEncounterTable
     {
-        (int Index, EncounterTableSlot Slot) SelectSlot(ref uint seed);
+        (int Index, GBASlot Slot) SelectSlot(ref uint seed);
     }
     class GrassTable : IEncounterTable
     {
-        private readonly EncounterTableSlot[] encounterTable;
-        public (int Index, EncounterTableSlot Slot) SelectSlot(ref uint seed)
+        private readonly GBASlot[] encounterTable;
+        public (int Index, GBASlot Slot) SelectSlot(ref uint seed)
         {
             var r = seed.GetRand(100);
             if (r < 20) return (0, encounterTable[0]);
@@ -28,7 +28,7 @@ namespace Pokemon3genRNGLibrary
             if (r == 98) return (10, encounterTable[10]);
             return (11, encounterTable[11]);
         }
-        public GrassTable(EncounterTableSlot[] table)
+        public GrassTable(GBASlot[] table)
         {
             if (table == null || table.Length != 12) throw new ArgumentException("tableの長さは12である必要があります");
 
@@ -37,8 +37,8 @@ namespace Pokemon3genRNGLibrary
     }
     class SurfTable : IEncounterTable
     {
-        private readonly EncounterTableSlot[] encounterTable;
-        public (int Index, EncounterTableSlot Slot) SelectSlot(ref uint seed)
+        private readonly GBASlot[] encounterTable;
+        public (int Index, GBASlot Slot) SelectSlot(ref uint seed)
         {
             var r = seed.GetRand(100);
             if (r < 60) return (0, encounterTable[0]);
@@ -47,7 +47,7 @@ namespace Pokemon3genRNGLibrary
             if (r < 99) return (3, encounterTable[3]);
             return (4, encounterTable[4]);
         }
-        public SurfTable(EncounterTableSlot[] table)
+        public SurfTable(GBASlot[] table)
         {
             if(table == null || table.Length != 5) throw new ArgumentException("tableの長さは5である必要があります");
 
@@ -56,14 +56,14 @@ namespace Pokemon3genRNGLibrary
     }
     class OldRodTable : IEncounterTable
     {
-        private readonly EncounterTableSlot[] encounterTable;
-        public (int Index, EncounterTableSlot Slot) SelectSlot(ref uint seed)
+        private readonly GBASlot[] encounterTable;
+        public (int Index, GBASlot Slot) SelectSlot(ref uint seed)
         {
             var r = seed.GetRand(100);
             if (r < 70) return (0, encounterTable[0]);
             return (1, encounterTable[1]);
         }
-        public OldRodTable(EncounterTableSlot[] table)
+        public OldRodTable(GBASlot[] table)
         {
             if(table == null || table.Length != 2) throw new ArgumentException("tableの長さは2である必要があります");
 
@@ -72,8 +72,8 @@ namespace Pokemon3genRNGLibrary
     }
     class GoodRodTable : IEncounterTable
     {
-        private readonly EncounterTableSlot[] encounterTable;
-        public (int Index, EncounterTableSlot Slot) SelectSlot(ref uint seed)
+        private readonly GBASlot[] encounterTable;
+        public (int Index, GBASlot Slot) SelectSlot(ref uint seed)
         {
             var r = seed.GetRand(100);
             if (r < 60) return (0, encounterTable[0]);
@@ -81,7 +81,7 @@ namespace Pokemon3genRNGLibrary
             return (2, encounterTable[2]);
         }
         
-        public GoodRodTable(EncounterTableSlot[] table)
+        public GoodRodTable(GBASlot[] table)
         {
             if(table == null || table.Length != 3) throw new ArgumentException("tableの長さは3である必要があります");
 
@@ -90,8 +90,8 @@ namespace Pokemon3genRNGLibrary
     }
     class SuperRodTable : IEncounterTable
     {
-        private readonly EncounterTableSlot[] encounterTable;
-        public (int Index, EncounterTableSlot Slot) SelectSlot(ref uint seed)
+        private readonly GBASlot[] encounterTable;
+        public (int Index, GBASlot Slot) SelectSlot(ref uint seed)
         {
             var r = seed.GetRand(100);
             if (r < 40) return (0, encounterTable[0]);
@@ -101,7 +101,7 @@ namespace Pokemon3genRNGLibrary
             return (4, encounterTable[4]);
         }
         
-        public SuperRodTable(EncounterTableSlot[] table)
+        public SuperRodTable(GBASlot[] table)
         {
             if(table == null || table.Length != 5) throw new ArgumentException("tableの長さは5である必要があります");
 
@@ -110,8 +110,8 @@ namespace Pokemon3genRNGLibrary
     }
     class RockSmashTable : IEncounterTable
     {
-        private readonly EncounterTableSlot[] encounterTable;
-        public (int Index, EncounterTableSlot Slot) SelectSlot(ref uint seed)
+        private readonly GBASlot[] encounterTable;
+        public (int Index, GBASlot Slot) SelectSlot(ref uint seed)
         {
             var r = seed.GetRand(100);
             if (r < 60) return (0, encounterTable[0]);
@@ -121,7 +121,7 @@ namespace Pokemon3genRNGLibrary
             return (4, encounterTable[4]);
         }
         
-        public RockSmashTable(EncounterTableSlot[] table)
+        public RockSmashTable(GBASlot[] table)
         {
             if(table == null || table.Length != 5) throw new ArgumentException("tableの長さは5である必要があります");
 

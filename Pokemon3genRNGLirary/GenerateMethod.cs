@@ -2,7 +2,11 @@
 
 namespace Pokemon3genRNGLibrary
 {
-    public abstract class GenerateMethod
+    public interface IIVsGenerator
+    {
+        uint[] GenerateIVs(ref uint seed);
+    }
+    public abstract class GenerateMethod : IIVsGenerator
     {
         private GenerateMethod(string legacyName) => LegacyName = legacyName;
 

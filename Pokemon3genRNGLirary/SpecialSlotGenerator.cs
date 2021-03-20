@@ -6,23 +6,29 @@ using PokemonStandardLibrary;
 
 namespace Pokemon3genRNGLibrary
 {
-    interface ITryGeneratable<T>
+    public interface ITryGeneratable<T>
     {
         bool TryGenerate(ref uint seed, out T result);
     }
 
-    class NullSpecialSlotGenerator : ITryGeneratable<EncounterTableSlot>
+    /// <summary>
+    /// 常にTryGenerateが失敗する実装.
+    /// </summary>
+    class NullSpecialSlotGenerator : ITryGeneratable<GBASlot>
     {
-        public bool TryGenerate(ref uint seed, out EncounterTableSlot result)
+        public bool TryGenerate(ref uint seed, out GBASlot result)
         {
             result = null;
             return false;
         }
     }
 
-    class DummySpecialSlotGenerator : ITryGeneratable<EncounterTableSlot>
+    /// <summary>
+    /// 常にTryGenerateは失敗するが, 判定は行われるので乱数が1消費される実装.
+    /// </summary>
+    class DummySpecialSlotGenerator : ITryGeneratable<GBASlot>
     {
-        public bool TryGenerate(ref uint seed, out EncounterTableSlot result)
+        public bool TryGenerate(ref uint seed, out GBASlot result)
         {
             result = null;
             seed.Advance();
@@ -30,10 +36,13 @@ namespace Pokemon3genRNGLibrary
         }
     }
 
-    class MassOutBreakSlotGenerator : ITryGeneratable<EncounterTableSlot>
+    /// <summary>
+    /// 大量発生の実装. ヒンバスもこれに該当する. ラティもかもしれない.
+    /// </summary>
+    class MassOutBreakSlotGenerator : ITryGeneratable<GBASlot>
     {
-        private readonly EncounterTableSlot massOutBreakSlot;
-        public bool TryGenerate(ref uint seed, out EncounterTableSlot result)
+        private readonly GBASlot massOutBreakSlot;
+        public bool TryGenerate(ref uint seed, out GBASlot result)
         {
             if (seed.GetRand(100) < 50) {
                 result = massOutBreakSlot;
@@ -44,17 +53,19 @@ namespace Pokemon3genRNGLibrary
         }
 
         public MassOutBreakSlotGenerator(string name, uint basicLv, uint variableLv = 0)
-            => this.massOutBreakSlot = new EncounterTableSlot(name, basicLv, variableLv);
+            => this.massOutBreakSlot = new GBASlot(name, basicLv, variableLv);
     }
 
-    class MagnetPullSlotGenerator : ITryGeneratable<EncounterTableSlot>
+    /// <summary>
+    /// 磁力の実装. 対象がテーブルに存在しなくても判定は入る.
+    /// </summary>
+    class MagnetPullSlotGenerator : ITryGeneratable<GBASlot>
     {
-        private readonly EncounterTableSlot[] steelPokemons;
-        public bool TryGenerate(ref uint seed, out EncounterTableSlot result)
+        private readonly GBASlot[] steelPokemons;
+        public bool TryGenerate(ref uint seed, out GBASlot result)
         {
-            // 逆だったかもしれねェ…
             var total = (uint)steelPokemons.Length;
-            if((seed.GetRand()&1) == 1 || total == 0)
+            if ((seed.GetRand() & 1) == 1 || total == 0)
             {
                 result = null;
                 return false;
@@ -64,15 +75,18 @@ namespace Pokemon3genRNGLibrary
             return true;
         }
 
-        public MagnetPullSlotGenerator(EncounterTableSlot[] table)
+        public MagnetPullSlotGenerator(GBASlot[] table)
             => steelPokemons = table.Where(_=>_.pokemon.Type.Type1 == PokeType.Steel || _.pokemon.Type.Type2 == PokeType.Steel)
                                     .ToArray();
     }
 
-    class StaticSlotGenerator : ITryGeneratable<EncounterTableSlot>
+    /// <summary>
+    /// 静電気の実装. 対象がテーブルに存在しなくても判定は入る.
+    /// </summary>
+    class StaticSlotGenerator : ITryGeneratable<GBASlot>
     {
-        private readonly EncounterTableSlot[] electricPokemons;
-        public bool TryGenerate(ref uint seed, out EncounterTableSlot result)
+        private readonly GBASlot[] electricPokemons;
+        public bool TryGenerate(ref uint seed, out GBASlot result)
         {
             // 逆だったかもしれねェ…
             var total = (uint)electricPokemons.Length;
@@ -86,7 +100,7 @@ namespace Pokemon3genRNGLibrary
             return true;
         }
 
-        public StaticSlotGenerator(EncounterTableSlot[] table)
+        public StaticSlotGenerator(GBASlot[] table)
             => electricPokemons = table.Where(_=>_.pokemon.Type.Type1 == PokeType.Electric || _.pokemon.Type.Type2 == PokeType.Electric)
                                     .ToArray();
     }

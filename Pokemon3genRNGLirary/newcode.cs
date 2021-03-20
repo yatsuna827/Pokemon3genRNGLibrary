@@ -14,9 +14,14 @@ namespace Pokemon3genRNGLibrary
     class FRLGStationaryGenerator : IGeneratable<Pokemon.Individual>
     {
         private readonly GBASlot slot;
-        internal FRLGStationaryGenerator(string name, uint lv) => slot = new GBASlot(name, lv);
+        internal FRLGStationaryGenerator(string name, uint lv) => slot = new GBASlot(name, lv, 1);
 
-        public Pokemon.Individual Generate(uint seed) => slot.Generate(seed, GenerateMethod.Standard, out _);
+        public Pokemon.Individual Generate(uint seed) => slot.Generate(seed, 
+            new StandardLvGenerator(), 
+            GenerateMethod.Standard, 
+            NullNatureGenerator.GetInstance(), 
+            NullGenderGenerator.GetInstance(),  
+            out _);
 
         public static FRLGStationaryGenerator Moltres = new FRLGStationaryGenerator("ファイヤー", 50);
         public static FRLGStationaryGenerator Zapdos = new FRLGStationaryGenerator("サンダー", 50);
