@@ -57,51 +57,27 @@ namespace Pokemon3genRNGLibrary
     }
 
     /// <summary>
-    /// 磁力の実装. 対象がテーブルに存在しなくても判定は入る.
+    /// 磁力/静電気の実装. 対象がテーブルに存在しなくても判定は入る.
     /// </summary>
-    class MagnetPullSlotGenerator : ITryGeneratable<GBASlot>
+    class AttractSlotGenerator : ITryGeneratable<GBASlot>
     {
-        private readonly GBASlot[] steelPokemons;
+        private readonly GBASlot[] attractedPokemons;
         public bool TryGenerate(ref uint seed, out GBASlot result)
         {
-            var total = (uint)steelPokemons.Length;
+            var total = (uint)attractedPokemons.Length;
             if ((seed.GetRand() & 1) == 1 || total == 0)
             {
                 result = null;
                 return false;
             }
 
-            result = steelPokemons[seed.GetRand(total)];
+            result = attractedPokemons[seed.GetRand(total)];
             return true;
         }
 
-        public MagnetPullSlotGenerator(GBASlot[] table)
-            => steelPokemons = table.Where(_=>_.pokemon.Type.Type1 == PokeType.Steel || _.pokemon.Type.Type2 == PokeType.Steel)
+        public AttractSlotGenerator(GBASlot[] table, PokeType attractingType)
+            => attractedPokemons = table.Where(_=>_.pokemon.Type.Type1 == attractingType || _.pokemon.Type.Type2 == attractingType)
                                     .ToArray();
     }
 
-    /// <summary>
-    /// 静電気の実装. 対象がテーブルに存在しなくても判定は入る.
-    /// </summary>
-    class StaticSlotGenerator : ITryGeneratable<GBASlot>
-    {
-        private readonly GBASlot[] electricPokemons;
-        public bool TryGenerate(ref uint seed, out GBASlot result)
-        {
-            // 逆だったかもしれねェ…
-            var total = (uint)electricPokemons.Length;
-            if((seed.GetRand()&1) == 1 || total == 0)
-            {
-                result = null;
-                return false;
-            }
-
-            result = electricPokemons[seed.GetRand(total)];
-            return true;
-        }
-
-        public StaticSlotGenerator(GBASlot[] table)
-            => electricPokemons = table.Where(_=>_.pokemon.Type.Type1 == PokeType.Electric || _.pokemon.Type.Type2 == PokeType.Electric)
-                                    .ToArray();
-    }
 }

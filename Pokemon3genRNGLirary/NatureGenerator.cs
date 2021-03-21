@@ -112,7 +112,7 @@ namespace Pokemon3genRNGLibrary
 
         public static INatureGenerator GetInstance(PokeBlock pokeBlock, Nature syncNature = Nature.other)
             => syncNature == Nature.other ?
-                new EmSafariNatureGenerator(pokeBlock, StandardNatureGenerator.GetInstance()) :
+                HoennSafariNatureGenerator.GetInstance(pokeBlock) :
                 new EmSafariNatureGenerator(pokeBlock, SynchronizeNatureGenerator.GetInstance(syncNature));
     }
 }
