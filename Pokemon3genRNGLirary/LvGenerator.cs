@@ -10,6 +10,10 @@ namespace Pokemon3genRNGLibrary
     {
         public uint GenerateLv(ref uint seed, uint basicLv, uint variableLv)
             => basicLv + seed.GetRand(variableLv);
+
+        private StandardLvGenerator() { }
+        private readonly static StandardLvGenerator instance = new StandardLvGenerator(); 
+        public static ILvGenerator GetInstance() => instance;
     }
     class PressureLvGenerator : ILvGenerator
     {
@@ -23,5 +27,10 @@ namespace Pokemon3genRNGLibrary
 
             return lv;
         }
+
+        private PressureLvGenerator() { }
+        private static readonly PressureLvGenerator instance = new PressureLvGenerator();
+        
+        public static ILvGenerator GetInstance() => instance;
     }
 }

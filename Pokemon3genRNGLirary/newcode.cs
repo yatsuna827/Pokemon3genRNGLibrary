@@ -17,7 +17,7 @@ namespace Pokemon3genRNGLibrary
         internal FRLGStationaryGenerator(string name, uint lv) => slot = new GBASlot(-1, name, lv, 1);
 
         public Pokemon.Individual Generate(uint seed) => slot.Generate(seed, 
-            new StandardLvGenerator(), 
+            StandardLvGenerator.GetInstance(), 
             GenerateMethod.Standard, 
             NullNatureGenerator.GetInstance(), 
             NullGenderGenerator.GetInstance(),  
@@ -36,12 +36,15 @@ namespace Pokemon3genRNGLibrary
     class WildGenerationArgument
     {
         // FieldAbility
+        public FieldAbility FieldAbility { get; set; }
 
         /// <summary>
         /// サファリに設置したポロックの味を指定します.
         /// サファリ以外では無視されます.
         /// </summary>
         public PokeBlock PokeBlock { get; set; } = PokeBlock.Plain;
+
+        public IIVsGenerator GenerateMethod { get; set;} = Pokemon3genRNGLibrary.GenerateMethod.Standard;
 
         /// <summary>
         /// エンカウント判定を無視するかどうかを指定します.
@@ -57,8 +60,18 @@ namespace Pokemon3genRNGLibrary
         private readonly EncounterTable encounterTable;
         public SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
         {
-            // seedを受け取ってGBASlotを返す.
-            // argsにエンカ判定が設定されているかどうかで分岐.
+            return null;
+        }
+        public ILvGenerator GetLvGenerator(WildGenerationArgument arg)
+        {
+            return null;
+        }
+        public INatureGenerator GetNatureGenerator(WildGenerationArgument arg)
+        {
+            return null;
+        }
+        public IGenderGenerator GetGenderGenerator(WildGenerationArgument arg)
+        {
             return null;
         }
     }

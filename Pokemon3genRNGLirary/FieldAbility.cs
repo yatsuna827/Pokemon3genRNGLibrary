@@ -6,30 +6,25 @@ namespace Pokemon3genRNGLibrary
 {
     public class FieldAbility
     {
-        internal Nature SyncNature { get; private protected set; }
-        internal Gender CuteCharmGender { get; private protected set; }
-        internal PokeType AttractingType { get; private protected set; }
+        internal readonly Nature syncNature;
+        internal readonly Gender cuteCharmGender;
+        internal readonly PokeType attractingType;
+        internal ILvGenerator lvGenerator { get; private set; } = StandardLvGenerator.GetInstance();
 
-        private protected FieldAbility() { }
+        private FieldAbility(Nature syncNature = Nature.other, Gender cuteCharmGender = Gender.Genderless, PokeType attractingType = PokeType.Non)
+        { 
+            this.syncNature = syncNature;
+            this.cuteCharmGender = cuteCharmGender;
+            this.attractingType = attractingType;
+        }
+
+        public static FieldAbility GetOtherAbility() => new FieldAbility();
+        public static FieldAbility GetSynchronize(Nature syncNature) => new FieldAbility(syncNature: syncNature);
+        public static FieldAbility GetCuteCharm(Gender cuteCharmGender) => new FieldAbility(cuteCharmGender: cuteCharmGender);
+        public static FieldAbility GetStatic() => new FieldAbility(attractingType: PokeType.Electric);
+        public static FieldAbility GetMagnetPull() => new FieldAbility(attractingType: PokeType.Steel);
+
+        public static FieldAbility GetPressure() => new FieldAbility() { lvGenerator = PressureLvGenerator.GetInstance() };
     }
 
-    public class Synchronize : FieldAbility
-    {
-        public Synchronize(Nature syncNature) => SyncNature = syncNature;
-    }
-
-    public class CuteCharm : FieldAbility
-    {
-        public CuteCharm(Gender cuteCharmPokemonsGender) => CuteCharmGender = cuteCharmPokemonsGender;
-    }
-
-    public class Static : FieldAbility
-    {
-        public Static() => AttractingType = PokeType.Electric;
-    }
-
-    public class MagnetPull : FieldAbility
-    {
-        public MagnetPull() => AttractingType = PokeType.Steel;
-    }
 }

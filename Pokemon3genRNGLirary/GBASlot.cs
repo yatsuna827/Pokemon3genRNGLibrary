@@ -79,6 +79,10 @@ namespace Pokemon3genRNGLibrary
         public UnownSlot(int index, string form, uint basicLv, uint variableLv) : base(index, Pokemon.GetPokemon("アンノーン", form), basicLv, variableLv) { }
     }
 
+    /// <summary>
+    /// 大量発生ポケモンの生成を行うクラス.
+    /// 大量発生ポケモンに限ってレベル決定が行われない.
+    /// </summary>
     public class MassOutBreakSlot : GBASlot
     {
         public override Pokemon.Individual Generate(uint seed, ILvGenerator lvGenerator, IIVsGenerator ivsGenerator, INatureGenerator natureGenerator, IGenderGenerator genderGenerator, out uint finSeed)
