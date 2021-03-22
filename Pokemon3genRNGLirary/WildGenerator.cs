@@ -17,7 +17,7 @@ namespace Pokemon3genRNGLibrary
 
         public Pokemon.Individual Generate(uint seed)
         {
-            var (idx, slot) = slotGenerator.GenerateSlot(ref seed);
+            var slot= slotGenerator.GenerateSlot(ref seed);
             return slot.Generate(seed, lvGenerator, ivsGenrator, natureGenerator, genderGenerator, out var _);
         }
         public WildGenerator(FRLGMap map, IIVsGenerator method)

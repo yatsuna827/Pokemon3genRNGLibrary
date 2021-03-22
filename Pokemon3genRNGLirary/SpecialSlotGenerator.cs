@@ -53,7 +53,7 @@ namespace Pokemon3genRNGLibrary
         }
 
         public MassOutBreakSlotGenerator(string name, uint basicLv, uint variableLv = 0)
-            => this.massOutBreakSlot = new GBASlot(name, basicLv, variableLv);
+            => this.massOutBreakSlot = new GBASlot(-1, name, basicLv, variableLv);
     }
 
     /// <summary>

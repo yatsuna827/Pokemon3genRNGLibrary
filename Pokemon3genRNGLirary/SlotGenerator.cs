@@ -1,23 +1,22 @@
+using System.Collections.Generic;
 using PokemonPRNG.LCG32.StandardLCG;
 
 namespace Pokemon3genRNGLibrary
 {
-    public class SlotGenerator
+    class SlotGenerator
     {
-        private readonly IEncounterTable encounterTable;
-        private readonly ITryGeneratable<GBASlot> specialSlotGenerator;
+        private readonly IEnumerable<ITryGeneratable<GBASlot>> slotGenerators;
 
-        public (int Index, GBASlot Slot) GenerateSlot(ref uint seed)
+        public GBASlot GenerateSlot(ref uint seed)
         {
-            var idx = -1;
-            if(!specialSlotGenerator.TryGenerate(ref seed, out var slot))
-                (idx, slot) = encounterTable.SelectSlot(ref seed);
+            GBASlot slot = null;
+            foreach(var generator in slotGenerators)
+                if(generator.TryGenerate(ref seed, out slot)) break;
 
-            return (idx, slot);
+            return slot;
         }
 
-        public SlotGenerator(IEncounterTable encounterTable) => this.encounterTable = encounterTable;
-        public SlotGenerator(IEncounterTable encounterTable, ITryGeneratable<GBASlot> specialSlotGenerator)
-            => (this.encounterTable, this.specialSlotGenerator) = (encounterTable, specialSlotGenerator);
+        public SlotGenerator(IEnumerable<ITryGeneratable<GBASlot>> slotGenerators) 
+            => this.slotGenerators = slotGenerators;
     }
 }

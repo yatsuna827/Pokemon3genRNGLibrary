@@ -14,7 +14,7 @@ namespace Pokemon3genRNGLibrary
     class FRLGStationaryGenerator : IGeneratable<Pokemon.Individual>
     {
         private readonly GBASlot slot;
-        internal FRLGStationaryGenerator(string name, uint lv) => slot = new GBASlot(name, lv, 1);
+        internal FRLGStationaryGenerator(string name, uint lv) => slot = new GBASlot(-1, name, lv, 1);
 
         public Pokemon.Individual Generate(uint seed) => slot.Generate(seed, 
             new StandardLvGenerator(), 
@@ -54,7 +54,7 @@ namespace Pokemon3genRNGLibrary
     {
         public readonly string MapName;
         public readonly uint BasicEncounterRate;
-        private readonly IEncounterTable encounterTable;
+        private readonly EncounterTable encounterTable;
         public SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
         {
             // seedを受け取ってGBASlotを返す.

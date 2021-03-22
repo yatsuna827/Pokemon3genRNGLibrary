@@ -11,6 +11,7 @@ namespace Pokemon3genRNGLibrary
 {
     public class GBASlot
     {
+        public readonly int Index;
         public readonly Pokemon.Species pokemon;
         public readonly uint basicLv;
         public readonly uint variableLv;
@@ -32,10 +33,10 @@ namespace Pokemon3genRNGLibrary
             return pokemon.GetIndividual(lv, IVs, pid);
         }
 
-        public GBASlot(string name, uint basicLv, uint variableLv)
-            => (this.pokemon, this.basicLv, this.variableLv) = (Pokemon.GetPokemon(name), basicLv, variableLv);
-        public GBASlot(Pokemon.Species p, uint basicLv, uint variableLv)
-            => (this.pokemon, this.basicLv, this.variableLv) = (p, basicLv, variableLv);
+        public GBASlot(int index, string name, uint basicLv, uint variableLv)
+            => (this.Index, this.pokemon, this.basicLv, this.variableLv) = (index, Pokemon.GetPokemon(name), basicLv, variableLv);
+        public GBASlot(int index, Pokemon.Species p, uint basicLv, uint variableLv)
+            => (this.Index, this.pokemon, this.basicLv, this.variableLv) = (index, p, basicLv, variableLv);
     }
 
     /// <summary>
@@ -75,6 +76,28 @@ namespace Pokemon3genRNGLibrary
             return pokemon.GetIndividual(lv, IVs, pid);
         }
 
-        public UnownSlot(string form, uint basicLv, uint variableLv) : base(Pokemon.GetPokemon("アンノーン", form), basicLv, variableLv) { }
+        public UnownSlot(int index, string form, uint basicLv, uint variableLv) : base(index, Pokemon.GetPokemon("アンノーン", form), basicLv, variableLv) { }
+    }
+
+    public class MassOutBreakSlot : GBASlot
+    {
+        public override Pokemon.Individual Generate(uint seed, ILvGenerator lvGenerator, IIVsGenerator ivsGenerator, INatureGenerator natureGenerator, IGenderGenerator genderGenerator, out uint finSeed)
+        {
+            // レベル決定処理が行われない.
+
+            var gender = pokemon.GenderRatio.IsFixed() ? Gender.Genderless : genderGenerator.GenerateGender(ref seed);
+            var nature = natureGenerator.GenerateFixedNature(ref seed);
+
+            var pid = seed.GetRand() | (seed.GetRand() << 16);
+
+            while (!(pid.CheckGender(pokemon.GenderRatio, gender) && pid.CheckNature(nature)))
+                pid = seed.GetRand() | (seed.GetRand() << 16);
+
+            var IVs = ivsGenerator.GenerateIVs(ref seed);
+            finSeed = seed;
+            return pokemon.GetIndividual(basicLv, IVs, pid);
+        }
+    
+        public MassOutBreakSlot(string name, uint basicLv, uint variableLv) : base(-1, name, basicLv, variableLv) { }
     }
 }
