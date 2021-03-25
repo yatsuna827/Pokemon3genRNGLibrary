@@ -98,7 +98,7 @@ namespace Pokemon3genRNGLibrary
 
         private protected HoennSafariNatureGenerator(PokeBlock pokeBlock) => this.pokeBlock = pokeBlock;
 
-        public static INatureGenerator GetInstance(PokeBlock pokeBlock) => new HoennSafariNatureGenerator(pokeBlock);
+        public static INatureGenerator CreateInstance(PokeBlock pokeBlock) => new HoennSafariNatureGenerator(pokeBlock);
     }
 
     /// <summary>
@@ -110,9 +110,9 @@ namespace Pokemon3genRNGLibrary
         private protected override Nature Default(ref uint seed) => defaultGenerator.GenerateFixedNature(ref seed);
         private EmSafariNatureGenerator(PokeBlock pokeBlock, INatureGenerator defaultGenerator) : base(pokeBlock) => this.defaultGenerator = defaultGenerator;
 
-        public static INatureGenerator GetInstance(PokeBlock pokeBlock, Nature syncNature = Nature.other)
+        public static INatureGenerator CreateInstance(PokeBlock pokeBlock, Nature syncNature = Nature.other)
             => syncNature == Nature.other ?
-                HoennSafariNatureGenerator.GetInstance(pokeBlock) :
+                HoennSafariNatureGenerator.CreateInstance(pokeBlock) :
                 new EmSafariNatureGenerator(pokeBlock, SynchronizeNatureGenerator.GetInstance(syncNature));
     }
 }

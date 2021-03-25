@@ -16,6 +16,10 @@ namespace Pokemon3genRNGLibrary
     /// </summary>
     class NullSpecialSlotGenerator : ITryGeneratable<GBASlot>
     {
+        private NullSpecialSlotGenerator() { }
+
+        private static readonly NullSpecialSlotGenerator instance = new NullSpecialSlotGenerator();
+        public static ITryGeneratable<GBASlot> GetInstance() => instance;
         public bool TryGenerate(ref uint seed, out GBASlot result)
         {
             result = null;
@@ -28,6 +32,10 @@ namespace Pokemon3genRNGLibrary
     /// </summary>
     class DummySpecialSlotGenerator : ITryGeneratable<GBASlot>
     {
+        private DummySpecialSlotGenerator() { }
+
+        private static readonly DummySpecialSlotGenerator instance = new DummySpecialSlotGenerator();
+        public static ITryGeneratable<GBASlot> GetInstance() => instance;
         public bool TryGenerate(ref uint seed, out GBASlot result)
         {
             result = null;
@@ -52,8 +60,18 @@ namespace Pokemon3genRNGLibrary
             return false;
         }
 
-        public MassOutBreakSlotGenerator(string name, uint basicLv, uint variableLv = 0)
+        private protected MassOutBreakSlotGenerator(string name, uint basicLv, uint variableLv = 0)
             => this.massOutBreakSlot = new GBASlot(-1, name, basicLv, variableLv);
+
+        public ITryGeneratable<GBASlot> CreateInstance(string name, uint basicLv, uint variableLv)
+            => new MassOutBreakSlotGenerator(name, basicLv, variableLv);
+    }
+
+    class FeebasSlotGenerator : MassOutBreakSlotGenerator
+    {
+        private FeebasSlotGenerator() : base("ヒンバス", 20, 6) { }
+        private static readonly FeebasSlotGenerator instance = new FeebasSlotGenerator();
+        public static ITryGeneratable<GBASlot> GetInstance() => instance;
     }
 
     /// <summary>

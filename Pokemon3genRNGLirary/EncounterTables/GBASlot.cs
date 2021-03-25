@@ -33,9 +33,9 @@ namespace Pokemon3genRNGLibrary
             return pokemon.GetIndividual(lv, IVs, pid);
         }
 
-        public GBASlot(int index, string name, uint basicLv, uint variableLv)
+        public GBASlot(int index, string name, uint basicLv, uint variableLv = 1)
             => (this.Index, this.pokemon, this.basicLv, this.variableLv) = (index, Pokemon.GetPokemon(name), basicLv, variableLv);
-        public GBASlot(int index, Pokemon.Species p, uint basicLv, uint variableLv)
+        public GBASlot(int index, Pokemon.Species p, uint basicLv, uint variableLv = 1)
             => (this.Index, this.pokemon, this.basicLv, this.variableLv) = (index, p, basicLv, variableLv);
     }
 
@@ -76,7 +76,7 @@ namespace Pokemon3genRNGLibrary
             return pokemon.GetIndividual(lv, IVs, pid);
         }
 
-        public UnownSlot(int index, string form, uint basicLv, uint variableLv) : base(index, Pokemon.GetPokemon("アンノーン", form), basicLv, variableLv) { }
+        public UnownSlot(int index, string form, uint basicLv, uint variableLv = 1) : base(index, Pokemon.GetPokemon("アンノーン", form), basicLv, variableLv) { }
     }
 
     /// <summary>

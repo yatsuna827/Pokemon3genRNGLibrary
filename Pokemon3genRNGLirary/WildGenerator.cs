@@ -20,7 +20,7 @@ namespace Pokemon3genRNGLibrary
             var slot= slotGenerator.GenerateSlot(ref seed);
             return slot.Generate(seed, lvGenerator, ivsGenrator, natureGenerator, genderGenerator, out var _);
         }
-        public WildGenerator(FRLGMap map, WildGenerationArgument arg)
+        public WildGenerator(GBAMap map, WildGenerationArgument arg)
         {
             lvGenerator = map.GetLvGenerator(arg);
             slotGenerator = map.GetSlotGenerator(arg);

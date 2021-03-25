@@ -31,51 +31,6 @@ namespace Pokemon3genRNGLibrary
         public static FRLGStationaryGenerator Eevee = new FRLGStationaryGenerator("イーブイ", 25);
     }
 
-
-
-    class WildGenerationArgument
-    {
-        // FieldAbility
-        public FieldAbility FieldAbility { get; set; }
-
-        /// <summary>
-        /// サファリに設置したポロックの味を指定します.
-        /// サファリ以外では無視されます.
-        /// </summary>
-        public PokeBlock PokeBlock { get; set; } = PokeBlock.Plain;
-
-        public IIVsGenerator GenerateMethod { get; set;} = Pokemon3genRNGLibrary.GenerateMethod.Standard;
-
-        /// <summary>
-        /// エンカウント判定を無視するかどうかを指定します.
-        /// </summary>
-        public bool ForceEncount { get; set; }
-        // 
-    }
-
-    class FRLGMap
-    {
-        public readonly string MapName;
-        public readonly uint BasicEncounterRate;
-        private readonly EncounterTable encounterTable;
-        public SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
-        {
-            return null;
-        }
-        public ILvGenerator GetLvGenerator(WildGenerationArgument arg)
-        {
-            return null;
-        }
-        public INatureGenerator GetNatureGenerator(WildGenerationArgument arg)
-        {
-            return null;
-        }
-        public IGenderGenerator GetGenderGenerator(WildGenerationArgument arg)
-        {
-            return null;
-        }
-    }
-
     static class GenerateExtensions
     {
         internal static bool CheckNature(this uint pid, Nature fixedNature) 

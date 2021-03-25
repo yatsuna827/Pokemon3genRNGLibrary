@@ -7,7 +7,7 @@ namespace Pokemon3genRNGLibrary
 {
     abstract class EncounterTable : ITryGeneratable<GBASlot>
     {
-        private readonly GBASlot[] encounterTable;
+        public readonly GBASlot[] encounterTable;
         abstract protected int SelectSlot(ref uint seed);
         public bool TryGenerate(ref uint seed, out GBASlot result)
         {

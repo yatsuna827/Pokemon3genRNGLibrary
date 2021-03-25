@@ -16,7 +16,7 @@ namespace Pokemon3genRNGLibrary
             return slot;
         }
 
-        public SlotGenerator(IEnumerable<ITryGeneratable<GBASlot>> slotGenerators) 
+        public SlotGenerator(params ITryGeneratable<GBASlot>[] slotGenerators) 
             => this.slotGenerators = slotGenerators;
     }
 }
