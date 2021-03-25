@@ -7,10 +7,10 @@ using PokemonStandardLibrary.PokeDex.Gen3;
 
 namespace Pokemon3genRNGLibrary
 {
-    class WildGenerator : IGeneratable<Pokemon.Individual>
+    public class WildGenerator : IGeneratable<Pokemon.Individual>
     {
-        private readonly ILvGenerator lvGenerator; // プレッシャーの有無で決まる
         private readonly SlotGenerator slotGenerator; // マップと静電気/磁力の有無によって決まる
+        private readonly ILvGenerator lvGenerator; // プレッシャーの有無で決まる
         private readonly INatureGenerator natureGenerator; // マップとシンクロの有無によって決まる
         private readonly IGenderGenerator genderGenerator; // メロボの有無によって決まる
         private readonly IIVsGenerator ivsGenrator; // 引数のまま

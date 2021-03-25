@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Pokemon3genRNGLibrary
 {
-    class WildGenerationArgument
+    public class WildGenerationArgument
     {
         // FieldAbility
         public FieldAbility FieldAbility { get; set; } = FieldAbility.GetOtherAbility();
