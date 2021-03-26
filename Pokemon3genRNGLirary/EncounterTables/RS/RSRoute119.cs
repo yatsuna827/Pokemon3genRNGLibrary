@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pokemon3genRNGLibrary.EncounterTables.RS
+namespace Pokemon3genRNGLibrary
 {
     abstract class RSRoute119 : RSMap
     {
@@ -21,29 +21,29 @@ namespace Pokemon3genRNGLibrary.EncounterTables.RS
 
     class RSRoute119OldRod : RSRoute119
     {
-        private protected RSRoute119OldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public RSRoute119OldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
     class RSFeebasSpotOldRod : RSFeebasSpot
     {
-        private protected RSFeebasSpotOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public RSFeebasSpotOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
 
     class RSRoute119GoodRod : RSRoute119
     {
-        private protected RSRoute119GoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public RSRoute119GoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
     class RSFeebasSpotGoodRod : RSFeebasSpot
     {
-        private protected RSFeebasSpotGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public RSFeebasSpotGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
 
     class RSRoute119SuperRod : RSRoute119
     {
-        private protected RSRoute119SuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public RSRoute119SuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
     class RSFeebasSpotSuperRod : RSFeebasSpot
     {
-        private protected RSFeebasSpotSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public RSFeebasSpotSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
 
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pokemon3genRNGLibrary.EncounterTables.RS
+namespace Pokemon3genRNGLibrary
 {
     abstract class RSSafari : RSMap
     {
@@ -19,27 +19,27 @@ namespace Pokemon3genRNGLibrary.EncounterTables.RS
 
     class RSSafariSurf : RSSafari
     {
-        private protected RSSafariSurf(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table)) { }
+        public RSSafariSurf(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table)) { }
     }
 
     class RSSafariOldRod : RSSafari
     {
-        private protected RSSafariOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public RSSafariOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
 
     class RSSafariGoodRod : RSSafari
     {
-        private protected RSSafariGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public RSSafariGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
 
     class RSSafariSuperRod : RSSafari
     {
-        private protected RSSafariSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public RSSafariSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
 
     class RSSafariRockSmash : RSSafari
     {
-        private protected RSSafariRockSmash(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
+        public RSSafariRockSmash(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
     }
 
 }

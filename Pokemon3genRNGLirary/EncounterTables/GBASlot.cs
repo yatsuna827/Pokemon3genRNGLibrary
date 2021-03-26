@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using PokemonPRNG.LCG32;
 using PokemonPRNG.LCG32.StandardLCG;
 using PokemonStandardLibrary;
@@ -37,6 +37,9 @@ namespace Pokemon3genRNGLibrary
             => (this.Index, this.pokemon, this.basicLv, this.variableLv) = (index, Pokemon.GetPokemon(name), basicLv, variableLv);
         public GBASlot(int index, Pokemon.Species p, uint basicLv, uint variableLv = 1)
             => (this.Index, this.pokemon, this.basicLv, this.variableLv) = (index, p, basicLv, variableLv);
+
+        public static GBASlot[] CreateTable((string name, uint lv)[] table) => table.Select((_, i) => new GBASlot(i, _.name, _.lv)).ToArray();
+        public static GBASlot[] CreateTable((string name, uint basicLv, uint variableLv)[] table) => table.Select((_, i) => new GBASlot(i, _.name, _.basicLv, _.variableLv)).ToArray();
     }
 
     /// <summary>
@@ -77,6 +80,8 @@ namespace Pokemon3genRNGLibrary
         }
 
         public UnownSlot(int index, string form, uint basicLv, uint variableLv = 1) : base(index, Pokemon.GetPokemon("アンノーン", form), basicLv, variableLv) { }
+
+        public static new UnownSlot[] CreateTable((string form, uint lv)[] table) => table.Select((_, i) => new UnownSlot(i, _.form, _.lv)).ToArray();
     }
 
     /// <summary>

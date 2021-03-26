@@ -8,6 +8,20 @@ namespace Pokemon3genRNGLibrary
     // 各種フィールド特性が有効になる.
     abstract class EmMap: GBAMap
     {
+        internal override IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg)
+        {
+            if (arg.ForceEncount) return ForceEncounter.Getinstance();
+
+            var value = BasicEncounterRate << 4;
+            if (arg.RidingBicycle) value = value * 8 / 10;
+            if (arg.UsingFlute == Flute.BlackFlute) value /= 2;
+            if (arg.UsingFlute == Flute.WhiteFlute) value = value * 15 / 10;
+            if (arg.HasCleanseTag) value = value * 2 / 3;
+            else value = arg.FieldAbility.CorrectEncounterThreshold(value);
+
+            return RSEEncounter.CreateInstance(value);
+        }
+
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg) 
             => new SlotGenerator(encounterTable);
 
@@ -23,7 +37,7 @@ namespace Pokemon3genRNGLibrary
         private protected EmMap(string name, uint rate, EncounterTable table) : base(name, rate, table) { }
     }
 
-    class EmGrassMap : EmMap
+    class EmGrass : EmMap
     {
         private protected AttractSlotGenerator staticGenerator;
         private protected AttractSlotGenerator magnetPullGenerator;
@@ -37,7 +51,7 @@ namespace Pokemon3genRNGLibrary
             return new SlotGenerator(encounterTable);
         }
         
-        private protected EmGrassMap(string name, uint rate, GBASlot[] table) : base(name, rate, new GrassTable(table))
+        public EmGrass(string name, uint rate, GBASlot[] table) : base(name, rate, new GrassTable(table))
         {
             staticGenerator = new AttractSlotGenerator(table, PokemonStandardLibrary.PokeType.Electric);
             magnetPullGenerator = new AttractSlotGenerator(table, PokemonStandardLibrary.PokeType.Steel);
@@ -45,7 +59,7 @@ namespace Pokemon3genRNGLibrary
 
     }
 
-    class EmSurfMap : EmMap
+    class EmSurf : EmMap
     {
         private protected AttractSlotGenerator staticGenerator;
 
@@ -55,31 +69,31 @@ namespace Pokemon3genRNGLibrary
                 new SlotGenerator(staticGenerator, encounterTable) : 
                 new SlotGenerator(encounterTable);
 
-        private protected EmSurfMap(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table))
+        public EmSurf(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table))
         {
             staticGenerator = new AttractSlotGenerator(table, PokeType.Electric);
         }
 
     }
 
-    class EmOldRodMap : EmMap
+    class EmOldRod : EmMap
     {
-        private protected EmOldRodMap(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public EmOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
 
-    class EmGoodRodMap : EmMap
+    class EmGoodRod : EmMap
     {
-        private protected EmGoodRodMap(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public EmGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
 
-    class EmSuperRodMap : EmMap
+    class EmSuperRod : EmMap
     {
-        private protected EmSuperRodMap(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public EmSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
 
-    class EmRockSmashMap : EmMap
+    class EmRockSmash : EmMap
     {
-        private protected EmRockSmashMap(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
+        public EmRockSmash(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
     }
 
 }

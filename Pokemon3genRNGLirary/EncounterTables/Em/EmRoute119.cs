@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pokemon3genRNGLibrary.EncounterTables.Em
+namespace Pokemon3genRNGLibrary
 {
     abstract class EmRoute119 : EmMap
     {
@@ -21,29 +21,29 @@ namespace Pokemon3genRNGLibrary.EncounterTables.Em
 
     class EmRoute119OldRod : EmRoute119
     {
-        private protected EmRoute119OldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public EmRoute119OldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
     class EmFeebasSpotOldRod : EmFeebasSpot
     {
-        private protected EmFeebasSpotOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public EmFeebasSpotOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
 
     class EmRoute119GoodRod : EmRoute119
     {
-        private protected EmRoute119GoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public EmRoute119GoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
     class EmFeebasSpotGoodRod : EmFeebasSpot
     {
-        private protected EmFeebasSpotGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public EmFeebasSpotGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
 
     class EmRoute119SuperRod : EmRoute119
     {
-        private protected EmRoute119SuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public EmRoute119SuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
     class EmFeebasSpotSuperRod : EmFeebasSpot
     {
-        private protected EmFeebasSpotSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public EmFeebasSpotSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
 
 }

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pokemon3genRNGLibrary.EncounterTables.FRLG
+namespace Pokemon3genRNGLibrary
 {
     abstract class FRLGMap : GBAMap
     {
+        internal override IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg) => ForceEncounter.Getinstance();
+
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
             => new SlotGenerator(encounterTable);
 
@@ -26,29 +28,29 @@ namespace Pokemon3genRNGLibrary.EncounterTables.FRLG
         public FRLGGrass(string name, uint rate, GBASlot[] table) : base(name, rate, new GrassTable(table)) { }
     }
 
-    class FRLGSurfMap : FRLGMap
+    class FRLGSurf : FRLGMap
     {
-        private protected FRLGSurfMap(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table)) { }
+        public FRLGSurf(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table)) { }
     }
 
-    class FRLGOldRodMap : FRLGMap
+    class FRLGOldRod : FRLGMap
     {
-        private protected FRLGOldRodMap(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public FRLGOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
 
-    class FRLGGoodRodMap : FRLGMap
+    class FRLGGoodRod : FRLGMap
     {
-        private protected FRLGGoodRodMap(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public FRLGGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
 
-    class FRLGSuperRodMap : FRLGMap
+    class FRLGSuperRod : FRLGMap
     {
-        private protected FRLGSuperRodMap(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public FRLGSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
 
-    class FRLGRockSmashMap : FRLGMap
+    class FRLGRockSmash : FRLGMap
     {
-        private protected FRLGRockSmashMap(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
+        public FRLGRockSmash(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
     }
 
 }

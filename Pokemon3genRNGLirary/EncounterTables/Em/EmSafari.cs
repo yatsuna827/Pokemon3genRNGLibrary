@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using PokemonStandardLibrary;
 
-namespace Pokemon3genRNGLibrary.EncounterTables.Em
+namespace Pokemon3genRNGLibrary
 {
     abstract class EmSafari : EmMap
     {
@@ -36,7 +36,7 @@ namespace Pokemon3genRNGLibrary.EncounterTables.Em
             return new SlotGenerator(encounterTable);
         }
 
-        private protected EmSafariGrass(string name, uint rate, GBASlot[] table) : base(name, rate, new GrassTable(table))
+        public EmSafariGrass(string name, uint rate, GBASlot[] table) : base(name, rate, new GrassTable(table))
         {
             staticGenerator = new AttractSlotGenerator(table, PokeType.Electric);
             magnetPullGenerator = new AttractSlotGenerator(table, PokeType.Steel);
@@ -54,7 +54,7 @@ namespace Pokemon3genRNGLibrary.EncounterTables.Em
                 new SlotGenerator(staticGenerator, encounterTable) :
                 new SlotGenerator(encounterTable);
 
-        private protected EmSafariSurf(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table))
+        public EmSafariSurf(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table))
         {
             staticGenerator = new AttractSlotGenerator(table, PokeType.Electric);
         }
@@ -63,22 +63,22 @@ namespace Pokemon3genRNGLibrary.EncounterTables.Em
 
     class EmSafariOldRod : EmSafari
     {
-        private protected EmSafariOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
+        public EmSafariOldRod(string name, uint rate, GBASlot[] table) : base(name, rate, new OldRodTable(table)) { }
     }
 
     class EmSafariGoodRod : EmSafari
     {
-        private protected EmSafariGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
+        public EmSafariGoodRod(string name, uint rate, GBASlot[] table) : base(name, rate, new GoodRodTable(table)) { }
     }
 
     class EmSafariSuperRod : EmSafari
     {
-        private protected EmSafariSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
+        public EmSafariSuperRod(string name, uint rate, GBASlot[] table) : base(name, rate, new SuperRodTable(table)) { }
     }
 
     class EmSafariRockSmash : EmSafari
     {
-        private protected EmSafariRockSmash(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
+        public EmSafariRockSmash(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
     }
 
 }
