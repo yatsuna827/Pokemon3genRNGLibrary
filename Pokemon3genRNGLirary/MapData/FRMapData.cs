@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Pokemon3genRNGLibrary.MapData.FR
+namespace Pokemon3genRNGLibrary.MapData
 {
     public static class FRMapData
     {

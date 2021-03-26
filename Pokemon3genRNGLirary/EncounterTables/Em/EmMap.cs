@@ -32,7 +32,7 @@ namespace Pokemon3genRNGLibrary
             => SynchronizeNatureGenerator.GetInstance(arg.FieldAbility.syncNature);
 
         internal override IGenderGenerator GetGenderGenerator(WildGenerationArgument arg)
-            => FixedGenderGenerator.GetInstance(arg.FieldAbility.cuteCharmGender);
+            => CuteCharmGenderGenerator.GetInstance(arg.FieldAbility.cuteCharmGender);
 
         private protected EmMap(string name, uint rate, EncounterTable table) : base(name, rate, table) { }
     }
@@ -45,16 +45,16 @@ namespace Pokemon3genRNGLibrary
         // 静電気と磁力が有効.
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
         {
-            if (arg.FieldAbility.attractingType == PokeType.Electric) return new SlotGenerator(encounterTable, staticGenerator);
-            if (arg.FieldAbility.attractingType == PokeType.Steel) return new SlotGenerator(encounterTable, magnetPullGenerator);
+            if (arg.FieldAbility.attractingType == PokeType.Electric) return new SlotGenerator(staticGenerator, encounterTable);
+            if (arg.FieldAbility.attractingType == PokeType.Steel) return new SlotGenerator(magnetPullGenerator, encounterTable);
 
             return new SlotGenerator(encounterTable);
         }
         
         public EmGrass(string name, uint rate, GBASlot[] table) : base(name, rate, new GrassTable(table))
         {
-            staticGenerator = new AttractSlotGenerator(table, PokemonStandardLibrary.PokeType.Electric);
-            magnetPullGenerator = new AttractSlotGenerator(table, PokemonStandardLibrary.PokeType.Steel);
+            staticGenerator = new AttractSlotGenerator(table, PokeType.Electric);
+            magnetPullGenerator = new AttractSlotGenerator(table, PokeType.Steel);
         }
 
     }

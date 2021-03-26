@@ -79,7 +79,7 @@ namespace Pokemon3genRNGLibrary
         private protected virtual Nature Default(ref uint seed) => defaultGenerator.GenerateFixedNature(ref seed);
         public Nature GenerateFixedNature(ref uint seed)
         {
-            if (seed.GetRand(100) >= 80 || pokeBlock.IsTasteless()) return defaultGenerator.GenerateFixedNature(ref seed);
+            if (seed.GetRand(100) >= 80 || pokeBlock.IsTasteless()) return Default(ref seed);
 
             var natureList = Enumerable.Range(0, 25).Select(_ => (Nature)_).ToList();
             for (int i = 0; i < 25; i++)
@@ -107,7 +107,7 @@ namespace Pokemon3genRNGLibrary
     public class EmSafariNatureGenerator : HoennSafariNatureGenerator
     {
         private readonly INatureGenerator defaultGenerator;
-        private protected override Nature Default(ref uint seed) => defaultGenerator.GenerateFixedNature(ref seed);
+        private protected override Nature Default(ref uint seed) => this.defaultGenerator.GenerateFixedNature(ref seed);
         private EmSafariNatureGenerator(PokeBlock pokeBlock, INatureGenerator defaultGenerator) : base(pokeBlock) => this.defaultGenerator = defaultGenerator;
 
         public static INatureGenerator CreateInstance(PokeBlock pokeBlock, Nature syncNature = Nature.other)

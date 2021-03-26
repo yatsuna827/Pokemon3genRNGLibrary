@@ -6,7 +6,7 @@ using PokemonStandardLibrary.CommonExtension;
 
 namespace Pokemon3genRNGLibrary
 {
-    public enum Taste { NoTaste, Spicy, Sour, Dry, Bitter, Sweet }
+    public enum Taste { Spicy, Sour, Dry, Bitter, Sweet, NoTaste }
     public class PokeBlock
     {
         public static readonly PokeBlock Plain = new PokeBlock();
@@ -33,7 +33,7 @@ namespace Pokemon3genRNGLibrary
         public bool IsTasteless() => tasteLevels.All(_ => _ == 0);
 
         public PokeBlock(uint spicy = 0, uint dry = 0, uint sweet = 0, uint bitter = 0, uint sour = 0)
-            => tasteLevels = new uint[] { spicy, dry, sweet, bitter, sour };
+            => tasteLevels = new uint[] { spicy, sour, dry, bitter, sweet };
     }
 
     public static class PokeBlockExtension

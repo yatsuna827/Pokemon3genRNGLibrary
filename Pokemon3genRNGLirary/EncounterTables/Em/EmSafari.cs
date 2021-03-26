@@ -7,17 +7,8 @@ namespace Pokemon3genRNGLibrary
 {
     abstract class EmSafari : EmMap
     {
-        internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
-            => new SlotGenerator(encounterTable);
-
-        internal override ILvGenerator GetLvGenerator(WildGenerationArgument arg)
-            => arg.FieldAbility.lvGenerator;
-
         internal override INatureGenerator GetNatureGenerator(WildGenerationArgument arg)
             => EmSafariNatureGenerator.CreateInstance(arg.PokeBlock, arg.FieldAbility.syncNature);
-
-        internal override IGenderGenerator GetGenderGenerator(WildGenerationArgument arg)
-            => FixedGenderGenerator.GetInstance(arg.FieldAbility.cuteCharmGender);
 
         private protected EmSafari(string name, uint rate, EncounterTable table) : base(name, rate, table) { }
     }
@@ -30,8 +21,8 @@ namespace Pokemon3genRNGLibrary
         // 静電気と磁力が有効.
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
         {
-            if (arg.FieldAbility.attractingType == PokeType.Electric) return new SlotGenerator(encounterTable, staticGenerator);
-            if (arg.FieldAbility.attractingType == PokeType.Steel) return new SlotGenerator(encounterTable, magnetPullGenerator);
+            if (arg.FieldAbility.attractingType == PokeType.Electric) return new SlotGenerator(staticGenerator, encounterTable);
+            if (arg.FieldAbility.attractingType == PokeType.Steel) return new SlotGenerator(magnetPullGenerator, encounterTable);
 
             return new SlotGenerator(encounterTable);
         }

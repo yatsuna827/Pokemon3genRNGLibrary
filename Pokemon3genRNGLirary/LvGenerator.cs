@@ -22,7 +22,7 @@ namespace Pokemon3genRNGLibrary
             var lv = basicLv + seed.GetRand(variableLv);
             if((seed.GetRand() & 1) == 1)
                 lv = basicLv + variableLv;
-            else if(lv != basicLv)
+            if(lv != basicLv)
                 lv --;
 
             return lv;
