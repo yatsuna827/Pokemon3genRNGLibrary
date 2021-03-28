@@ -17,4 +17,13 @@
     <ProjectReference Include="..\Pokemon3genRNGLirary\Pokemon3genRNGLibrary.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="PokemonPRNG">
+      <HintPath>..\Pokemon3genRNGLirary\libraries\PokemonPRNG.dll</HintPath>
+    </Reference>
+    <Reference Include="PokemonStandardLibrary">
+      <HintPath>..\Pokemon3genRNGLirary\libraries\PokemonStandardLibrary.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
 </Project>

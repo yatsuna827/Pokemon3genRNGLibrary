@@ -11,26 +11,6 @@ using PokemonStandardLibrary.CommonExtension;
 
 namespace Pokemon3genRNGLibrary
 {
-    class FRLGStationaryGenerator : IGeneratable<Pokemon.Individual>
-    {
-        private readonly GBASlot slot;
-        internal FRLGStationaryGenerator(string name, uint lv) => slot = new GBASlot(-1, name, lv, 1);
-
-        public Pokemon.Individual Generate(uint seed) => slot.Generate(seed, 
-            StandardLvGenerator.GetInstance(), 
-            GenerateMethod.Standard, 
-            NullNatureGenerator.GetInstance(), 
-            NullGenderGenerator.GetInstance(),  
-            out _);
-
-        public static FRLGStationaryGenerator Moltres = new FRLGStationaryGenerator("ファイヤー", 50);
-        public static FRLGStationaryGenerator Zapdos = new FRLGStationaryGenerator("サンダー", 50);
-        public static FRLGStationaryGenerator Articuno = new FRLGStationaryGenerator("フリーザー", 50);
-        public static FRLGStationaryGenerator Mewtwo = new FRLGStationaryGenerator("ミュウツー", 70);
-
-        public static FRLGStationaryGenerator Eevee = new FRLGStationaryGenerator("イーブイ", 25);
-    }
-
     static class GenerateExtensions
     {
         internal static bool CheckNature(this uint pid, Nature fixedNature) 
