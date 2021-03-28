@@ -13,7 +13,7 @@ namespace UnitTest
         {
             var seed = 0x0u;
             var generator = NullNatureGenerator.GetInstance();
-            Assert.AreEqual(generator.GenerateFixedNature(ref seed), Nature.other);
+            Assert.AreEqual(Nature.other, generator.GenerateFixedNature(ref seed));
         }
     }
 
@@ -24,7 +24,7 @@ namespace UnitTest
         public void GetInstanceWithInvalidNature()
         {
             var generator = FixedNatureGenerator.GetInstance(Nature.other);
-            Assert.AreEqual(generator.GetType(), typeof(NullNatureGenerator));
+            Assert.AreEqual(typeof(NullNatureGenerator), generator.GetType());
         }
 
         [TestMethod]
@@ -34,7 +34,7 @@ namespace UnitTest
             var expectedNature = Nature.Relaxed;
             var generator = FixedNatureGenerator.GetInstance(expectedNature);
 
-            Assert.AreEqual(generator.GenerateFixedNature(ref seed), expectedNature);
+            Assert.AreEqual(expectedNature, generator.GenerateFixedNature(ref seed));
         }
     }
 
@@ -48,7 +48,7 @@ namespace UnitTest
             var seed = TestCases.Mod25[(int)expectedNature];
             var generator = StandardNatureGenerator.GetInstance();
 
-            Assert.AreEqual(generator.GenerateFixedNature(ref seed), expectedNature);
+            Assert.AreEqual(expectedNature, generator.GenerateFixedNature(ref seed));
         }
     }
 
@@ -59,7 +59,7 @@ namespace UnitTest
         public void GetInstanceWithDefaultValue()
         {
             var generator = SynchronizeNatureGenerator.GetInstance(Nature.other);
-            Assert.AreEqual(generator.GetType(), typeof(StandardNatureGenerator));
+            Assert.AreEqual(typeof(StandardNatureGenerator), generator.GetType());
         }
         [TestMethod]
         public void PassedSync()
@@ -69,7 +69,7 @@ namespace UnitTest
 
             var seed = TestCases.Mod2[0];
 
-            Assert.AreEqual(generator.GenerateFixedNature(ref seed), expectedNature);
+            Assert.AreEqual(expectedNature, generator.GenerateFixedNature(ref seed));
         }
         [TestMethod]
         public void UnpassedSync()
@@ -81,7 +81,7 @@ namespace UnitTest
 
             if ((TestCases.Mod25[(int)expectedNature] >> 16) % 2 == 0) throw new AssertFailedException("シンクロ判定を通るseedが渡されました");
 
-            Assert.AreEqual(generator.GenerateFixedNature(ref seed), expectedNature);
+            Assert.AreEqual(expectedNature, generator.GenerateFixedNature(ref seed));
         }
     }
 

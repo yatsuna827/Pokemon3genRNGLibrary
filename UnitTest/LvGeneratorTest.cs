@@ -11,14 +11,14 @@ namespace UnitTest
         {
             uint seed = 0x0;
             var lvGenerator = StandardLvGenerator.GetInstance();
-            Assert.AreEqual(lvGenerator.GenerateLv(ref seed, 5, 1), 5u);
+            Assert.AreEqual(5u, lvGenerator.GenerateLv(ref seed, 5, 1));
         }
         [TestMethod]
         public void GenerateLvWithVariableLv()
         {
             uint seed = TestCases.Mod10[7];
             var lvGenerator = StandardLvGenerator.GetInstance();
-            Assert.AreEqual(lvGenerator.GenerateLv(ref seed, 5, 10), 12u);
+            Assert.AreEqual(12u, lvGenerator.GenerateLv(ref seed, 5, 10));
         }
         [TestMethod]
         [ExpectedException(typeof(System.DivideByZeroException))]
@@ -38,7 +38,7 @@ namespace UnitTest
         {
             uint seed = 0x0;
             var lvGenerator = PressureLvGenerator.GetInstance();
-            Assert.AreEqual(lvGenerator.GenerateLv(ref seed, 5, 1), 5u);
+            Assert.AreEqual(5u, lvGenerator.GenerateLv(ref seed, 5, 1));
         }
 
         [TestMethod]
@@ -50,7 +50,7 @@ namespace UnitTest
 
             if (((seed >> 16) & 1) == 0) throw new AssertFailedException($"プレッシャー判定に外れるseedが与えられています {seed:X8}");
 
-            Assert.AreEqual(lv, 14u);
+            Assert.AreEqual(14u, lv);
         }
 
         [TestMethod]
@@ -64,7 +64,7 @@ namespace UnitTest
 
             if (((seed >> 16) & 1) != 0) throw new AssertFailedException("プレッシャー判定に通るseedが与えられています");
 
-            Assert.AreEqual(lv, (uint)(5 + expectedRand - 1));
+            Assert.AreEqual((uint)(5 + expectedRand - 1), lv);
         }
 
         [TestMethod]

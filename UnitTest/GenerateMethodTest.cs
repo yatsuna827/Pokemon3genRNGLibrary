@@ -15,8 +15,8 @@ namespace UnitTest
 
             var method1 = GenerateMethod.Standard;
             var result = method1.GenerateIVs(ref seed);
-            CollectionAssert.AreEqual(result, ivs, $"expected:{string.Join("-", ivs)} actual:{string.Join("-", result)}");
-            Assert.AreEqual(seed, 0x63ed9171u, $"expected seed: 0x63ed9171 actual: {seed:x8}");
+            CollectionAssert.AreEqual(ivs, result);
+            Assert.AreEqual(0x63ed9171u, seed);
         }
 
         [TestMethod]
@@ -27,8 +27,8 @@ namespace UnitTest
 
             var method2 = GenerateMethod.IVsInterrupt;
             var result = method2.GenerateIVs(ref seed);
-            CollectionAssert.AreEqual(result, ivs, $"expected:{string.Join("-", ivs)} actual:{string.Join("-", result)}");
-            Assert.AreEqual(seed, 0x1cddbb90u, $"expected seed: 0x1cddbb90 actual: {seed:x8}");
+            CollectionAssert.AreEqual(ivs, result);
+            Assert.AreEqual(0x1cddbb90u, seed);
         }
 
         [TestMethod]
@@ -39,8 +39,8 @@ namespace UnitTest
 
             var method3 = GenerateMethod.MiddleInterrupt;
             var result = method3.GenerateIVs(ref seed);
-            CollectionAssert.AreEqual(result, ivs, $"expected:{string.Join("-", ivs)} actual:{string.Join("-", result)}");
-            Assert.AreEqual(seed, 0x1cddbb90u, $"expected seed: 0x1cddbb90 actual: {seed:x8}");
+            CollectionAssert.AreEqual(ivs, result);
+            Assert.AreEqual(0x1cddbb90u, seed);
         }
     }
 }

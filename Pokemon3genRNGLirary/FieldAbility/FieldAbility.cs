@@ -1,17 +1,15 @@
-using System.Linq;
-using PokemonPRNG.LCG32.StandardLCG;
 using PokemonStandardLibrary;
 
 namespace Pokemon3genRNGLibrary
 {
     public class FieldAbility
     {
-        internal readonly Nature syncNature;
-        internal readonly Gender cuteCharmGender;
-        internal readonly PokeType attractingType;
-        internal ILvGenerator lvGenerator { get; private set; } = StandardLvGenerator.GetInstance();
+        public readonly Nature syncNature;
+        public readonly Gender cuteCharmGender;
+        public readonly PokeType attractingType;
+        public ILvGenerator lvGenerator { get; private set; } = StandardLvGenerator.GetInstance();
 
-        internal virtual uint CorrectEncounterThreshold(uint threshold) => threshold;
+        public virtual uint CorrectEncounterThreshold(uint threshold) => threshold;
 
         private FieldAbility(Nature syncNature = Nature.other, Gender cuteCharmGender = Gender.Genderless, PokeType attractingType = PokeType.Non)
         { 
@@ -31,12 +29,12 @@ namespace Pokemon3genRNGLibrary
 
         class Stench : FieldAbility
         {
-            internal override uint CorrectEncounterThreshold(uint threshold) => threshold / 2;
+            public override uint CorrectEncounterThreshold(uint threshold) => threshold / 2;
         }
 
         class Illuminate : FieldAbility
         {
-            internal override uint CorrectEncounterThreshold(uint threshold) => threshold * 2;
+            public override uint CorrectEncounterThreshold(uint threshold) => threshold * 2;
         }
     }
 }
