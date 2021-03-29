@@ -1441,50 +1441,48 @@ namespace Pokemon3genRNGLibrary.MapData
             {
                 tables = new GBAMap[]
                 {
-                new RSRockSmash("111ばんどうろ", 20, GBASlot.CreateTable(new (string, uint, uint)[]
-                {
-                    ("イシツブテ", 10, 6),
-                    ("イシツブテ", 5, 6),
-                    ("イシツブテ", 15, 6),
-                    ("イシツブテ", 15, 6),
-                    ("イシツブテ", 15, 6),
-                })),
-                new RSRockSmash("114ばんどうろ", 20, GBASlot.CreateTable(new (string, uint, uint)[]
-                {
-                    ("イシツブテ", 10, 6),
-                    ("イシツブテ", 5, 6),
-                    ("イシツブテ", 15, 6),
-                    ("イシツブテ", 15, 6),
-                    ("イシツブテ", 15, 6),
-                })),
-                new RSRockSmash("いしのどうくつ", 20, GBASlot.CreateTable(new (string, uint, uint)[]
-                {
-                    ("イシツブテ", 10, 6),
-                    ("ノズパス", 10, 11),
-                    ("イシツブテ", 5, 6),
-                    ("イシツブテ", 15, 6),
-                    ("イシツブテ", 15, 6),
-                })),
-                new RSRockSmash("チャンピオンロード", 20, GBASlot.CreateTable(new (string, uint, uint)[]
-                {
-                    ("ゴローン", 30, 11),
-                    ("イシツブテ", 30, 11),
-                    ("ゴローン", 35, 6),
-                    ("ゴローン", 35, 6),
-                    ("ゴローン", 35, 6),
-                })),
-                new RSSafariRockSmash("サファリゾーン ダートエリア", 25, GBASlot.CreateTable(new (string, uint, uint)[]
-                {
-                    ("イシツブテ", 10, 6),
-                    ("イシツブテ", 5, 6),
-                    ("イシツブテ", 15, 6),
-                    ("イシツブテ", 20, 6),
-                    ("イシツブテ", 25, 6),
-                })),
+                    new RSRockSmash("111ばんどうろ", 20, GBASlot.CreateTable(new (string, uint, uint)[]
+                    {
+                        ("イシツブテ", 10, 6),
+                        ("イシツブテ", 5, 6),
+                        ("イシツブテ", 15, 6),
+                        ("イシツブテ", 15, 6),
+                        ("イシツブテ", 15, 6),
+                    })),
+                    new RSRockSmash("114ばんどうろ", 20, GBASlot.CreateTable(new (string, uint, uint)[]
+                    {
+                        ("イシツブテ", 10, 6),
+                        ("イシツブテ", 5, 6),
+                        ("イシツブテ", 15, 6),
+                        ("イシツブテ", 15, 6),
+                        ("イシツブテ", 15, 6),
+                    })),
+                    new RSRockSmash("いしのどうくつ", 20, GBASlot.CreateTable(new (string, uint, uint)[]
+                    {
+                        ("イシツブテ", 10, 6),
+                        ("ノズパス", 10, 11),
+                        ("イシツブテ", 5, 6),
+                        ("イシツブテ", 15, 6),
+                        ("イシツブテ", 15, 6),
+                    })),
+                    new RSRockSmash("チャンピオンロード", 20, GBASlot.CreateTable(new (string, uint, uint)[]
+                    {
+                        ("ゴローン", 30, 11),
+                        ("イシツブテ", 30, 11),
+                        ("ゴローン", 35, 6),
+                        ("ゴローン", 35, 6),
+                        ("ゴローン", 35, 6),
+                    })),
+                    new RSSafariRockSmash("サファリゾーン ダートエリア", 25, GBASlot.CreateTable(new (string, uint, uint)[]
+                    {
+                        ("イシツブテ", 10, 6),
+                        ("イシツブテ", 5, 6),
+                        ("イシツブテ", 15, 6),
+                        ("イシツブテ", 20, 6),
+                        ("イシツブテ", 25, 6),
+                    })),
                 };
             }
         }
-
     }
-
 }
