@@ -3,7 +3,7 @@ using PokemonPRNG.LCG32.StandardLCG;
 
 namespace Pokemon3genRNGLibrary
 {
-    class SlotGenerator
+    public class SlotGenerator
     {
         private readonly IEnumerable<ITryGeneratable<GBASlot>> slotGenerators;
 

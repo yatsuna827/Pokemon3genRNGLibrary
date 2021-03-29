@@ -13,7 +13,7 @@ namespace UnitTest
             uint seed = 0x68501323;
             var expectedIVs = new uint[] { 31, 31, 31, 31, 31, 31 };
 
-            var generator = GenerateMethod.Standard;
+            var generator = StandardIVsGenerator.GetInstance();
             CollectionAssert.AreEqual(expectedIVs, generator.GenerateIVs(ref seed));
         }
 
@@ -23,17 +23,17 @@ namespace UnitTest
             uint seed = 0xB8864CFA;
             var expectedIVs = new uint[] { 31, 31, 31, 31, 31, 31 };
 
-            var generator = GenerateMethod.IVsInterrupt;
+            var generator = MiddleInterruptedIVsGenerator.GetInstance();
             CollectionAssert.AreEqual(expectedIVs, generator.GenerateIVs(ref seed));
         }
 
         [TestMethod]
-        public void TestGenerateMethod3()
+        public void TestGenerateMethod4()
         {
             uint seed = 0x11A90F70;
             var expectedIVs = new uint[] { 31, 31, 31, 31, 31, 31 };
 
-            var generator = GenerateMethod.MiddleInterrupt;
+            var generator = PriorInterruptIVsGenerator.GetInstance();
             CollectionAssert.AreEqual(expectedIVs, generator.GenerateIVs(ref seed));
         }
 

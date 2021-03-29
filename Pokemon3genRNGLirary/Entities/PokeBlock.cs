@@ -11,17 +11,17 @@ namespace Pokemon3genRNGLibrary
     {
         public static readonly PokeBlock Plain = new PokeBlock();
         public static readonly PokeBlock RedPokeBlock = new PokeBlock(spicy: 10);
-        public static readonly PokeBlock BluePokeBlock = new PokeBlock(dry: 10);
-        public static readonly PokeBlock PinkPokeBlock = new PokeBlock(sweet: 10);
-        public static readonly PokeBlock GreenPokeBlock = new PokeBlock(bitter: 10);
         public static readonly PokeBlock YellowPokeBlock = new PokeBlock(sour: 10);
+        public static readonly PokeBlock BluePokeBlock = new PokeBlock(dry: 10);
+        public static readonly PokeBlock GreenPokeBlock = new PokeBlock(bitter: 10);
+        public static readonly PokeBlock PinkPokeBlock = new PokeBlock(sweet: 10);
 
         private readonly uint[] tasteLevels;
         public uint SpicyLevel { get => tasteLevels[(int)Taste.Spicy]; }
-        public uint DryLevel { get => tasteLevels[(int)Taste.Dry]; }
-        public uint SweetLevel { get => tasteLevels[(int)Taste.Sweet]; }
-        public uint BitterLevel { get => tasteLevels[(int)Taste.Bitter]; }
         public uint SourLevel { get => tasteLevels[(int)Taste.Sour]; }
+        public uint DryLevel { get => tasteLevels[(int)Taste.Dry]; }
+        public uint BitterLevel { get => tasteLevels[(int)Taste.Bitter]; }
+        public uint SweetLevel { get => tasteLevels[(int)Taste.Sweet]; }
 
         public uint GetTasteLevel(Taste taste) => tasteLevels[(int)taste];
         public bool IsLikedBy(Nature nature)

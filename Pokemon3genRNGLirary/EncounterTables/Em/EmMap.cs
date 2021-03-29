@@ -39,8 +39,8 @@ namespace Pokemon3genRNGLibrary
 
     class EmGrass : EmMap
     {
-        private protected AttractSlotGenerator staticGenerator;
-        private protected AttractSlotGenerator magnetPullGenerator;
+        private protected ITryGeneratable<GBASlot> staticGenerator;
+        private protected ITryGeneratable<GBASlot> magnetPullGenerator;
 
         // 静電気と磁力が有効.
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
@@ -53,15 +53,15 @@ namespace Pokemon3genRNGLibrary
         
         public EmGrass(string name, uint rate, GBASlot[] table) : base(name, rate, new GrassTable(table))
         {
-            staticGenerator = new AttractSlotGenerator(table, PokeType.Electric);
-            magnetPullGenerator = new AttractSlotGenerator(table, PokeType.Steel);
+            staticGenerator = AttractSlotGenerator.CreateInstance(table, PokeType.Electric);
+            magnetPullGenerator = AttractSlotGenerator.CreateInstance(table, PokeType.Steel);
         }
 
     }
 
     class EmSurf : EmMap
     {
-        private protected AttractSlotGenerator staticGenerator;
+        private protected ITryGeneratable<GBASlot> staticGenerator;
 
         // 静電気のみ有効
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
@@ -71,7 +71,7 @@ namespace Pokemon3genRNGLibrary
 
         public EmSurf(string name, uint rate, GBASlot[] table) : base(name, rate, new SurfTable(table))
         {
-            staticGenerator = new AttractSlotGenerator(table, PokeType.Electric);
+            staticGenerator = AttractSlotGenerator.CreateInstance(table, PokeType.Electric);
         }
 
     }
