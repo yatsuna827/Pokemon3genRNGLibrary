@@ -27,7 +27,7 @@ namespace Pokemon3genRNGLibrary
         /// <summary>
         /// 個体値の生成方法を指定します.
         /// </summary>
-        public IIVsGenerator GenerateMethod { get; set; } = Pokemon3genRNGLibrary.GenerateMethod.Standard;
+        public IIVsGenerator GenerateMethod { get; set; } = StandardIVsGenerator.GetInstance();
 
         /// <summary>
         /// エンカウント判定を無視するかどうかを指定します.

@@ -8,7 +8,7 @@ namespace Pokemon3genRNGLibrary
     {
         internal override IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg)
         {
-            if (arg.ForceEncount) return ForceEncounter.Getinstance();
+            if (arg.ForceEncount) return ForceEncounterDrawer.Getinstance();
 
             var value = BasicEncounterRate << 4;
             if (arg.RidingBicycle) value = value * 8 / 10;
@@ -17,7 +17,7 @@ namespace Pokemon3genRNGLibrary
             if (arg.HasCleanseTag) value = value * 2 / 3;
             else value = arg.FieldAbility.CorrectEncounterThreshold(value);
 
-            return RSEEncounter.CreateInstance(value);
+            return RSEEncounterDrawer.CreateInstance(value);
         }
 
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)

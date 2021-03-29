@@ -6,7 +6,7 @@ namespace Pokemon3genRNGLibrary
 {
     abstract class FRLGMap : GBAMap
     {
-        internal override IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg) => ForceEncounter.Getinstance();
+        internal override IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg) => ForceEncounterDrawer.Getinstance();
 
         internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
             => new SlotGenerator(encounterTable);
