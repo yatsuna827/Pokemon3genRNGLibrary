@@ -15,6 +15,7 @@ namespace Pokemon3genRNGLibrary
         private protected virtual Nature Default(ref uint seed) => defaultGenerator.GenerateFixedNature(ref seed);
         public Nature GenerateFixedNature(ref uint seed)
         {
+            // 判定はポロックの有無にかかわらず入る
             if (seed.GetRand(100) >= 80 || pokeBlock.IsTasteless()) return Default(ref seed);
 
             var natureList = Enumerable.Range(0, 25).Select(_ => (Nature)_).ToList();
@@ -32,9 +33,8 @@ namespace Pokemon3genRNGLibrary
             return natureList.Find(x => pokeBlock.IsLikedBy(x));
         }
 
-        private protected HoennSafariNatureGenerator(PokeBlock pokeBlock) => this.pokeBlock = pokeBlock;
+        private protected HoennSafariNatureGenerator(PokeBlock pokeBlock) => this.pokeBlock = pokeBlock ?? PokeBlock.Plain;
 
         public static INatureGenerator CreateInstance(PokeBlock pokeBlock) => new HoennSafariNatureGenerator(pokeBlock);
     }
-
 }

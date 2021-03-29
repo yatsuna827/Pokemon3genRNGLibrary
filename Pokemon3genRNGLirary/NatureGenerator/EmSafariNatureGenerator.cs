@@ -1,4 +1,5 @@
-﻿using PokemonStandardLibrary;
+﻿using System;
+using PokemonStandardLibrary;
 
 namespace Pokemon3genRNGLibrary
 {
@@ -12,8 +13,10 @@ namespace Pokemon3genRNGLibrary
         private EmSafariNatureGenerator(PokeBlock pokeBlock, INatureGenerator defaultGenerator) : base(pokeBlock) => this.defaultGenerator = defaultGenerator;
 
         public static INatureGenerator CreateInstance(PokeBlock pokeBlock, Nature syncNature = Nature.other)
-            => syncNature == Nature.other ?
-                HoennSafariNatureGenerator.CreateInstance(pokeBlock) :
-                new EmSafariNatureGenerator(pokeBlock, SynchronizeNatureGenerator.GetInstance(syncNature));
+        {
+            if (!Enum.IsDefined(typeof(Nature), syncNature)) throw new ArgumentException("定義外の値が渡されました");
+
+            return new EmSafariNatureGenerator(pokeBlock, SynchronizeNatureGenerator.GetInstance(syncNature));
+        }
     }
 }

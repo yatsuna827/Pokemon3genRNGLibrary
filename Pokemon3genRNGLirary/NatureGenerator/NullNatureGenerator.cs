@@ -9,8 +9,8 @@ namespace Pokemon3genRNGLibrary
     {
         public Nature GenerateFixedNature(ref uint seed) => Nature.other;
 
+        private NullNatureGenerator() { }
         private static readonly NullNatureGenerator instance = new NullNatureGenerator();
         public static INatureGenerator GetInstance() => instance;
-        private NullNatureGenerator() { }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using PokemonPRNG.LCG32.StandardLCG;
 using PokemonStandardLibrary;
 
@@ -14,10 +15,15 @@ namespace Pokemon3genRNGLibrary
 
         private static readonly INatureGenerator defaultGenerator = StandardNatureGenerator.GetInstance();
 
-        private static readonly SynchronizeNatureGenerator[] instances = Enumerable.Range(0, 25).Select(_ => new SynchronizeNatureGenerator((Nature)_)).ToArray();
-        public static INatureGenerator GetInstance(Nature syncNature)
-            => syncNature == Nature.other ? defaultGenerator : instances[(uint)syncNature];
-
         private SynchronizeNatureGenerator(Nature nature) => syncNature = nature;
+        private static readonly INatureGenerator[] instances =
+            Enumerable.Range(0, 25).Select(_ => new SynchronizeNatureGenerator((Nature)_)).Append(StandardNatureGenerator.GetInstance()).ToArray();
+
+        public static INatureGenerator GetInstance(Nature syncNature)
+        {
+            if(!Enum.IsDefined(typeof(Nature), syncNature)) throw new ArgumentException("定義外の値が渡されました");
+
+            return instances[(int)syncNature];
+        }
     }
 }
