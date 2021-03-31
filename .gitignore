@@ -15,6 +15,7 @@ x64/
 [Oo]bj/
 
 # MSTest test Results
+[Cc]onsole
 [Tt]est[Rr]esult*/
 [Bb]uild[Ll]og.*
 
