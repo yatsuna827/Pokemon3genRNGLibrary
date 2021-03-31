@@ -8,7 +8,7 @@ namespace Pokemon3genRNGLibrary
         {
             var lv = basicLv + seed.GetRand(variableLv);
 
-            if ((seed.GetRand() & 1) == 1)
+            if ((seed.GetRand() & 1) == 0)
                 lv = basicLv + variableLv;
 
             if (lv != basicLv)
