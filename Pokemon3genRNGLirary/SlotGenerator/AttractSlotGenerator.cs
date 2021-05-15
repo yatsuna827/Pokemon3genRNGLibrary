@@ -11,7 +11,7 @@ namespace Pokemon3genRNGLibrary
     public class AttractSlotGenerator : ITryGeneratable<GBASlot>
     {
         private readonly GBASlot[] attractedPokemons;
-        public bool TryGenerate(ref uint seed, out GBASlot result)
+        public bool TryGenerate(uint seed, out GBASlot result)
         {
             var total = (uint)attractedPokemons.Length;
             if ((seed.GetRand() & 1) == 1 || total == 0)
@@ -21,6 +21,21 @@ namespace Pokemon3genRNGLibrary
             }
 
             result = attractedPokemons[seed.GetRand(total)];
+            return true;
+        }
+
+        public bool TryGenerate(uint seed, out GBASlot result, out uint finSeed)
+        {
+            var total = (uint)attractedPokemons.Length;
+            if ((seed.GetRand() & 1) == 1 || total == 0)
+            {
+                result = null;
+                finSeed = seed;
+                return false;
+            }
+
+            result = attractedPokemons[seed.GetRand(total)];
+            finSeed = seed;
             return true;
         }
 

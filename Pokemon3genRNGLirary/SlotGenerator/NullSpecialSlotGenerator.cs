@@ -5,9 +5,15 @@
     /// </summary>
     public class NullSpecialSlotGenerator : ITryGeneratable<GBASlot>
     {
-        public bool TryGenerate(ref uint seed, out GBASlot result)
+        public bool TryGenerate(uint seed, out GBASlot result)
         {
             result = null;
+            return false;
+        }
+        public bool TryGenerate(uint seed, out GBASlot result, out uint finSeed)
+        {
+            result = null;
+            finSeed = seed;
             return false;
         }
 

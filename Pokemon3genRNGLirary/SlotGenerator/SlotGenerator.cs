@@ -11,7 +11,7 @@ namespace Pokemon3genRNGLibrary
         {
             GBASlot slot = null;
             foreach(var generator in slotGenerators)
-                if(generator.TryGenerate(ref seed, out slot)) break;
+                if(generator.TryGenerate(seed, out slot, out seed)) break;
 
             return slot;
         }

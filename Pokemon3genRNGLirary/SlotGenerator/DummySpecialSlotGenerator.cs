@@ -7,10 +7,18 @@ namespace Pokemon3genRNGLibrary
     /// </summary>
     public class DummySpecialSlotGenerator : ITryGeneratable<GBASlot>
     {
-        public bool TryGenerate(ref uint seed, out GBASlot result)
+        public bool TryGenerate(uint seed, out GBASlot result)
         {
             result = null;
             seed.Advance();
+            return false;
+        }
+
+        public bool TryGenerate(uint seed, out GBASlot result, out uint finSeed)
+        {
+            result = null;
+            seed.Advance();
+            finSeed = seed;
             return false;
         }
 

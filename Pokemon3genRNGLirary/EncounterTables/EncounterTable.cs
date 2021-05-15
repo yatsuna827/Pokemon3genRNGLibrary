@@ -9,10 +9,18 @@ namespace Pokemon3genRNGLibrary
     {
         public readonly GBASlot[] encounterTable;
         abstract protected int SelectSlot(ref uint seed);
-        public bool TryGenerate(ref uint seed, out GBASlot result)
+        public bool TryGenerate(uint seed, out GBASlot result)
         {
             var index = SelectSlot(ref seed);
             result = encounterTable[index];
+            return true;
+        }
+
+        public bool TryGenerate(uint seed, out GBASlot result, out uint finSeed)
+        {
+            var index = SelectSlot(ref seed);
+            result = encounterTable[index];
+            finSeed = seed;
             return true;
         }
 

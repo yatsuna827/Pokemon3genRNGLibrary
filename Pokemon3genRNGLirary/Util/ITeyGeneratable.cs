@@ -6,7 +6,8 @@ namespace Pokemon3genRNGLibrary
 {
     public interface ITryGeneratable<T>
     {
-        bool TryGenerate(ref uint seed, out T result);
+        bool TryGenerate(uint seed, out T result);
+        bool TryGenerate(uint seed, out T result, out uint finSeed);
     }
 
 }
