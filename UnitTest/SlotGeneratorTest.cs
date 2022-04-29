@@ -132,7 +132,7 @@ namespace UnitTest
                 new GBASlot(5, "スイクン", 100),
             };
 
-            Assert.AreEqual(typeof(DummySpecialSlotGenerator), AttractSlotGenerator.CreateInstance(table, PokeType.Non).GetType());
+            Assert.AreEqual(typeof(DummySpecialSlotGenerator), AttractSlotGenerator.CreateInstance(table, PokeType.None).GetType());
         }
         [TestMethod]
         

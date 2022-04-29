@@ -45,7 +45,7 @@ namespace Pokemon3genRNGLibrary
         {
             if(!Enum.IsDefined(typeof(PokeType), attractingType)) throw new ArgumentException("定義外の値が渡されました");
 
-            if (table == null || attractingType == PokeType.Non) return DummySpecialSlotGenerator.GetInstance();
+            if (table == null || attractingType == PokeType.None) return DummySpecialSlotGenerator.GetInstance();
 
             var filteredTable = table.Where(_ => _.pokemon.Type.Type1 == attractingType || _.pokemon.Type.Type2 == attractingType).ToArray();
 

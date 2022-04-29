@@ -4,7 +4,7 @@ using System.Linq;
 using PokemonPRNG.LCG32;
 using PokemonPRNG.LCG32.StandardLCG;
 using PokemonStandardLibrary;
-using PokemonStandardLibrary.PokeDex.Gen3;
+using PokemonStandardLibrary.Gen3;
 using PokemonStandardLibrary.CommonExtension;
 
 namespace Pokemon3genRNGLibrary
@@ -70,7 +70,7 @@ namespace Pokemon3genRNGLibrary
             var pid = (seed.GetRand() << 16) | seed.GetRand();
 
             // 形状が一致するまで再計算.
-            while (GetUnownForm(pid) != pokemon.FormName)
+            while (GetUnownForm(pid) != pokemon.Form)
                 pid = (seed.GetRand() << 16) | seed.GetRand();
 
             var IVs = ivsGenerator.GenerateIVs(ref seed);
