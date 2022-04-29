@@ -76,7 +76,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
 
@@ -95,7 +95,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -113,7 +113,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -131,7 +131,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -149,7 +149,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -167,7 +167,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -185,7 +185,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
     }
@@ -234,7 +234,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
 
@@ -253,7 +253,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -271,7 +271,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -289,7 +289,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -307,7 +307,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -325,7 +325,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -343,7 +343,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
 
@@ -393,7 +393,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -411,7 +411,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -429,7 +429,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -447,7 +447,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -465,7 +465,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -483,7 +483,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -501,7 +501,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
     }
@@ -551,7 +551,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
         [DataTestMethod]
         [DynamicData(nameof(StdTestCases_Em), DynamicDataSourceType.Method)]
@@ -568,7 +568,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -586,7 +586,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -604,7 +604,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -622,7 +622,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -640,7 +640,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -658,7 +658,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
     }
@@ -708,7 +708,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -726,7 +726,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -744,7 +744,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -762,7 +762,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -780,7 +780,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -798,7 +798,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -816,7 +816,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
     }
@@ -865,7 +865,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -883,7 +883,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -901,7 +901,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -919,7 +919,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -937,7 +937,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -955,7 +955,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
         [DataTestMethod]
@@ -973,7 +973,7 @@ namespace UnitTest
             Assert.AreEqual(testCase.Lv, result.Lv);
             Assert.AreEqual(testCase.PID, result.PID);
             Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs);
+            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
         }
 
     }

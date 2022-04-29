@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using PokemonPRNG.LCG32;
 using PokemonPRNG.LCG32.StandardLCG;
 using PokemonStandardLibrary;
-using PokemonStandardLibrary.PokeDex.Gen3;
+using PokemonStandardLibrary.Gen3;
 using PokemonStandardLibrary.CommonExtension;
 
 namespace Pokemon3genRNGLibrary

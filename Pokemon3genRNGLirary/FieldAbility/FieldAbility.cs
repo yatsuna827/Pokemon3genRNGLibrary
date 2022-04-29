@@ -11,7 +11,7 @@ namespace Pokemon3genRNGLibrary
 
         public virtual uint CorrectEncounterThreshold(uint threshold) => threshold;
 
-        private FieldAbility(Nature syncNature = Nature.other, Gender cuteCharmGender = Gender.Genderless, PokeType attractingType = PokeType.Non)
+        private FieldAbility(Nature syncNature = Nature.other, Gender cuteCharmGender = Gender.Genderless, PokeType attractingType = PokeType.None)
         { 
             this.syncNature = syncNature;
             this.cuteCharmGender = cuteCharmGender;

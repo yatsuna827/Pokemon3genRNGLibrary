@@ -13,7 +13,7 @@ namespace UnitTest
         {
             var ability = FieldAbility.GetOtherAbility();
             Assert.AreEqual(Nature.other, ability.syncNature);
-            Assert.AreEqual(PokeType.Non, ability.attractingType);
+            Assert.AreEqual(PokeType.None, ability.attractingType);
             Assert.AreEqual(Gender.Genderless, ability.cuteCharmGender);
 
             uint threshold = 100;
@@ -28,7 +28,7 @@ namespace UnitTest
             var expectedNature = Nature.Bashful;
             var ability = FieldAbility.GetSynchronize(expectedNature);
             Assert.AreEqual(expectedNature, ability.syncNature);
-            Assert.AreEqual(PokeType.Non, ability.attractingType);
+            Assert.AreEqual(PokeType.None, ability.attractingType);
             Assert.AreEqual(Gender.Genderless, ability.cuteCharmGender);
 
             uint threshold = 100;
@@ -43,7 +43,7 @@ namespace UnitTest
             var cuteCharmGender = Gender.Male;
             var ability = FieldAbility.GetCuteCharm(cuteCharmGender);
             Assert.AreEqual(Nature.other, ability.syncNature);
-            Assert.AreEqual(PokeType.Non, ability.attractingType);
+            Assert.AreEqual(PokeType.None, ability.attractingType);
             Assert.AreEqual(cuteCharmGender, ability.cuteCharmGender);
 
             uint threshold = 100;
@@ -57,7 +57,7 @@ namespace UnitTest
         {
             var ability = FieldAbility.GetPressure();
             Assert.AreEqual(Nature.other, ability.syncNature);
-            Assert.AreEqual(PokeType.Non, ability.attractingType);
+            Assert.AreEqual(PokeType.None, ability.attractingType);
             Assert.AreEqual(Gender.Genderless, ability.cuteCharmGender);
 
             uint threshold = 100;
@@ -99,7 +99,7 @@ namespace UnitTest
         {
             var ability = FieldAbility.GetStench();
             Assert.AreEqual(Nature.other, ability.syncNature);
-            Assert.AreEqual(PokeType.Non, ability.attractingType);
+            Assert.AreEqual(PokeType.None, ability.attractingType);
             Assert.AreEqual(Gender.Genderless, ability.cuteCharmGender);
 
             uint threshold = 100;
@@ -113,7 +113,7 @@ namespace UnitTest
         {
             var ability = FieldAbility.GetIlluminate();
             Assert.AreEqual(Nature.other, ability.syncNature);
-            Assert.AreEqual(PokeType.Non, ability.attractingType);
+            Assert.AreEqual(PokeType.None, ability.attractingType);
             Assert.AreEqual(Gender.Genderless, ability.cuteCharmGender);
 
             uint threshold = 100;

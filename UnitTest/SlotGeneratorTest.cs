@@ -15,7 +15,7 @@ namespace UnitTest
             var generator = NullSpecialSlotGenerator.GetInstance();
             var seed = 0x0u;
 
-            Assert.IsFalse(generator.TryGenerate(ref seed, out var result));
+            Assert.IsFalse(generator.TryGenerate(seed, out var result, out seed));
             Assert.IsNull(result);
             Assert.AreEqual(0x0u, seed.GetIndex());
         }
@@ -26,7 +26,7 @@ namespace UnitTest
             var generator = DummySpecialSlotGenerator.GetInstance();
             var seed = 0x0u;
 
-            Assert.IsFalse(generator.TryGenerate(ref seed, out var result));
+            Assert.IsFalse(generator.TryGenerate(seed, out var result, out seed));
             Assert.IsNull(result);
             Assert.AreEqual(0x1u, seed.GetIndex());
         }
@@ -37,11 +37,11 @@ namespace UnitTest
             var generator = FeebasSlotGenerator.GetInstance();
 
             var seed = TestCases.Mod100[50];
-            Assert.IsFalse(generator.TryGenerate(ref seed, out var result));
+            Assert.IsFalse(generator.TryGenerate(seed, out var result));
             Assert.IsNull(result);
 
             seed = TestCases.Mod100[49];
-            Assert.IsTrue(generator.TryGenerate(ref seed, out result));
+            Assert.IsTrue(generator.TryGenerate(seed, out result));
             Assert.IsNotNull(result);
         }
 
@@ -61,11 +61,11 @@ namespace UnitTest
             var generator = AttractSlotGenerator.CreateInstance(table, PokeType.Water);
 
             var seed = TestCases.Mod2[0];
-            Assert.IsTrue(generator.TryGenerate(ref seed, out var result));
+            Assert.IsTrue(generator.TryGenerate(seed, out var result));
             Assert.AreEqual("スイクン", result.pokemon.Name);
 
             seed = TestCases.Mod2[1];
-            Assert.IsFalse(generator.TryGenerate(ref seed, out result));
+            Assert.IsFalse(generator.TryGenerate(seed, out result));
             Assert.IsNull(result);
         }
 
@@ -132,7 +132,7 @@ namespace UnitTest
                 new GBASlot(5, "スイクン", 100),
             };
 
-            Assert.AreEqual(typeof(DummySpecialSlotGenerator), AttractSlotGenerator.CreateInstance(table, PokeType.Non).GetType());
+            Assert.AreEqual(typeof(DummySpecialSlotGenerator), AttractSlotGenerator.CreateInstance(table, PokeType.None).GetType());
         }
         [TestMethod]
         

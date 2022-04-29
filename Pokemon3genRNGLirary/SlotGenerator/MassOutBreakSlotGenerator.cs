@@ -8,7 +8,7 @@ namespace Pokemon3genRNGLibrary
     public class MassOutBreakSlotGenerator : ITryGeneratable<GBASlot>
     {
         private readonly GBASlot massOutBreakSlot;
-        public bool TryGenerate(ref uint seed, out GBASlot result)
+        public bool TryGenerate(uint seed, out GBASlot result)
         {
             if (seed.GetRand(100) < 50)
             {
@@ -16,6 +16,19 @@ namespace Pokemon3genRNGLibrary
                 return true;
             }
             result = null;
+            return false;
+        }
+
+        public bool TryGenerate(uint seed, out GBASlot result, out uint finSeed)
+        {
+            if (seed.GetRand(100) < 50)
+            {
+                result = massOutBreakSlot;
+                finSeed = seed;
+                return true;
+            }
+            result = null;
+            finSeed = seed;
             return false;
         }
 
