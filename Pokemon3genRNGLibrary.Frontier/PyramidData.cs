@@ -11,9 +11,9 @@ namespace Pokemon3genRNGLibrary.Frontier
         public byte[] Code { get; }
         public ((byte, byte) Asc, (byte, byte) Desc) Items { get; }
         public IReadOnlyList<PyramidEnemy> Enemies { get; }
-        public (byte,byte) Exit { get; }
+        public (byte, byte) Exit { get; }
 
-        private PyramidMapTile(byte[] mapData, (byte, byte) itemsAsc, (byte, byte) itemsDesc, PyramidEnemy[] pyramidEnemies, (byte,byte) exit)
+        private PyramidMapTile(byte[] mapData, (byte, byte) itemsAsc, (byte, byte) itemsDesc, PyramidEnemy[] pyramidEnemies, (byte, byte) exit)
         {
             Code = mapData;
             Items = (itemsAsc, itemsDesc);
@@ -31,8 +31,8 @@ namespace Pokemon3genRNGLibrary.Frontier
             Data = new PyramidMapTile[16]
             {
                 new PyramidMapTile(
-                    new byte[] { 0x00, 0x02, 0x72, 0x42, 0x42, 0x4E, 0x40, 0x00 },
-                    (1,4), (4,7), 
+                    new byte[] { 0x00, 0x40, 0x4E, 0x42, 0x42, 0x72, 0x02, 0x00 },
+                    (1,4), (4,7),
                     new[]
                     {
                         new PyramidEnemy((3,2), 3, Direction._D_R),
@@ -43,7 +43,7 @@ namespace Pokemon3genRNGLibrary.Frontier
                     (4,3)
                 ),
                 new PyramidMapTile(
-                    new byte[] { 0x3E, 0x00, 0x00, 0x82, 0x82, 0x80, 0x80, 0xEC },
+                    new byte[] { 0x7C, 0x00, 0x00, 0x41, 0x41, 0x01, 0x01, 0x37 },
                     (0,7), (5,6),
                     new[]
                     {
@@ -55,7 +55,7 @@ namespace Pokemon3genRNGLibrary.Frontier
                     (4,3)
                 ),
                 new PyramidMapTile(
-                    new byte[] { 0x00, 0x40, 0x42, 0x42, 0xE0, 0x02, 0x7E, 0xE0 },
+                    new byte[] { 0x00, 0x02, 0x42, 0x42, 0x07, 0x40, 0x7E, 0x02 },
                     (2,4), (7,2),
                     new[]
                     {
@@ -165,7 +165,7 @@ namespace Pokemon3genRNGLibrary.Frontier
                     (4,4)
                 ),
                 new PyramidMapTile(
-                    new byte[] { 0x67, 0x00, 0x00, 0xF6, 0x00, 0x00, 0x00, 0x6E },
+                    new byte[] { 0x77, 0x00, 0x00, 0xF6, 0x00, 0x00, 0x00, 0x7F },
                     (2,7), (7,7),
                     new[]
                     {
@@ -285,7 +285,7 @@ namespace Pokemon3genRNGLibrary.Frontier
     public partial class PyramidDifficulty
     {
         public static PyramidDifficulty[] Data;
-        public static uint[][] RateTable;
+        public static uint[][] RateTables;
         static PyramidDifficulty()
         {
             Data = new PyramidDifficulty[16]
@@ -307,7 +307,7 @@ namespace Pokemon3genRNGLibrary.Frontier
                 new PyramidDifficulty( 80, new[]{ 0xE,0xE,0xE,0xE,0xE,0xE,0xE,0xE }, 3, 6, LayoutStrategy.Whole),
                 new PyramidDifficulty( 80, new[]{ 0xF,0xF,0xF,0xF,0xF,0xF,0xF,0xF }, 3, 8, LayoutStrategy.Whole),
             };
-            RateTable = new uint[7][]
+            RateTables = new uint[7][]
             {
                 new uint[16] { 40,30,20,10,0,0,0,0,0,0,0,0,0,0,0,0 },
                 new uint[16] { 0,35,20,20,15,0,0,0,0,0,10,0,0,0,0,0 },
@@ -317,6 +317,22 @@ namespace Pokemon3genRNGLibrary.Frontier
                 new uint[16] { 0,0,0,0,0,35,20,20,15,0,0,0,0,0,10,0 },
                 new uint[16] { 0,0,0,0,0,0,35,20,20,15,0,0,0,0,0,10 },
             };
+        }
+
+        public static PyramidDifficulty GetDifficulty(in FloorCode code, int rank)
+        {
+            var roll = code.DifficultyRoll;
+            var rateTable = RateTables[rank];
+
+            var sum = 0u;
+            for (int i = 0; i < rateTable.Length; i++)
+            {
+                sum += rateTable[i];
+                if (roll < sum) return Data[i];
+            }
+
+            // unexpected
+            return null;
         }
     }
 
@@ -331,7 +347,7 @@ namespace Pokemon3genRNGLibrary.Frontier
 
     public abstract class LayoutStrategy
     {
-        public abstract int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, int trainers);
+        public abstract int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, uint objects);
 
         public static LayoutStrategy Whole { get; } = new Whole();
         public static LayoutStrategy FocusOnEntry { get; } = new FocusOnEntry();
@@ -352,9 +368,9 @@ namespace Pokemon3genRNGLibrary.Frontier
 
     class Whole : LayoutStrategy
     {
-        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, int objects)
+        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, uint objects)
         {
-            var start = code.Value3 & 0xF;
+            var start = (code.Value3) & 0xF;
             var bits = code.Value4;
 
             var remain = objects;
@@ -363,10 +379,10 @@ namespace Pokemon3genRNGLibrary.Frontier
             for (int i = 0; i < 16 && remain > 0; i++)
             {
                 var k = (start + i) & 0xF;
-                if ((bits & (1 << k)) == 1)
+                if ((bits & (1 << k)) != 0)
                 {
+                    t[(k + 1) & 0xF]++;
                     remain--;
-                    t[k]++;
                 }
             }
             for (int i = 0; i < 16 && remain > 0; i++)
@@ -374,19 +390,20 @@ namespace Pokemon3genRNGLibrary.Frontier
                 var k = (start + i) & 0xF;
                 if ((bits & (1 << k)) == 0)
                 {
-                    t[k]++;
+                    t[(k + 1) & 0xF]++;
                     remain--;
                 }
             }
 
             return t;
         }
+        public override string ToString() => "Whole";
     }
     class FocusOnEntry : LayoutStrategy
     {
-        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, int objects)
+        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, uint objects)
         {
-            var remain = objects;
+            var remain = (int)objects;
             var t = new int[16];
 
             t[code.EntryTileIndex] = Math.Min(map[code.EntryTileIndex].Enemies.Count, remain);
@@ -403,15 +420,17 @@ namespace Pokemon3genRNGLibrary.Frontier
 
             return t;
         }
+        public override string ToString() => "FocusOnEntry";
     }
     class FocusOnExit : LayoutStrategy
     {
-        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, int objects)
+        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, uint objects)
         {
-            var remain = objects;
+            var remain = (int)objects;
             var t = new int[16];
 
             t[code.ExitTileIndex] = Math.Min(map[code.ExitTileIndex].Enemies.Count, remain);
+
             remain -= t[code.ExitTileIndex];
 
             foreach (var i in EnumerateAround(code.ExitTileIndex).TakeWhile(_ => remain > 0))
@@ -425,12 +444,13 @@ namespace Pokemon3genRNGLibrary.Frontier
 
             return t;
         }
+        public override string ToString() => "FocusOnExit";
     }
     class AroundExit : LayoutStrategy
     {
-        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, int objects)
+        public override int[] Layout(FloorCode code, IReadOnlyList<PyramidMapTile> map, uint objects)
         {
-            var remain = objects;
+            var remain = (int)objects;
             var t = new int[16];
 
             foreach (var i in EnumerateAround(code.ExitTileIndex).TakeWhile(_ => remain > 0))
@@ -444,6 +464,7 @@ namespace Pokemon3genRNGLibrary.Frontier
 
             return t;
         }
+        public override string ToString() => "AroundExit";
     }
 
     [StructLayout(LayoutKind.Explicit)]
@@ -463,7 +484,7 @@ namespace Pokemon3genRNGLibrary.Frontier
         [FieldOffset(4)]
         public readonly uint Second;
 
-        public int EntryTileIndex { get => (Value1 & 0xF) != (Value4 & 0xF) ? (Value1 & 0xF) : (((Value1 & 0xF) + 1) & 0xF); }
+        public int EntryTileIndex { get => (Value1 & 0xF) != (Value4 & 0xF) ? (Value4 & 0xF) : (((Value4 & 0xF) + 1) & 0xF); }
         public int ExitTileIndex { get => (Value1 & 0xF) != (Value4 & 0xF) ? (Value1 & 0xF) : (((Value1 & 0xF) + 15) & 0xF); }
 
         public bool LayoutOrder { get => (Value1 & 1) == 0; }
@@ -485,6 +506,16 @@ namespace Pokemon3genRNGLibrary.Frontier
         }
 
         public ushort this[int i] { get => (i < 2) ? (i % 2 == 0) ? Value1 : Value2 : (i % 2 == 0) ? Value3 : Value4; }
+
+        public FloorCode(ushort val1, ushort val2, ushort val3, ushort val4)
+        {
+            First = Second = 0;
+
+            Value1 = val1;
+            Value2 = val2;
+            Value3 = val3;
+            Value4 = val4;
+        }
     }
 
     public class PyramidItem
@@ -525,20 +556,46 @@ namespace Pokemon3genRNGLibrary.Frontier
 
         private readonly string[] itemTable;
 
-        public string[] GetItems(FloorCode code, int items, int floor)
+        private IEnumerable<int> GetTileIndex(FloorCode code, uint items)
+        {
+            var start = (code.Value3) & 0xF;
+            var bits = code.Value4;
+
+            for (int i = 0; i < 16 && items > 0; i++)
+            {
+                var k = (start + i) & 0xF;
+                if ((bits & (1 << k)) != 0)
+                {
+                    yield return (k + 1) & 0xF;
+                    items--;
+                }
+            }
+            for (int i = 0; i < 16 && items > 0; i++)
+            {
+                var k = (start + i) & 0xF;
+                if ((bits & (1 << k)) == 0)
+                {
+                    yield return (k + 1) & 0xF;
+                    items--;
+                }
+            }
+
+        }
+        public IEnumerable<(int TileIndex, string Item)> GetItems(FloorCode code, uint items, int floor)
         {
             var rates = rateTable[floor];
-
             var result = new string[items];
             for (int i = 0; i < result.Length; i++)
             {
                 var seed = (uint)code[i / 2];
-                for (int k = 0; k < i; i++) seed = seed * 0x41c64e6du + 0x6073u;
-                var rand = (seed * 0x41c64e6du + 0x6073u) >> 16;
+                for (int k = 0; k < i; k++) seed = seed * 0x41c64e6du + 0x6073u;
+                var rand = ((seed * 0x41c64e6du + 0x6073u) >> 16) % 100;
 
-                for (int k=0; k < rates.Length; k++, rand -= rates[k])
+                var sum = 0u;
+                for (int k = 0; k < rates.Length; k++)
                 {
-                    if (rand < rates[k])
+                    sum += rates[k];
+                    if (rand < sum)
                     {
                         result[i] = itemTable[k];
                         break;
@@ -546,7 +603,7 @@ namespace Pokemon3genRNGLibrary.Frontier
                 }
             }
 
-            return result;
+            return GetTileIndex(code, items).Zip(result, (i, item) => (i, item));
         }
 
         public PyramidItem(int rank)
