@@ -7,7 +7,7 @@ using PokemonStandardLibrary.Gen3;
 
 namespace Pokemon3genRNGLibrary
 {
-    public class StationaryGenerator : IGeneratable<Pokemon.Individual>
+    public class StationaryGenerator : IGeneratable<RNGResult<Pokemon.Individual, uint>>
     {
         private readonly GBASlot slot;
         private readonly ILvGenerator lvGenerator; // プレッシャーの有無で決まる
@@ -15,15 +15,17 @@ namespace Pokemon3genRNGLibrary
         private readonly IGenderGenerator genderGenerator; // メロボの有無によって決まる
         private readonly IIVsGenerator ivsGenrator; // 引数のまま
 
-        public Pokemon.Individual Generate(uint seed)
+        public RNGResult<Pokemon.Individual, uint> Generate(uint seed)
         {
-            return slot.Generate(seed, lvGenerator, ivsGenrator, natureGenerator, genderGenerator, out var _);
+            var head = seed;
+            var (individual, recalc) = slot.Generate(ref seed, lvGenerator, ivsGenrator, natureGenerator, genderGenerator);
+
+            return new RNGResult<Pokemon.Individual, uint>(individual, recalc, head, seed);
         }
         public StationaryGenerator(GBASlot slot, IIVsGenerator generateMethod = null)
         {
-            if (slot == null) throw new ArgumentException("slotをnullにするな");
-
-            lvGenerator = StandardLvGenerator.GetInstance();
+            this.slot = slot ?? throw new ArgumentException("slotをnullにするな");
+            lvGenerator = NullLvGenerator.GetInstance();
             natureGenerator = NullNatureGenerator.GetInstance();
             genderGenerator = NullGenderGenerator.GetInstance();
             ivsGenrator = generateMethod ?? StandardIVsGenerator.GetInstance();

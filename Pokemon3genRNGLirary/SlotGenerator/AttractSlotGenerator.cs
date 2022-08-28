@@ -47,7 +47,7 @@ namespace Pokemon3genRNGLibrary
 
             if (table == null || attractingType == PokeType.None) return DummySpecialSlotGenerator.GetInstance();
 
-            var filteredTable = table.Where(_ => _.pokemon.Type.Type1 == attractingType || _.pokemon.Type.Type2 == attractingType).ToArray();
+            var filteredTable = table.Where(_ => _.Pokemon.Type.Type1 == attractingType || _.Pokemon.Type.Type2 == attractingType).ToArray();
 
             return filteredTable.Length == 0 ? DummySpecialSlotGenerator.GetInstance() : new AttractSlotGenerator(filteredTable);
         }

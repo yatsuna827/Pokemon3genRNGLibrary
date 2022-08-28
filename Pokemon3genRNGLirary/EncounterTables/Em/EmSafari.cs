@@ -1,14 +1,48 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 using PokemonStandardLibrary;
 
 namespace Pokemon3genRNGLibrary
 {
     abstract class EmSafari : EmMap
     {
-        internal override INatureGenerator GetNatureGenerator(WildGenerationArgument arg)
+        public override INatureGenerator GetNatureGenerator(WildGenerationArgument arg)
             => EmSafariNatureGenerator.CreateInstance(arg.PokeBlock, arg.FieldAbility.syncNature);
+
+        public override IEnumerable<CalcBackResult> FindGeneratingSeed(uint H, uint A, uint B, uint C, uint D, uint S, bool ivInterrupt, bool middleInterrupt)
+        {
+            var header = new HoennSafariCalcBackHeader(this, LvCalcBacker.standard);
+            var pressureHeader = new HoennSafariCalcBackHeader(this, LvCalcBacker.pressure);
+
+            var method = ivInterrupt ? "Method4" : middleInterrupt ? "Method2" : "Method1";
+            foreach (var core in SeedFinder.EnumerateGeneratingSeed(H, A, B, C, D, S, ivInterrupt, middleInterrupt))
+            {
+                var pid = core.PID;
+
+                foreach (var ret in new StandardCalcBackCell(core.Seed, pid % 25).Find(pressureHeader).Select(_ => _.Generate(core.Seed, core.IVs.DecodeIVs(), core.PID, method)).Where(_ => _ != null))
+                    yield return ret;
+                foreach (var ret in new StandardCalcBackCell(core.Seed, pid % 25).Find(pressureHeader).Select(_ => _.Generate(core.Seed, core.IVs.DecodeIVs(), core.PID, method)).Where(_ => _ != null))
+                    yield return ret;
+
+                var cells = new CalcBackCell[]
+                {
+                    new SynchronizeCalcBackCell(core.Seed, pid % 25),
+
+                    new CuteCharmCalcBackCell(core.Seed, pid % 25, pid & 0xFF, GenderRatio.M7F1),
+                    new CuteCharmCalcBackCell(core.Seed, pid % 25, pid & 0xFF, GenderRatio.M3F1),
+                    new CuteCharmCalcBackCell(core.Seed, pid % 25, pid & 0xFF, GenderRatio.M1F1),
+                    new CuteCharmCalcBackCell(core.Seed, pid % 25, pid & 0xFF, GenderRatio.M1F7),
+                };
+                foreach (var cell in cells)
+                {
+                    foreach (var ret in cell.Find(header).Select(_ => _.Generate(core.Seed, core.IVs.DecodeIVs(), core.PID, method)).Where(_ => _ != null))
+                    {
+                        yield return ret;
+                    }
+                }
+            }
+        }
 
         private protected EmSafari(string name, uint rate, EncounterTable table) : base(name, rate, table) { }
     }
@@ -19,7 +53,7 @@ namespace Pokemon3genRNGLibrary
         private protected ITryGeneratable<GBASlot> magnetPullGenerator;
 
         // 静電気と磁力が有効.
-        internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
+        public override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
         {
             if (arg.FieldAbility.attractingType == PokeType.Electric) return new SlotGenerator(staticGenerator, encounterTable);
             if (arg.FieldAbility.attractingType == PokeType.Steel) return new SlotGenerator(magnetPullGenerator, encounterTable);
@@ -40,7 +74,7 @@ namespace Pokemon3genRNGLibrary
         private protected ITryGeneratable<GBASlot> staticGenerator;
 
         // 静電気のみ有効
-        internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
+        public override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
             => arg.FieldAbility.attractingType == PokeType.Electric ?
                 new SlotGenerator(staticGenerator, encounterTable) :
                 new SlotGenerator(encounterTable);

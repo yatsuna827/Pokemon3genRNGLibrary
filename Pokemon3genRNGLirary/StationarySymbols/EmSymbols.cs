@@ -27,7 +27,7 @@ namespace Pokemon3genRNGLibrary.StationarySymbols
         public static class RoamingSymbol
         {
             private static readonly GBASlot[] symbols;
-            public static IEnumerable<GBASlot> SelectSymbol(string name = "") => symbols.Where(_ => _.pokemon.Name == name);
+            public static IEnumerable<GBASlot> SelectSymbol(string name = "") => symbols.Where(_ => _.Pokemon.Name == name);
 
             static RoamingSymbol()
             {

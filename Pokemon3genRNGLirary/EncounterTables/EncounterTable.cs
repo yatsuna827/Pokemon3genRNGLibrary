@@ -7,24 +7,24 @@ namespace Pokemon3genRNGLibrary
 {
     abstract class EncounterTable : ITryGeneratable<GBASlot>
     {
-        public readonly GBASlot[] encounterTable;
+        public IReadOnlyList<GBASlot> Table { get; }
         abstract protected int SelectSlot(ref uint seed);
+        public GBASlot Generate(uint seed) => Table[SelectSlot(ref seed)];
         public bool TryGenerate(uint seed, out GBASlot result)
         {
             var index = SelectSlot(ref seed);
-            result = encounterTable[index];
+            result = Table[index];
             return true;
         }
-
         public bool TryGenerate(uint seed, out GBASlot result, out uint finSeed)
         {
             var index = SelectSlot(ref seed);
-            result = encounterTable[index];
+            result = Table[index];
             finSeed = seed;
             return true;
         }
 
-        private protected EncounterTable(GBASlot[] table) => encounterTable = table;
+        private protected EncounterTable(GBASlot[] table) => this.Table = table;
     }
 
     class GrassTable : EncounterTable

@@ -4,7 +4,7 @@
     {
         private protected GenerateMethod(string legacyName) => LegacyName = legacyName;
 
-        public readonly string LegacyName;
+        public string LegacyName { get; }
         public abstract uint[] GenerateIVs(ref uint seed);
     }
 }

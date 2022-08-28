@@ -4,7 +4,7 @@ namespace Pokemon3genRNGLibrary
 {
     public class MiddleInterruptedIVsGenerator : GenerateMethod
     {
-        private MiddleInterruptedIVsGenerator() : base("Method2") { }
+        private MiddleInterruptedIVsGenerator() : base("Method4") { }
 
         private static readonly GenerateMethod instance = new MiddleInterruptedIVsGenerator();
         public static GenerateMethod GetInstance() => instance;

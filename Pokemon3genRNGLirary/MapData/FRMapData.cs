@@ -1298,43 +1298,43 @@ namespace Pokemon3genRNGLibrary.MapData
                     ("ズバット", 10), ("ズバット", 12), ("ズバット", 16), ("ズバット", 6),
                     ("ズバット", 8), ("ズバット", 14), ("ズバット", 8), ("ズバット", 14),
                 })),
-                new FRLGGrass("イレスのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
+                new FRLGTanobyRuin("イレスのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
                 {
                     ("A", 25), ("A", 25), ("A", 25), ("A", 25),
                     ("A", 25), ("A", 25), ("A", 25), ("A", 25),
                     ("A", 25), ("A", 25), ("A", 25), ("?", 25),
                 })),
-                new FRLGGrass("ナザンのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
+                new FRLGTanobyRuin("ナザンのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
                 {
                     ("C", 25), ("C", 25), ("C", 25), ("D", 25),
                     ("D", 25), ("D", 25), ("H", 25), ("H", 25),
                     ("H", 25), ("U", 25), ("U", 25), ("O", 25),
                 })),
-                new FRLGGrass("ユゴのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
+                new FRLGTanobyRuin("ユゴのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
                 {
                     ("N", 25), ("N", 25), ("N", 25), ("N", 25),
                     ("S", 25), ("S", 25), ("S", 25), ("S", 25),
                     ("I", 25), ("I", 25), ("E", 25), ("E", 25),
                 })),
-                new FRLGGrass("アレボカのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
+                new FRLGTanobyRuin("アレボカのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
                 {
                     ("P", 25), ("P", 25), ("L", 25), ("L", 25),
                     ("J", 25), ("J", 25), ("R", 25), ("R", 25),
                     ("R", 25), ("Q", 25), ("Q", 25), ("Q", 25),
                 })),
-                new FRLGGrass("コトーのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
+                new FRLGTanobyRuin("コトーのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
                 {
                     ("Y", 25), ("Y", 25), ("T", 25), ("T", 25),
                     ("G", 25), ("G", 25), ("G", 25), ("F", 25),
                     ("F", 25), ("F", 25), ("K", 25), ("K", 25),
                 })),
-                new FRLGGrass("アヌザのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
+                new FRLGTanobyRuin("アヌザのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
                 {
                     ("V", 25), ("V", 25), ("V", 25), ("W", 25),
                     ("W", 25), ("W", 25), ("X", 25), ("X", 25),
                     ("M", 25), ("M", 25), ("B", 25), ("B", 25),
                 })),
-                new FRLGGrass("オリフのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
+                new FRLGTanobyRuin("オリフのせきしつ", 7, UnownSlot.CreateTable(new (string, uint)[]
                 {
                     ("Z", 25), ("Z", 25), ("Z", 25), ("Z", 25),
                     ("Z", 25), ("Z", 25), ("Z", 25), ("Z", 25),

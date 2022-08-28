@@ -31,8 +31,9 @@ namespace Pokemon3genRNGLibrary
 
         /// <summary>
         /// エンカウント判定を無視するかどうかを指定します.
+        /// ただし釣りでは常に無視され、岩砕きでは常に判定されます.
         /// </summary>
-        public bool ForceEncount { get; set; }
+        public bool ForceEncounter { get; set; }
 
         /// <summary>
         /// 自転車に乗っているかどうかを指定します.
@@ -52,10 +53,5 @@ namespace Pokemon3genRNGLibrary
         /// </summary>
         public bool HasCleanseTag { get; set; }
 
-        /// <summary>
-        /// エンカ判定を無視するかどうかを指定します.
-        /// ただし釣りでは常に無視され、岩砕きでは常に判定されます.
-        /// </summary>
-        public bool ForceEncounter { get; set; }
     }
 }

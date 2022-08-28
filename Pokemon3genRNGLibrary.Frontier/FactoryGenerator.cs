@@ -9,8 +9,8 @@ namespace Pokemon3genRNGLibrary.Frontier
 {
     public class FactoryGenerator : IGeneratable<FactoryStarterResult>
     {
-        private readonly FrontierPokemon[] pokemons;
-        private readonly uint m;
+        private readonly FrontierPokemon[] _pokemons;
+        private readonly FrontierTrainer[] _trainers;
 
         public FactoryStarterResult Generate(uint seed)
         {
@@ -25,7 +25,7 @@ namespace Pokemon3genRNGLibrary.Frontier
                 int i = 0;
                 while (i < 6)
                 {
-                    var poke = pokemons[seed.GetRand(m)];
+                    var poke = _pokemons[seed.GetRand() % _pokemons.Length];
                     if (poke.Species.Name == "アンノーン") continue;
                     if (rentalItems.Contains(poke.Item)) continue;
 
@@ -36,8 +36,7 @@ namespace Pokemon3genRNGLibrary.Frontier
             }
 
             // トレーナー決定
-            var trainer = "未実装";
-            seed.Advance();
+            var trainer = _trainers[seed.GetRand() % _trainers.Length];
 
             // 相手手持ち生成
             var enemyItems = new HashSet<string>();
@@ -46,7 +45,7 @@ namespace Pokemon3genRNGLibrary.Frontier
                 int i = 0;
                 while (i < 3)
                 {
-                    var poke = pokemons[seed.GetRand(m)];
+                    var poke = _pokemons[seed.GetRand() % _pokemons.Length];
                     if (poke.Species.Name == "アンノーン") continue;
                     if (enemyItems.Contains(poke.Item)) continue;
                     if (appeared.Contains(poke.Species.Name)) continue;
@@ -60,23 +59,23 @@ namespace Pokemon3genRNGLibrary.Frontier
             return new FactoryStarterResult(head, seed, rentalPokemons, trainer, enemyPokemons);
         }
 
-        public FactoryGenerator(bool openLv)
+        public FactoryGenerator(int win, bool openLv)
         {
-            pokemons = FrontierPokemon.GetFactoryPokemons(0, openLv).ToArray();
-            m = (uint)pokemons.Length;
+            _pokemons = FrontierPokemon.GetFactoryPokemons(win, openLv).ToArray();
+            _trainers = FrontierTrainer.GetTrainers(win).ToArray();
         }
     }
 
-    public readonly struct FactoryStarterResult
+    public class FactoryStarterResult
     {
         public uint HeadSeed { get; }
         public uint TailSeed { get; }
 
-        public string EnemyTrainer { get; }
+        public FrontierTrainer EnemyTrainer { get; }
         public FrontierPokemon[] RentalPokemons { get; }
         public FrontierPokemon[] EnemyTeam { get; }
 
-        public FactoryStarterResult(in uint head, in uint tail, in FrontierPokemon[] rental, in string enemy, in FrontierPokemon[] enemyTeam)
+        public FactoryStarterResult(in uint head, in uint tail, in FrontierPokemon[] rental, FrontierTrainer enemy, in FrontierPokemon[] enemyTeam)
         {
             HeadSeed = head;
             TailSeed = tail;

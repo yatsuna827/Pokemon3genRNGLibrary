@@ -11,8 +11,9 @@ namespace UnitTest
         public void ProPhaseTest()
         {
             var gen = ProphaseEggGenerator.CreateInstance(AISHOU.ANMARI, 12);
-            var result = gen.TryGenerate(0xb08fb2ef, out var pid);
-            Assert.IsTrue(result);
+            var seed = 0xb08fb2efu;
+            var result = gen.Generate(seed, seed.GetIndex() + 12);
+            Assert.IsNotNull(result.Content);
         }
     }
 }

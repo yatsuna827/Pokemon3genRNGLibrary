@@ -6,15 +6,19 @@ namespace Pokemon3genRNGLibrary
 {
     public abstract class GBAMap
     {
-        public readonly string MapName;
-        public readonly uint BasicEncounterRate;
-        private protected readonly EncounterTable encounterTable;
+        public string MapName { get; }
+        public uint BasicEncounterRate { get; }
+        public IReadOnlyList<GBASlot> EncounterTable { get => encounterTable.Table; }
 
-        internal abstract IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg);
-        internal abstract SlotGenerator GetSlotGenerator(WildGenerationArgument arg);
-        internal abstract ILvGenerator GetLvGenerator(WildGenerationArgument arg);
-        internal abstract INatureGenerator GetNatureGenerator(WildGenerationArgument arg);
-        internal abstract IGenderGenerator GetGenderGenerator(WildGenerationArgument arg);
+        internal readonly EncounterTable encounterTable;
+
+        public abstract IEnumerable<CalcBackResult> FindGeneratingSeed(uint H, uint A, uint B, uint C, uint D, uint S, bool ivInterrupt, bool middleInterrupt);
+
+        public abstract IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg);
+        public abstract SlotGenerator GetSlotGenerator(WildGenerationArgument arg);
+        public abstract ILvGenerator GetLvGenerator(WildGenerationArgument arg);
+        public abstract INatureGenerator GetNatureGenerator(WildGenerationArgument arg);
+        public abstract IGenderGenerator GetGenderGenerator(WildGenerationArgument arg);
 
         private protected GBAMap(string name, uint rate, EncounterTable table) 
             => (this.MapName, this.BasicEncounterRate, this.encounterTable) = (name, rate, table);

@@ -62,7 +62,7 @@ namespace UnitTest
 
             var seed = TestCases.Mod2[0];
             Assert.IsTrue(generator.TryGenerate(seed, out var result));
-            Assert.AreEqual("スイクン", result.pokemon.Name);
+            Assert.AreEqual("スイクン", result.Pokemon.Name);
 
             seed = TestCases.Mod2[1];
             Assert.IsFalse(generator.TryGenerate(seed, out result));

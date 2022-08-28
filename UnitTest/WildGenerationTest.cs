@@ -70,7 +70,7 @@ namespace UnitTest
             var generator = new WildGenerator(FRMapData.Field.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name + result.Form);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -84,18 +84,18 @@ namespace UnitTest
         [DynamicData(nameof(StdTestCases_Em), DynamicDataSourceType.Method)]
         public void EmStandard(WildTestCase testCase)
         {
-            var arg = new WildGenerationArgument();
-            arg.PokeBlock = pokeBlocks[testCase.PokeBlock];
-            var generator = new WildGenerator(EmMapData.Field.SelectMap(testCase.MapName).First(), arg);
+            var generator = new WildGenerator(EmMapData.Field.SelectMap(testCase.MapName).First(), new WildGenerationArgument { PokeBlock = pokeBlocks[testCase.PokeBlock] });
+
             var seed = testCase.Seed;
 
             var result = generator.Generate(seed);
 
-            Assert.AreEqual(testCase.Name, result.Name);
-            Assert.AreEqual(testCase.Lv, result.Lv);
-            Assert.AreEqual(testCase.PID, result.PID);
-            Assert.AreEqual(testCase.Nature, result.Nature.ToJapanese());
-            CollectionAssert.AreEqual(testCase.IVs, result.IVs.ToArray());
+            Assert.AreEqual(testCase.Name, result.Content.Name);
+            Assert.AreEqual(testCase.Lv, result.Content.Lv);
+            Assert.AreEqual(testCase.PID, result.Content.PID);
+            Assert.AreEqual(testCase.Nature, result.Content.Nature.ToJapanese());
+            CollectionAssert.AreEqual(testCase.IVs, result.Content.IVs.ToArray());
+            Assert.AreEqual(testCase.Seed, result.HeadSeed);
         }
 
         [DataTestMethod]
@@ -107,7 +107,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Field.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -125,7 +125,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Field.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -143,7 +143,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Field.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name, $"{testCase.Seed:X8}");
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -161,7 +161,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Field.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -179,7 +179,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Field.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -228,7 +228,7 @@ namespace UnitTest
             var generator = new WildGenerator(FRMapData.Surf.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -247,7 +247,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Surf.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -265,7 +265,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Surf.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -283,7 +283,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Surf.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -301,7 +301,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Surf.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name, $"{testCase.Seed:X8}");
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -319,7 +319,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Surf.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -337,7 +337,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.Surf.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -387,7 +387,7 @@ namespace UnitTest
             var generator = new WildGenerator(FRMapData.OldRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -405,7 +405,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.OldRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -423,7 +423,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.OldRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name, $"{testCase.Seed:X8}");
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -441,7 +441,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.OldRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -459,7 +459,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.OldRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name, $"{testCase.Seed:X8}");
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -477,7 +477,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.OldRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -495,7 +495,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.OldRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -545,7 +545,7 @@ namespace UnitTest
             var generator = new WildGenerator(FRMapData.GoodRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -562,7 +562,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.GoodRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -580,7 +580,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.GoodRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -598,7 +598,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.GoodRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -616,7 +616,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.GoodRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name, $"{testCase.Seed:X8}");
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -634,7 +634,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.GoodRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -652,7 +652,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.GoodRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -702,7 +702,7 @@ namespace UnitTest
             var generator = new WildGenerator(FRMapData.SuperRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -720,7 +720,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.SuperRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -738,7 +738,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.SuperRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -756,7 +756,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.SuperRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -774,7 +774,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.SuperRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name, $"{testCase.Seed:X8}");
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -792,7 +792,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.SuperRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -810,7 +810,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.SuperRod.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -859,7 +859,7 @@ namespace UnitTest
             var generator = new WildGenerator(FRMapData.RockSmash.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -877,7 +877,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.RockSmash.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -895,7 +895,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.RockSmash.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -913,7 +913,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.RockSmash.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -931,7 +931,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.RockSmash.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name, $"{testCase.Seed:X8}");
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -949,7 +949,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.RockSmash.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);
@@ -967,7 +967,7 @@ namespace UnitTest
             var generator = new WildGenerator(EmMapData.RockSmash.SelectMap(testCase.MapName).First(), arg);
             var seed = testCase.Seed;
 
-            var result = generator.Generate(seed);
+            var result = generator.Generate(seed).Content;
 
             Assert.AreEqual(testCase.Name, result.Name);
             Assert.AreEqual(testCase.Lv, result.Lv);

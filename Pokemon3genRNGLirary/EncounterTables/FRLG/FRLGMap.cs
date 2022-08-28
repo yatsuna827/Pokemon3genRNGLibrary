@@ -1,24 +1,40 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
+using PokemonPRNG.LCG32.StandardLCG;
 
 namespace Pokemon3genRNGLibrary
 {
     abstract class FRLGMap : GBAMap
     {
-        internal override IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg) => ForceEncounterDrawer.Getinstance();
+        public override IEncounterDrawer GetEncounterDrawer(WildGenerationArgument arg) => ForceEncounterDrawer.Getinstance();
 
-        internal override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
+        public override SlotGenerator GetSlotGenerator(WildGenerationArgument arg)
             => new SlotGenerator(encounterTable);
 
-        internal override ILvGenerator GetLvGenerator(WildGenerationArgument arg)
+        public override ILvGenerator GetLvGenerator(WildGenerationArgument arg)
             => StandardLvGenerator.GetInstance();
 
-        internal override INatureGenerator GetNatureGenerator(WildGenerationArgument arg)
+        public override INatureGenerator GetNatureGenerator(WildGenerationArgument arg)
             => StandardNatureGenerator.GetInstance();
 
-        internal override IGenderGenerator GetGenderGenerator(WildGenerationArgument arg)
+        public override IGenderGenerator GetGenderGenerator(WildGenerationArgument arg)
             => NullGenderGenerator.GetInstance();
+
+        public override IEnumerable<CalcBackResult> FindGeneratingSeed(uint H, uint A, uint B, uint C, uint D, uint S, bool ivInterrupt, bool middleInterrupt)
+        {
+            var head = new CalcBackHeader(this, LvCalcBacker.standard);
+            var method = ivInterrupt ? "Method4" : middleInterrupt ? "Method2" : "Method1";
+            foreach (var core in SeedFinder.EnumerateGeneratingSeed(H, A, B, C, D, S, ivInterrupt, middleInterrupt))
+            {
+                // FindGeneratiogSeedの戻り値を生のseedじゃなくて生成される個体情報を詰める？
+                var pid = core.PID;
+                var cell = new StandardCalcBackCell(core.Seed, pid % 25);
+
+                foreach (var ret in cell.Find(head).Select(_ => _.Generate(core.Seed, core.IVs.DecodeIVs(), core.PID, method)).Where(_ => _ != null))
+                    yield return ret;
+            }
+        }
 
         private protected FRLGMap(string name, uint rate, EncounterTable table) : base(name, rate, table) { }
     }
@@ -53,4 +69,22 @@ namespace Pokemon3genRNGLibrary
         public FRLGRockSmash(string name, uint rate, GBASlot[] table) : base(name, rate, new RockSmashTable(table)) { }
     }
 
+    class FRLGTanobyRuin : FRLGGrass
+    {
+        public override IEnumerable<CalcBackResult> FindGeneratingSeed(uint H, uint A, uint B, uint C, uint D, uint S, bool ivInterrupt, bool middleInterrupt)
+        {
+            var method = ivInterrupt ? "Method4" : middleInterrupt ? "Method2" : "Method1";
+            foreach (var core in SeedFinder.EnumerateGeneratingSeed(H, A, B, C, D, S, ivInterrupt, middleInterrupt))
+            {
+                // FindGeneratiogSeedの戻り値を生のseedじゃなくて生成される個体情報を詰める？
+                var pid = (core.PID << 16) | (core.PID >> 16);
+                var cell = new TanobyRuinCalcBackCell(core.Seed, pid.GetUnownForm(), this);
+
+                foreach (var ret in cell.Find().Select(_ => _.Generate(core.Seed, core.IVs.DecodeIVs(), pid, method)).Where(_ => _ != null))
+                    yield return ret;
+            }
+        }
+
+        public FRLGTanobyRuin(string name, uint rate, GBASlot[] table) : base(name, rate, table) { }
+    }
 }
