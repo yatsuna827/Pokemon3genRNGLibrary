@@ -16,6 +16,8 @@ namespace Pokemon3genRNGLibrary
         private readonly IGenderGenerator genderGenerator; // メロボの有無によって決まる
         private readonly IIVsGenerator ivsGenrator; // 引数のまま
 
+        private readonly bool _interruptAfterSlot;
+
         public RNGResult<Pokemon.Individual, uint> Generate(uint seed)
         {
             var head = seed;
@@ -23,6 +25,7 @@ namespace Pokemon3genRNGLibrary
                 return new RNGResult<Pokemon.Individual, uint>(null, 0u, head, seed);
 
             var slot = slotGenerator.GenerateSlot(ref seed);
+            if (_interruptAfterSlot) seed.Advance();
             var (individual, recalc) = slot.Generate(ref seed, lvGenerator, ivsGenrator, natureGenerator, genderGenerator);
 
             return new RNGResult<Pokemon.Individual, uint>(individual, recalc, head, seed);
@@ -37,6 +40,7 @@ namespace Pokemon3genRNGLibrary
             natureGenerator = map.GetNatureGenerator(arg);
             genderGenerator = map.GetGenderGenerator(arg);
             ivsGenrator = arg.GenerateMethod;
+            _interruptAfterSlot = arg.InterruptAfterSlot;
         }
     }
 }

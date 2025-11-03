@@ -53,5 +53,9 @@ namespace Pokemon3genRNGLibrary
         /// </summary>
         public bool HasCleanseTag { get; set; }
 
+        /// <summary>
+        /// スロット決定後に描画消費を挿入します. 
+        /// </summary>
+        public bool InterruptAfterSlot { get; set; }
     }
 }
