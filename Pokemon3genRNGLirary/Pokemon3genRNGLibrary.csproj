@@ -6,6 +6,7 @@
     <Authors>sub_827</Authors>
     <Company />
     <Version>0.2.0</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
