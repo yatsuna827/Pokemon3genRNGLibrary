@@ -5,7 +5,7 @@ using PokemonPRNG.LCG32.StandardLCG;
 
 namespace Pokemon3genRNGLibrary
 {
-    abstract class EncounterTable : ITryGeneratable<GBASlot>
+    public abstract class EncounterTable : ITryGeneratable<GBASlot>
     {
         public IReadOnlyList<GBASlot> Table { get; }
         abstract protected int SelectSlot(ref uint seed);
@@ -27,7 +27,7 @@ namespace Pokemon3genRNGLibrary
         private protected EncounterTable(GBASlot[] table) => this.Table = table;
     }
 
-    class GrassTable : EncounterTable
+    public class GrassTable : EncounterTable
     {
         protected override int SelectSlot(ref uint seed)
         {
@@ -48,7 +48,7 @@ namespace Pokemon3genRNGLibrary
 
         public GrassTable(GBASlot[] table) : base(table) { }
     }
-    class SurfTable : EncounterTable
+    public class SurfTable : EncounterTable
     {
         protected override int SelectSlot(ref uint seed)
         {
@@ -61,14 +61,14 @@ namespace Pokemon3genRNGLibrary
         }
         public SurfTable(GBASlot[] table) : base(table) { }
     }
-    class OldRodTable : EncounterTable
+    public class OldRodTable : EncounterTable
     {
         protected override int SelectSlot(ref uint seed)
             => seed.GetRand(100) < 70 ? 0 : 1;
 
         public OldRodTable(GBASlot[] table) : base(table) { }
     }
-    class GoodRodTable : EncounterTable
+    public class GoodRodTable : EncounterTable
     {
         protected override int SelectSlot(ref uint seed)
         {
@@ -80,7 +80,7 @@ namespace Pokemon3genRNGLibrary
         
         public GoodRodTable(GBASlot[] table) : base(table) {  }
     }
-    class SuperRodTable : EncounterTable
+    public class SuperRodTable : EncounterTable
     {
         protected override int SelectSlot(ref uint seed)
         {
@@ -94,7 +94,7 @@ namespace Pokemon3genRNGLibrary
         
         public SuperRodTable(GBASlot[] table) : base(table) { }
     }
-    class RockSmashTable : EncounterTable
+    public class RockSmashTable : EncounterTable
     {
         protected override int SelectSlot(ref uint seed)
         {

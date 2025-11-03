@@ -2,7 +2,7 @@
 
 namespace Pokemon3genRNGLibrary
 {
-    class RSEEncounterDrawer : IEncounterDrawer
+    public class RSEEncounterDrawer : IEncounterDrawer
     {
         private readonly uint threshold;
         public bool DrawEncounter(ref uint seed) => seed.GetRand(0xB40) < threshold;

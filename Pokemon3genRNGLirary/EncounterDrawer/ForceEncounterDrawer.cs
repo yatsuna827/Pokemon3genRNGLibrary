@@ -1,6 +1,6 @@
 ﻿namespace Pokemon3genRNGLibrary
 {
-    class ForceEncounterDrawer : IEncounterDrawer
+    public class ForceEncounterDrawer : IEncounterDrawer
     {
         public bool DrawEncounter(ref uint seed) => true;
 

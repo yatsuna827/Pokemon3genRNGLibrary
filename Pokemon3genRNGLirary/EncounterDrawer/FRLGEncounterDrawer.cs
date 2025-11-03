@@ -2,7 +2,7 @@
 
 namespace Pokemon3genRNGLibrary
 {
-    class FRLGEncounterDrawer : IEncounterDrawer
+    public class FRLGEncounterDrawer : IEncounterDrawer
     {
         // よくわかってないから後回し.
         public bool DrawEncounter(ref uint seed) => true;
