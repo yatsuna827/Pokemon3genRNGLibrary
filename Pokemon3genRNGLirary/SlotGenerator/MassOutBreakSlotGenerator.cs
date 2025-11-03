@@ -35,7 +35,7 @@ namespace Pokemon3genRNGLibrary
         private protected MassOutBreakSlotGenerator(string name, uint basicLv, uint variableLv = 1)
             => this.massOutBreakSlot = new GBASlot(-1, name, basicLv, variableLv);
 
-        public ITryGeneratable<GBASlot> CreateInstance(string name, uint basicLv, uint variableLv)
+        public static ITryGeneratable<GBASlot> CreateInstance(string name, uint basicLv, uint variableLv)
             => new MassOutBreakSlotGenerator(name, basicLv, variableLv);
     }
 }
